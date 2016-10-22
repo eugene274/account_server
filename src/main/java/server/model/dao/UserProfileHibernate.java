@@ -1,5 +1,6 @@
 package server.model.dao;
 
+import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
@@ -29,6 +30,15 @@ public class UserProfileHibernate implements UserDAO {
 
     @Override
     public UserProfile updateLogin(String login, String newlogin) {
-        throw new NotImplementedException();
+        try {
+            DbHibernate.doTransactional(session , s -> {
+                s.createQuery("update userProfile u set login=:newLogin where u.login =:login")
+                        .setParameter("newLogin",newlogin)
+                        .setParameter("login",login).executeUpdate();
+            });
+        } catch (TransactionalError ignore) {
+        }
+
+        return getByLogin(newlogin);
     }
 }

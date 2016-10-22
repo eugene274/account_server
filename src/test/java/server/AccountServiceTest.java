@@ -3,6 +3,7 @@ package server;
 import org.junit.Before;
 import org.junit.Test;
 import server.model.AccountService;
+import server.model.dao.UserProfileHibernate;
 import server.model.data.Token;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.LoginExistsError;
@@ -17,7 +18,11 @@ import static org.junit.Assert.*;
 public class AccountServiceTest {
 
 
-    static AccountService accountService = new AccountService();
+    static AccountService accountService = AccountService.getInstance();
+    static {
+        accountService.setDao(new UserProfileHibernate());
+    }
+
     static final String login = "test";
     static final String pass = "testpass";
 

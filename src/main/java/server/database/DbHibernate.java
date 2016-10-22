@@ -31,9 +31,10 @@ public class DbHibernate {
         return factory.openSession();
     }
 
-    public static void doTransactional(Consumer<Session> consumer) throws TransactionalError {
+    public static void doTransactional(Session session,Consumer<Session> consumer)
+            throws TransactionalError {
         Transaction transaction = null;
-        try (Session session = newSession()) {
+        try {
             transaction = session.beginTransaction();
             consumer.accept(session);
             transaction.commit();
@@ -46,11 +47,12 @@ public class DbHibernate {
         }
     }
 
-    public static <T> T getTransactional(Function<Session,T> function) throws TransactionalError {
+    public static <T> T getTransactional(Session session, Function<Session,T> function)
+            throws TransactionalError {
         Transaction transaction = null;
         T result  = null;
 
-        try (Session session = newSession()) {
+        try {
             transaction = session.beginTransaction();
             result = function.apply(session);
             transaction.commit();
@@ -61,7 +63,6 @@ public class DbHibernate {
             }
             throw new TransactionalError(e.getMessage(),e);
         }
-
         return result;
     }
 

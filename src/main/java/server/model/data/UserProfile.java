@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by eugene on 10/9/16.
  */
 
-@Entity
+@Entity(name = "userProfile")
 @Table(name = "users")
 public class UserProfile {
     @Id
