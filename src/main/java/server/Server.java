@@ -3,8 +3,12 @@ package server;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.Jetty;
+import org.eclipse.jetty.util.log.JettyLogHandler;
 import server.jmx.controller.JMXInit;
+import server.model.AccountService;
 import server.model.TokenStatusUpdater;
+import server.model.dao.UserProfileHibernate;
 
 /**
  * Created by eugene on 10/7/16.
@@ -20,6 +24,7 @@ public class Server {
 
     static {
         JMXInit.init();
+        AccountService.setDao(new UserProfileHibernate());
     }
 
     public static void main(String[] args){

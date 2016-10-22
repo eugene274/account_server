@@ -23,6 +23,9 @@ public class UserProfile {
     @Column(nullable = false)
     private String password;
 
+    public UserProfile() {
+    }
+
     public UserProfile(String login, String password) {
         this.login = login;
         this.password = password;

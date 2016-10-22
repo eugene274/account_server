@@ -24,6 +24,7 @@ public class AccountService {
             = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
             = new ConcurrentHashMap<>();
+    private static UserDAO dao = new UserProfileInMemo();
 
     private static final AccountService instance = new AccountService();
 
@@ -33,11 +34,13 @@ public class AccountService {
         return instance;
     }
 
+    public static void setDao(UserDAO dao) { AccountService.dao = dao; }
+
     static {
         LOG.debug("accounting started");
     }
 
-    private final UserDAO dao = new UserProfileInMemo();
+
 
     private UserProfile getUserByTokenString(String tokenString){
         return usersSignedIn.get(Token.valueOf(tokenString));
