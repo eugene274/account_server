@@ -34,9 +34,9 @@ public class UserProfileInMemo implements UserDAO {
     }
 
     @Override
-    public UserProfile updateLogin(String login, String newlogin) {
+    public UserProfile updateName(String login, String newName) {
         UserProfile user = getByLogin(login);
-        user.setLogin(newlogin);
+        user.setName(newName);
         return user;
     }
 }

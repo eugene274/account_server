@@ -26,7 +26,7 @@ public class Profile {
             @FormParam("name") String name
     ){
         try {
-            accountService.updateLogin(token,name);
+            accountService.updateName(token,name);
             return CustomerRequestResponse.ok(null).toString();
         } catch (CustomerRequestError error) {
             return CustomerRequestResponse.fail(error).toString();

@@ -8,5 +8,5 @@ import server.model.data.UserProfile;
 @SuppressWarnings("DefaultFileTemplate")
 public interface UserDAO extends DAO<UserProfile> {
     UserProfile getByLogin(String login);
-    UserProfile updateLogin(String login, String newlogin);
+    UserProfile updateName(String login, String newlogin);
 }

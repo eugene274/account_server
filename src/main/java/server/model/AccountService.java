@@ -115,22 +115,17 @@ public class AccountService {
         LOG.info("'" + remove.getLogin() + "' logged out");
     }
 
-    public void updateLogin(String tokenString, String newLogin) throws LoginExistsError {
+    public void updateName(String tokenString, String newName) throws LoginExistsError {
         UserProfile user = getUserByTokenString(tokenString);
 
         // nothing to do
-        if(user.getLogin().equals(newLogin)){
+        if(newName.equals(user.getName())){
             return;
-        }
-
-        // check if new login is ok
-        if(null != dao.getByLogin(newLogin)){
-            throw new LoginExistsError(newLogin);
         }
 
         // update sign-in-array copy
         // violates equality!!!
-        user.setLogin(newLogin);
-        dao.updateLogin(user.getLogin(), newLogin);
+        dao.updateName(user.getLogin(), newName);
+        user.setName(newName);
     }
 }

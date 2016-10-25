@@ -62,29 +62,13 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void updateLogin() throws Exception {
+    public void updateName() throws Exception {
         Token token = accountService.signIn(login,pass);
-        accountService.updateLogin(token.toString(),"test2");
-
-        // the same token
-        assertEquals(token, accountService.signIn("test2",pass));
-
-        // no more old user
-        try {
-            accountService.signIn(login,pass);
-            fail();
-        }
-        catch (WrongCredentialsError ignore){
-        }
-
-        accountService.signUp(login,pass);
-        // login exists error
-        try {
-            accountService.updateLogin(token.toString(),login);
-            fail();
-        }
-        catch (LoginExistsError ignore){
-        }
+        accountService.updateName(token.toString(),"test2");
+        assertTrue(
+                accountService.getOnlineUsers().stream().
+                        filter(userProfile -> "test2".equals(userProfile.getName())).
+                        count() > 0L );
     }
 
 }

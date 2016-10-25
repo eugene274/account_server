@@ -20,7 +20,7 @@ public class Auth {
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")
     public String signIn(
-            @DefaultValue("") @FormParam("login") String login,
+            @DefaultValue("") @FormParam("user") String login,
             @DefaultValue("") @FormParam("password") String password
     ){
         try {
@@ -36,7 +36,7 @@ public class Auth {
     @Path("/register")
     @Consumes("application/x-www-form-urlencoded")
     public String signUp(
-            @DefaultValue("") @FormParam("login") String login,
+            @DefaultValue("") @FormParam("user") String login,
             @DefaultValue("") @FormParam("password") String password
     ){
         try {
@@ -47,7 +47,7 @@ public class Auth {
         }
     }
 
-    @GET
+    @POST
     @Path("/logout")
     @Authorized
 
