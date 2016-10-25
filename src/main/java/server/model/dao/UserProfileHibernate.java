@@ -29,16 +29,20 @@ public class UserProfileHibernate implements UserDAO {
     }
 
     @Override
-    public UserProfile updateLogin(String login, String newlogin) {
+    public UserProfile updateLogin(String login, String newLogin) {
         try {
             DbHibernate.doTransactional(session , s -> {
                 s.createQuery("update userProfile u set login=:newLogin where u.login =:login")
-                        .setParameter("newLogin",newlogin)
-                        .setParameter("login",login).executeUpdate();
+                        .setParameter("newLogin",newLogin)
+                        .setParameter("login",login)
+                        .executeUpdate();
             });
         } catch (TransactionalError ignore) {
+            // do something!!!!!!
+
+
         }
 
-        return getByLogin(newlogin);
+        return getByLogin(newLogin);
     }
 }

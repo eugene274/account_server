@@ -3,6 +3,7 @@ package server.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.model.customer.PolicyViolationError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileInMemo;
 import server.model.customer.CustomerRequestError;
@@ -47,8 +48,9 @@ public class AccountService {
     }
 
     private Token getTokenByTokenString(String tokenString){
+        Token token = Token.valueOf(tokenString);
         return usersSignedInReverse.values().stream()
-                .filter(token -> token.equals(Token.valueOf(tokenString)))
+                .filter( t -> t.equals(token) )
                 .findFirst().orElse(null);
     }
 
@@ -75,7 +77,7 @@ public class AccountService {
 
         token = new Token();
         addUserSession(user, token);
-        LOG.info("'" + login + "' logged in successfully");
+        LOG.info("'" + login + "' logged in");
         return token;
     }
 
@@ -86,8 +88,12 @@ public class AccountService {
             throw new LoginExistsError(login);
         }
 
+        if(!CredentialsPolicy.checkLogin(login) || !CredentialsPolicy.checkPassword(pass)){
+            throw new PolicyViolationError();
+        }
+
         dao.insert(new UserProfile(login,pass));
-        LOG.info("'" + login + "' signed up successfully");
+        LOG.info("'" + login + "' signed up");
     }
 
     public Collection<UserProfile> getOnlineUsers(){

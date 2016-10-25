@@ -36,9 +36,9 @@ public class AccountServiceTest {
 
     @Test
     public void signUp() throws Exception {
-        accountService.signUp("eugene222","test");
+        accountService.signUp("eugene222","testpass");
         try {
-            accountService.signUp("eugene222","test2");
+            accountService.signUp("eugene222","testpass2");
             fail();
         }
         catch(LoginExistsError ignore){
