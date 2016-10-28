@@ -15,7 +15,7 @@ import javax.ws.rs.*;
 @Path("/profile")
 public class Profile {
 
-    private static AccountService accountService = AccountService.getInstance();
+    private static AccountService accountService = new AccountService();
 
     @POST
     @Path("name")

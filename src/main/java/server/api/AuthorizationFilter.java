@@ -15,7 +15,7 @@ import java.io.IOException;
 @Provider
 @Authorized
 public class AuthorizationFilter implements ContainerRequestFilter {
-    static final AccountService accountService = AccountService.getInstance();
+    static final AccountService accountService = new AccountService();
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {

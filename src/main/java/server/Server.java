@@ -24,7 +24,6 @@ public class Server {
 
     static {
         JMXInit.init();
-        AccountService.setDao(new UserProfileHibernate());
     }
 
     public static void main(String[] args){

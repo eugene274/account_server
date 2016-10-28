@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class AccountServiceTest {
 
 
-    static AccountService accountService = AccountService.getInstance();
+    static AccountService accountService = new AccountService();
     static {
         accountService.setDao(new UserProfileHibernate());
     }

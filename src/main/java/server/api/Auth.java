@@ -3,6 +3,7 @@ package server.api;
 import server.model.AccountService;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerRequestResponse;
+import server.model.dao.UserProfileHibernate;
 import server.model.data.Token;
 
 import javax.ws.rs.*;
@@ -14,7 +15,7 @@ import javax.ws.rs.*;
 @Path("/auth")
 @Produces({"application/json","text/plain"})
 public class Auth {
-    private static final AccountService accountService = AccountService.getInstance();
+    private static final AccountService accountService = new AccountService();
 
     @POST
     @Path("/login")

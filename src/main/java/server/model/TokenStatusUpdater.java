@@ -10,7 +10,7 @@ import java.util.Calendar;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class TokenStatusUpdater implements Runnable{
-    private static final AccountService accountservice = AccountService.getInstance();
+    private static final AccountService accountservice = new AccountService();
     private static final Logger LOG = LogManager.getLogger("tokenupdr");
 
     private static final Integer INACTIVE_AFTER = 2;

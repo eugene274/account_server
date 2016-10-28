@@ -11,7 +11,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 
 public class UserProfileHibernate implements UserDAO {
-    private static Session session = DbHibernate.newSession();
+    private Session session = DbHibernate.newSession();
 
     @Override
     public Long insert(UserProfile in) {

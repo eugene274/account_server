@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.model.customer.PolicyViolationError;
 import server.model.dao.UserDAO;
+import server.model.dao.UserProfileHibernate;
 import server.model.dao.UserProfileInMemo;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.LoginExistsError;
@@ -25,22 +26,25 @@ public class AccountService {
             = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
             = new ConcurrentHashMap<>();
-    private static UserDAO dao = new UserProfileInMemo();
-
-    private static final AccountService instance = new AccountService();
 
     private static final Logger LOG = LogManager.getLogger("account");
-
-    public static AccountService getInstance(){
-        return instance;
-    }
-
-    public static void setDao(UserDAO dao) { AccountService.dao = dao; }
 
     static {
         LOG.debug("accounting started");
     }
 
+    private UserDAO dao = new UserProfileHibernate();
+
+    public AccountService() {
+    }
+
+    public UserDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(UserDAO dao) {
+        this.dao = dao;
+    }
 
 
     private UserProfile getUserByTokenString(String tokenString){

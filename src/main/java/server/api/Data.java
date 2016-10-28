@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 public class Data {
 
-    private static final AccountService accountService = AccountService.getInstance();
+    private static final AccountService accountService = new AccountService();
 
     @GET
     @Path("/users")
