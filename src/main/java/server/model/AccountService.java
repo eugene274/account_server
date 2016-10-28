@@ -21,17 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by eugene on 10/9/16.
  */
 @SuppressWarnings("DefaultFileTemplate")
-public class AccountService {
-    private static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
-            = new ConcurrentHashMap<>();
-    private static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
-            = new ConcurrentHashMap<>();
-
+public class AccountService extends UsersSignedInService {
     private static final Logger LOG = LogManager.getLogger("account");
-
-    static {
-        LOG.debug("accounting started");
-    }
 
     private UserDAO dao = new UserProfileHibernate();
 
@@ -45,24 +36,6 @@ public class AccountService {
     public void setDao(UserDAO dao) {
         this.dao = dao;
     }
-
-
-    private UserProfile getUserByTokenString(String tokenString){
-        return usersSignedIn.get(Token.valueOf(tokenString));
-    }
-
-    private Token getTokenByTokenString(String tokenString){
-        Token token = Token.valueOf(tokenString);
-        return usersSignedInReverse.values().stream()
-                .filter( t -> t.equals(token) )
-                .findFirst().orElse(null);
-    }
-
-    private static void addUserSession( UserProfile user,  Token token){
-        usersSignedIn.putIfAbsent(token, user);
-        usersSignedInReverse.putIfAbsent(user,token);
-    }
-
 
     public Token signIn( String login, String pass)
             throws CustomerRequestError
@@ -101,23 +74,20 @@ public class AccountService {
     }
 
     public Collection<UserProfile> getOnlineUsers(){
-        return usersSignedIn.values();
+        return users();
     }
 
-    public Collection<Token> getTokens(){ return usersSignedInReverse.values(); }
+    public Collection<Token> getTokens(){ return tokens(); }
 
     public boolean isTokenValid(String tokenString){
-        return usersSignedIn.containsKey(Token.valueOf(tokenString));
+        return tokens().contains(Token.valueOf(tokenString));
     }
 
     public void logout(String tokenString){
-        UserProfile remove = usersSignedIn.remove(Token.valueOf(tokenString));
-        if(null == remove) {
-            return;
-        }
-        usersSignedInReverse.remove(remove);
-        LOG.info("'" + remove.getLogin() + "' logged out");
+        UserProfile profile = removeUserSession(Token.valueOf(tokenString));
+        LOG.info(String.format("'%s' logged out", profile.getLogin()));
     }
+
 
     public void updateName(String tokenString, String newName) throws LoginExistsError {
         UserProfile user = getUserByTokenString(tokenString);
