@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import server.model.customer.PolicyViolationError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
-import server.model.dao.UserProfileInMemo;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.LoginExistsError;
 import server.model.customer.WrongCredentialsError;
@@ -15,7 +14,6 @@ import server.model.data.UserProfile;
 
 
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by eugene on 10/9/16.
@@ -114,7 +112,7 @@ public class AccountService extends UsersSignedInService {
 
     public void logout(String tokenString){
         UserProfile profile = removeUserSession(Token.valueOf(tokenString));
-        LOG.info(String.format("'%s' logged out", profile.getLogin()));
+        LOG.info(String.format("'%s' logged out", profile.getEmail()));
     }
 
 
@@ -128,7 +126,7 @@ public class AccountService extends UsersSignedInService {
 
         // update sign-in-array copy
         // violates equality!!!
-        dao.updateName(user.getLogin(), newName);
+        dao.updateName(user.getEmail(), newName);
         user.setName(newName);
     }
 }
