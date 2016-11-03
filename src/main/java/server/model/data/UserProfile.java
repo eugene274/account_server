@@ -1,10 +1,13 @@
 package server.model.data;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by eugene on 10/9/16.
@@ -21,9 +24,10 @@ public class UserProfile {
     @NaturalId
     private String email;
 
-    @Column(nullable = false, updatable = false)
-    @CreationTimestamp
-    private Calendar registrationDate;
+    @Column(updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Generated(GenerationTime.INSERT)
+    private Date registrationDate = new Date();
 
 
     @Column
@@ -35,13 +39,13 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(String login, String password) {
-        this.email = login;
+    public UserProfile(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public boolean checkCredentials(String login, String pass){
-        return getEmail().equals(login) && getPassword().equals(pass);
+    public boolean checkCredentials(String email, String pass){
+        return getEmail().equals(email) && getPassword().equals(pass);
     }
 
     public String getEmail() {
@@ -52,12 +56,8 @@ public class UserProfile {
         this.email = email;
     }
 
-    public Calendar getRegistrationDate() {
+    public Date getRegistrationDate() {
         return registrationDate;
-    }
-
-    private void setRegistrationDate(Calendar registrationDate) {
-        this.registrationDate = registrationDate;
     }
 
     public String getPassword() {

@@ -25,11 +25,16 @@ public abstract class UserDAOTest {
     @Test
     public final void getById() throws Exception {
         UserProfile user = new UserProfile("test2","pass");
+        UserProfile user2;
+
         Long id = dao.insert(user);
 
         assertNull(dao.getById(-1L));
-        assertNotNull(dao.getById(id));
-        assertEquals(user, dao.getById(id));
+        assertNotNull(user2 = dao.getById(id));
+        assertEquals(user, user2);
+
+        assertEquals(user.getRegistrationDate(), user2.getRegistrationDate());
+
     }
 
     @Test
