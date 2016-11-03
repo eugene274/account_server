@@ -6,6 +6,8 @@ import server.database.DbHibernate;
 import org.hibernate.Session;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Collection;
+
 /**
  * Created by eugene on 10/10/16.
  */
@@ -21,6 +23,11 @@ public class UserProfileHibernate implements UserDAO {
     @Override
     public UserProfile getById(Long id) {
         return session.get(UserProfile.class, id);
+    }
+
+    @Override
+    public Collection<UserProfile> getWhere(String... conditions) {
+        throw new NotImplementedException();
     }
 
     @Override

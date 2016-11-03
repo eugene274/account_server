@@ -1,7 +1,9 @@
 package server.model.dao;
 
 import server.model.data.UserProfile;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -25,6 +27,11 @@ public class UserProfileInMemo implements UserDAO {
     @Override
     public UserProfile getById(Long id) {
         return users.get(id);
+    }
+
+    @Override
+    public Collection<UserProfile> getWhere(String... conditions) {
+        throw new NotImplementedException();
     }
 
     @Override
