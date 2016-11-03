@@ -19,8 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by eugene on 10/9/16.
+ *
+ * Serves all accounting stuff
+ * login/logout/register
  */
-@SuppressWarnings("DefaultFileTemplate")
+
 public class AccountService extends UsersSignedInService {
     private static final Logger LOG = LogManager.getLogger("account");
 
@@ -37,6 +40,19 @@ public class AccountService extends UsersSignedInService {
         this.dao = dao;
     }
 
+    /**
+     *
+     * @param login
+     * @param pass
+     * @return Token
+     * @throws CustomerRequestError
+     *
+     * 1. checks out users already signed in. if present, returns issued token
+     * 2. checks out db
+     * 3. if ok, issues new Token\
+     * 3'. if not ok, throws "Wrong credentials"
+     * 4. adds user session and returns token
+     */
     public Token signIn( String login, String pass)
             throws CustomerRequestError
     {
@@ -57,6 +73,19 @@ public class AccountService extends UsersSignedInService {
         LOG.info("'" + login + "' logged in");
         return token;
     }
+
+    /**
+     *
+     * @param login
+     * @param pass
+     * @throws CustomerRequestError
+     *
+     * 1. checks db for login existence
+     * 2. if ok, check policy violation (empty login, forbidden symbols)
+     * 2'. if not ok, throws LoginExistsError
+     * 2''. if login violates policy, throws PolicyVoilationError
+     * 3. add new user to db
+     */
 
     public void signUp( String login, String pass)
             throws CustomerRequestError {
