@@ -1,7 +1,6 @@
 package server.model.dao;
 
 import server.model.data.UserProfile;
-import server.model.dao.UserDAO;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,7 +29,7 @@ public class UserProfileInMemo implements UserDAO {
 
     @Override
     public UserProfile getByLogin(String login) {
-        return users.values().stream().filter(u -> u.getLogin().equals(login)).findFirst().orElse(null);
+        return users.values().stream().filter(u -> u.getEmail().equals(login)).findFirst().orElse(null);
     }
 
     @Override

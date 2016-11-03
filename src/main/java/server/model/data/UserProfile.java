@@ -1,9 +1,10 @@
 package server.model.data;
 
-import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 /**
  * Created by eugene on 10/9/16.
@@ -18,7 +19,12 @@ public class UserProfile {
 
     @Column
     @NaturalId
-    private String login;
+    private String email;
+
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    private Calendar registrationDate;
+
 
     @Column
     private String name;
@@ -30,20 +36,28 @@ public class UserProfile {
     }
 
     public UserProfile(String login, String password) {
-        this.login = login;
+        this.email = login;
         this.password = password;
     }
 
     public boolean checkCredentials(String login, String pass){
-        return getLogin().equals(login) && getPassword().equals(pass);
+        return getEmail().equals(login) && getPassword().equals(pass);
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Calendar getRegistrationDate() {
+        return registrationDate;
+    }
+
+    private void setRegistrationDate(Calendar registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getPassword() {
