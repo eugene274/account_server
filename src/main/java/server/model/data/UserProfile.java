@@ -13,18 +13,17 @@ import java.util.Date;
  * Created by eugene on 10/9/16.
  */
 
-@Entity(name = "userProfile")
+@Entity(name = "Profiles")
 @Table(name = "users")
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "login")
     @NaturalId
     private String email;
 
-    @Column(updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Generated(GenerationTime.INSERT)
     private Date registrationDate = new Date();

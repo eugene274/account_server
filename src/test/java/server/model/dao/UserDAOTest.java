@@ -5,6 +5,8 @@ import server.model.dao.UserProfileInMemo;
 import server.model.data.UserProfile;
 import org.junit.Test;
 
+import java.util.Collection;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,6 +49,19 @@ public abstract class UserDAOTest {
         assertNull(dao.getByLogin("nosuchuser"));
         assertNotNull(user2 = dao.getByLogin("test3"));
         assertEquals(user, user2);
+    }
+
+    @Test
+    public final void getWhere() throws Exception {
+        UserProfile user = new UserProfile("test4", "pass");
+        Long id = dao.insert(user);
+
+        Collection<UserProfile> profiles = dao.getWhere("user.email = 'test4'");
+        assertNotNull(profiles);
+        assertTrue(profiles.contains(user));
+
+        profiles = dao.getWhere("user.email = 'test45'");
+        assertFalse(profiles.contains(user));
     }
 
 }
