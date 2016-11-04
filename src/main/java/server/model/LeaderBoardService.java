@@ -8,4 +8,5 @@ public class LeaderBoardService extends UsersSignedInService {
     // TODO: List<Score> getLeaders(int N)
     // TODO: List<Score> getLeaders()
     // TODO: void addScore(UserProfile user, int increment)
+    // TODO: Each score point is new object with ID, Date created, amount = 1, reason
 }
