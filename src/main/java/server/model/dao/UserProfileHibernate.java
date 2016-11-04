@@ -4,20 +4,27 @@ import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by eugene on 10/10/16.
  */
 
 public class UserProfileHibernate implements UserDAO {
+    private static String ENTITY_NAME = "Profiles";
+    private static String ALIAS = "user";
     private Session session = DbHibernate.newSession();
 
     @Override
     public Long insert(UserProfile in) {
-        return (Long) session.save(in);
+        try {
+            return (Long) DbHibernate.getTransactional(session, s -> s.save(in));
+        } catch (TransactionalError transactionalError) {
+            return -1L;
+        }
     }
 
     @Override
@@ -27,27 +34,36 @@ public class UserProfileHibernate implements UserDAO {
 
     @Override
     public Collection<UserProfile> getWhere(String... conditions) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public UserProfile getByLogin(String login) {
-        return session.bySimpleNaturalId(UserProfile.class).load(login);
-    }
-
-    @Override
-    public UserProfile updateName(String login, String newName) {
-        try {
-            DbHibernate.doTransactional(session , s -> {
-                s.createQuery("update userProfile u set name=:newName where u.login =:login")
-                        .setParameter("newName",newName)
-                        .setParameter("login",login)
-                        .executeUpdate();
-            });
-        } catch (TransactionalError ignore) {
-            // do something!!!!!!
+        StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
+        for (String condition : conditions){
+            query.add(condition);
         }
 
-        return getByLogin(newName);
+        List<UserProfile> result = session.createQuery(query.toString()).list();
+        return result;
+    }
+
+    @Override
+    public UserProfile getByEmail(String email) {
+        return session.bySimpleNaturalId(UserProfile.class).load(email);
+    }
+
+    @Override
+    public UserProfile updateName(String email, String newName) throws DaoError {
+        try {
+            int result = DbHibernate.getTransactional(session , s ->  s.createQuery("update " + ENTITY_NAME + " set name=:newName where email=:email")
+                        .setParameter("newName",newName)
+                        .setParameter("email",email)
+                        .executeUpdate()
+            );
+
+            if(result != 1){
+                throw new DaoError();
+            }
+        } catch (TransactionalError error) {
+            throw new DaoError(error);
+        }
+
+        return getByEmail(email);
     }
 }

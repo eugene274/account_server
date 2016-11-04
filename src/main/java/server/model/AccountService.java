@@ -4,6 +4,7 @@ package server.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.model.customer.PolicyViolationError;
+import server.model.dao.DaoError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.customer.CustomerRequestError;
@@ -61,7 +62,7 @@ public class AccountService extends UsersSignedInService {
         });
         if(null != token) return token;
 
-        UserProfile user = dao.getByLogin(login);
+        UserProfile user = dao.getByEmail(login);
         if(null == user || !user.getPassword().equals(pass)) {
             throw new WrongCredentialsError();
         }
@@ -87,7 +88,7 @@ public class AccountService extends UsersSignedInService {
 
     public void signUp( String login, String pass)
             throws CustomerRequestError {
-        if(null != dao.getByLogin(login)) {
+        if(null != dao.getByEmail(login)) {
             LOG.warn("'" + login + "' exists");
             throw new LoginExistsError(login);
         }
@@ -126,7 +127,12 @@ public class AccountService extends UsersSignedInService {
 
         // update sign-in-array copy
         // violates equality!!!
-        dao.updateName(user.getEmail(), newName);
-        user.setName(newName);
+        try {
+            dao.updateName(user.getEmail(), newName);
+            user.setName(newName);
+        } catch (DaoError daoError) {
+            daoError.printStackTrace();
+        }
+
     }
 }
