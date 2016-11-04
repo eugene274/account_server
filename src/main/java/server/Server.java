@@ -15,7 +15,7 @@ import server.model.dao.UserProfileHibernate;
  */
 
 @SuppressWarnings("DefaultFileTemplate")
-public class Server {
+public class Server implements Runnable {
     private static Integer PORT = 8080;
     private static String ROOT_SERVLET_PATH = "/*";
 
@@ -26,7 +26,7 @@ public class Server {
         JMXInit.init();
     }
 
-    public static void main(String[] args){
+    public void run(){
         Thread tokenupdater = new Thread(new TokenStatusUpdater());
 
 
@@ -52,5 +52,9 @@ public class Server {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public static void main(String[] args){
+        new Server().run();
     }
 }

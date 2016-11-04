@@ -1,6 +1,7 @@
 package server.model.customer;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -29,7 +30,11 @@ public class CustomerRequestError extends Exception{
         this.code = code;
     }
 
-    public CustomerRequestError(String message, Integer code) {
+    @JsonCreator
+    public CustomerRequestError(
+            @JsonProperty("reason") String message,
+            @JsonProperty("code") Integer code
+    ) {
         super(message);
         this.code = code;
     }
