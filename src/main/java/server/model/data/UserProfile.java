@@ -84,4 +84,7 @@ public class UserProfile {
         this.name = name;
     }
 
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 }
