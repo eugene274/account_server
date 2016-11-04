@@ -13,6 +13,10 @@ public class Token {
     private Calendar lastRequestAt;
     private boolean active = true;
 
+    // TODO:
+    // @Embedded
+    UserProfile user;
+
 
     private static Random generator = new Random();
 

@@ -41,7 +41,7 @@
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-jetty-servlet:2.23.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.2.14.v20151106" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.2.14.v20151106" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.39" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.4.1210" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.3.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
