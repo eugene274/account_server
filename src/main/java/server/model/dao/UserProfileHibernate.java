@@ -1,17 +1,10 @@
 package server.model.dao;
 
-import org.hibernate.Transaction;
-import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
-import org.hibernate.query.Query;
 import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.jws.soap.SOAPBinding;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
@@ -21,9 +14,8 @@ import java.util.StringJoiner;
  */
 
 public class UserProfileHibernate implements UserDAO {
-    private static String TABLE_NAME = "Profiles";
+    private static String ENTITY_NAME = "Profiles";
     private static String ALIAS = "user";
-
     private Session session = DbHibernate.newSession();
 
     @Override
@@ -42,7 +34,7 @@ public class UserProfileHibernate implements UserDAO {
 
     @Override
     public Collection<UserProfile> getWhere(String... conditions) {
-        StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", TABLE_NAME, ALIAS) ,"");
+        StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
         for (String condition : conditions){
             query.add(condition);
         }
@@ -52,23 +44,26 @@ public class UserProfileHibernate implements UserDAO {
     }
 
     @Override
-    public UserProfile getByLogin(String login) {
-        return session.bySimpleNaturalId(UserProfile.class).load(login);
+    public UserProfile getByEmail(String email) {
+        return session.bySimpleNaturalId(UserProfile.class).load(email);
     }
 
     @Override
-    public UserProfile updateName(String login, String newName) {
+    public UserProfile updateName(String email, String newName) throws DaoError {
         try {
-            DbHibernate.doTransactional(session , s -> {
-                s.createQuery("update userProfile u set name=:newName where u.login =:login")
+            int result = DbHibernate.getTransactional(session , s ->  s.createQuery("update " + ENTITY_NAME + " set name=:newName where email=:email")
                         .setParameter("newName",newName)
-                        .setParameter("login",login)
-                        .executeUpdate();
-            });
-        } catch (TransactionalError ignore) {
-            // do something!!!!!!
+                        .setParameter("email",email)
+                        .executeUpdate()
+            );
+
+            if(result != 1){
+                throw new DaoError();
+            }
+        } catch (TransactionalError error) {
+            throw new DaoError(error);
         }
 
-        return getByLogin(newName);
+        return getByEmail(email);
     }
 }

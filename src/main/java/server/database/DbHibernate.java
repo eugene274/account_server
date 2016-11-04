@@ -43,8 +43,10 @@ public class DbHibernate {
             if(transaction != null && transaction.isActive()){
                 transaction.rollback();
             }
-            throw new TransactionalError(e.getMessage(),e);
+            throw new TransactionalError(e);
         }
+
+
     }
 
     public static <T> T getTransactional(Session session, Function<Session,T> function)
@@ -58,10 +60,8 @@ public class DbHibernate {
             transaction.commit();
         }
         catch (RuntimeException e){
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-            }
-            throw new TransactionalError(e.getMessage(),e);
+            if(transaction != null) transaction.rollback();
+            throw new TransactionalError(e);
         }
         return result;
     }

@@ -11,4 +11,8 @@ public class TransactionalError extends Exception {
     public TransactionalError(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public TransactionalError(RuntimeException e) {
+        super(e);
+    }
 }

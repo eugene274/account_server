@@ -35,13 +35,13 @@ public class UserProfileInMemo implements UserDAO {
     }
 
     @Override
-    public UserProfile getByLogin(String login) {
+    public UserProfile getByEmail(String login) {
         return users.values().stream().filter(u -> u.getEmail().equals(login)).findFirst().orElse(null);
     }
 
     @Override
     public UserProfile updateName(String login, String newName) {
-        UserProfile user = getByLogin(login);
+        UserProfile user = getByEmail(login);
         user.setName(newName);
         return user;
     }

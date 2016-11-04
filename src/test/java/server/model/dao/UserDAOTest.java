@@ -1,7 +1,6 @@
 package server.model.dao;
 
 import org.jetbrains.annotations.NotNull;
-import server.model.dao.UserProfileInMemo;
 import server.model.data.UserProfile;
 import org.junit.Test;
 
@@ -46,8 +45,8 @@ public abstract class UserDAOTest {
 
         dao.insert(user);
 
-        assertNull(dao.getByLogin("nosuchuser"));
-        assertNotNull(user2 = dao.getByLogin("test3"));
+        assertNull(dao.getByEmail("nosuchuser"));
+        assertNotNull(user2 = dao.getByEmail("test3"));
         assertEquals(user, user2);
     }
 

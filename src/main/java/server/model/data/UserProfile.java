@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "users")
 public class UserProfile {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -24,8 +25,8 @@ public class UserProfile {
     @NaturalId
     private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Generated(GenerationTime.INSERT)
+    @Column(name = "registration_date", nullable = false, updatable = false)
+    @Temporal(TemporalType.DATE)
     private Date registrationDate = new Date();
 
 
@@ -82,4 +83,5 @@ public class UserProfile {
     public void setName(String name) {
         this.name = name;
     }
+
 }

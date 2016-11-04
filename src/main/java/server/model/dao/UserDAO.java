@@ -7,6 +7,6 @@ import server.model.data.UserProfile;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public interface UserDAO extends DAO<UserProfile> {
-    UserProfile getByLogin(String login);
-    UserProfile updateName(String login, String newlogin);
+    UserProfile getByEmail(String login);
+    UserProfile updateName(String login, String newName) throws DaoError;
 }
