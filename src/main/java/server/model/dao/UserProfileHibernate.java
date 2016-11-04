@@ -5,7 +5,6 @@ import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -33,37 +32,36 @@ public class UserProfileHibernate implements UserDAO {
     }
 
     @Override
-    public Collection<UserProfile> getWhere(String... conditions) {
+    public List<UserProfile> getWhere(String... conditions) {
         StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
         for (String condition : conditions){
             query.add(condition);
         }
 
-        List<UserProfile> result = session.createQuery(query.toString()).list();
-        return result;
+        return (List<UserProfile>) session.createQuery(query.toString())
+                .list();
     }
 
     @Override
     public UserProfile getByEmail(String email) {
-        return session.bySimpleNaturalId(UserProfile.class).load(email);
+//        return session.bySimpleNaturalId(UserProfile.class).load(email);
+        try {
+            return getWhere(String.format("user.email = '%s'", email)).get(0);
+        } catch (IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     @Override
-    public UserProfile updateName(String email, String newName) throws DaoError {
+    public void updateName(String email, String newName) throws DaoError {
         try {
-            int result = DbHibernate.getTransactional(session , s ->  s.createQuery("update " + ENTITY_NAME + " set name=:newName where email=:email")
-                        .setParameter("newName",newName)
-                        .setParameter("email",email)
-                        .executeUpdate()
-            );
-
-            if(result != 1){
-                throw new DaoError();
-            }
+            DbHibernate.doTransactional(session, s -> {
+                UserProfile profile = getByEmail(email);
+                profile.setName(newName);
+                s.update(profile);
+            });
         } catch (TransactionalError error) {
             throw new DaoError(error);
         }
-
-        return getByEmail(email);
     }
 }

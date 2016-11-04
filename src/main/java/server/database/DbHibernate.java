@@ -19,11 +19,10 @@ import java.util.function.Function;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class DbHibernate {
-    private static Configuration configuration;
     private static SessionFactory factory;
 
     static {
-        configuration = new Configuration().configure();
+        Configuration configuration = new Configuration().configure();
         factory = configuration.buildSessionFactory();
     }
 
