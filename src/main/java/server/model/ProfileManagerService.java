@@ -37,7 +37,7 @@ public class ProfileManagerService {
     static {
         Class<UserProfile> clazz = UserProfile.class;
         Arrays.stream(clazz.getDeclaredFields())
-                .filter(field -> checkField(field))
+                .filter(ProfileManagerService::checkField)
                 .map(Field::getName)
                 .forEach(s -> mutable.add(s));
         LOG.info("mutable fields " + mutable.toString());

@@ -24,7 +24,7 @@ public class UserProfile {
     private String email;
 
     @Column(name = "registration_date", nullable = false, updatable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
     @UserCanChange
@@ -96,5 +96,21 @@ public class UserProfile {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserProfile that = (UserProfile) o;
+
+        return getEmail().equals(that.getEmail());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getEmail().hashCode();
     }
 }
