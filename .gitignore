@@ -12,8 +12,8 @@
 *.db
 
 # sensitive data (dblogin-pass)
-src/main/resources
-src/test/resources
+src/main/resources/
+src/test/resources/
 
 target/
 logs/

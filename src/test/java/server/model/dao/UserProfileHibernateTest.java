@@ -24,8 +24,8 @@ public class UserProfileHibernateTest  {
 
     @Test
     public final void insert() throws Exception {
-        Long id1 = dao.insert(new UserProfile("test","pass")) + 1L;
-        Long id2 = dao.insert(new UserProfile("test1","pass"));
+        Long id1 = dao.insert(new UserProfile("test7654","pass")) + 1L;
+        Long id2 = dao.insert(new UserProfile("test1trew","pass"));
         assertEquals(id2, id1);
     }
 
