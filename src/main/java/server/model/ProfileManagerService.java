@@ -4,11 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.InternalError;
+import server.model.customer.WrongFieldError;
 import server.model.dao.DaoError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.UserProfile;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,18 +26,26 @@ public class ProfileManagerService {
 
     private UserDAO dao = new UserProfileHibernate();
 
+    private static boolean checkField(Field field){
+        return field.isAnnotationPresent(UserMutable.class) &&
+                (
+                        field.isAnnotationPresent(Basic.class) ||
+                                field.isAnnotationPresent(Column.class) && field.getAnnotation(Column.class).updatable()
+                        );
+    }
+
     static {
         Class<UserProfile> clazz = UserProfile.class;
-        Arrays.asList(clazz.getDeclaredFields()).stream()
-                .filter(field -> field.isAnnotationPresent(UserMutable.class))
-                .map(field -> field.getName())
+        Arrays.stream(clazz.getDeclaredFields())
+                .filter(field -> checkField(field))
+                .map(Field::getName)
                 .forEach(s -> mutable.add(s));
         LOG.info("mutable fields " + mutable.toString());
     }
 
     public void update(String email, String field, String value) throws CustomerRequestError {
         if(!mutable.contains(field)){
-            // throw error
+            throw new WrongFieldError(field);
         }
 
         try {

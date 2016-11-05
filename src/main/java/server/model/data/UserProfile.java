@@ -31,14 +31,16 @@ public class UserProfile {
     @Temporal(TemporalType.DATE)
     private Date registrationDate = new Date();
 
-
     @UserMutable
-    @Column
+    @Column(name = "user_name")
     private String name;
 
     @UserMutable
     @Column(nullable = false)
     private String password;
+
+    @Version
+    private Long version;
 
     public UserProfile() {
     }
@@ -90,5 +92,13 @@ public class UserProfile {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

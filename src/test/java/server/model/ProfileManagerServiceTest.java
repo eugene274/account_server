@@ -1,6 +1,7 @@
 package server.model;
 
 import org.junit.Test;
+import server.model.customer.WrongFieldError;
 import server.model.data.UserProfile;
 
 import static org.junit.Assert.*;
@@ -17,7 +18,15 @@ public class ProfileManagerServiceTest {
         service.getDao().insert(new UserProfile("testuser5","testpass"));
 
         // updating non-existing field
-        service.update("testuser5","namefff","qwerty");
+        try {
+            service.update("testuser5","namefff","qwerty");
+            fail();
+        }
+        catch (WrongFieldError ignore){}
+
+        service.update("testuser5", "name", "qwerty");
+
+        assertEquals(service.getDao().getByEmail("testuser5").getName(), "qwerty");
 
     }
 
