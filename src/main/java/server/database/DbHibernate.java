@@ -30,39 +30,27 @@ public class DbHibernate {
         return factory.openSession();
     }
 
-    public static void doTransactional(Session session,Consumer<Session> consumer)
-            throws TransactionalError {
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            consumer.accept(session);
+    public static void doTransactional(Consumer<Session> operation) throws TransactionalError {
+        try (Session session = newSession()) {
+            Transaction transaction = session.beginTransaction();
+            operation.accept(session);
             transaction.commit();
         }
         catch (RuntimeException e){
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-            }
             throw new TransactionalError(e);
         }
-
-
     }
 
-    public static <T> T getTransactional(Session session, Function<Session,T> function)
-            throws TransactionalError {
-        Transaction transaction = null;
-        T result  = null;
-
-        try {
-            transaction = session.beginTransaction();
-            result = function.apply(session);
+    public static <T> T getTransactional(Function<Session,T> operation) throws TransactionalError {
+        try (Session session = newSession()) {
+            Transaction transaction = session.beginTransaction();
+            T result = operation.apply(session);
             transaction.commit();
+            return result;
         }
         catch (RuntimeException e){
-            if(transaction != null) transaction.rollback();
             throw new TransactionalError(e);
         }
-        return result;
     }
 
     private DbHibernate(){}

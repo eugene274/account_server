@@ -5,6 +5,7 @@ import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -17,10 +18,19 @@ public class UserProfileHibernate implements UserDAO {
     private static String ALIAS = "user";
     private Session session = DbHibernate.newSession();
 
+    private org.hibernate.query.Query<UserProfile> getWhereQuery(String ...conditions){
+        StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
+        for (String condition : conditions){
+            query.add(condition);
+        }
+
+        return session.createQuery(query.toString(), UserProfile.class);
+    }
+
     @Override
     public Long insert(UserProfile in) {
         try {
-            return (Long) DbHibernate.getTransactional(session, s -> s.save(in));
+            return (Long) DbHibernate.getTransactional( s -> s.save(in));
         } catch (TransactionalError transactionalError) {
             return -1L;
         }
@@ -33,34 +43,37 @@ public class UserProfileHibernate implements UserDAO {
 
     @Override
     public List<UserProfile> getWhere(String... conditions) {
-        StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
-        for (String condition : conditions){
-            query.add(condition);
-        }
-
-        return (List<UserProfile>) session.createQuery(query.toString())
-                .list();
+        return getWhereQuery(conditions).list();
     }
 
     @Override
     public UserProfile getByEmail(String email) {
-//        return session.bySimpleNaturalId(UserProfile.class).load(email);
-        try {
-            return getWhere(String.format("user.email = '%s'", email)).get(0);
-        } catch (IndexOutOfBoundsException e){
-            return null;
-        }
+        return session.byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
     }
 
     @Override
     public void updateName(String email, String newName) throws DaoError {
         try {
-            DbHibernate.doTransactional(session, s -> {
+            DbHibernate.doTransactional(s -> {
                 UserProfile profile = getByEmail(email);
                 profile.setName(newName);
                 s.update(profile);
             });
         } catch (TransactionalError error) {
+            throw new DaoError(error);
+        }
+    }
+
+    public void update(String email, String field, String value) throws DaoError {
+        try {
+            DbHibernate.doTransactional( s -> {
+                s.createQuery(String.format("update versioned %s set %s = :value where email = :email", ENTITY_NAME, field)).
+                        setParameter("value",value).
+                        setParameter("email",email).
+                        executeUpdate();
+            });
+        }
+        catch (TransactionalError error){
             throw new DaoError(error);
         }
     }

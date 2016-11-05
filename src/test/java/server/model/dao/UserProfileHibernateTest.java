@@ -45,7 +45,7 @@ public class UserProfileHibernateTest  {
     }
 
     @Test
-    public final void getByLogin() throws Exception {
+    public final void getByEmail() throws Exception {
         UserProfile user = new UserProfile("test3","pass");
         UserProfile user2;
 
