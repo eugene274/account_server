@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.NaturalId;
+import server.model.UserMutable;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -21,6 +22,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @UserMutable
     @Column(name = "login")
     @NaturalId
     private String email;
@@ -30,9 +32,11 @@ public class UserProfile {
     private Date registrationDate = new Date();
 
 
+    @UserMutable
     @Column
     private String name;
 
+    @UserMutable
     @Column(nullable = false)
     private String password;
 

@@ -39,7 +39,7 @@ public class DbHibernate {
             transaction.commit();
         }
         catch (RuntimeException e){
-            if(transaction != null && transaction.isActive()){
+            if(transaction != null){
                 transaction.rollback();
             }
             throw new TransactionalError(e);
