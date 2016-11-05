@@ -38,7 +38,7 @@ public class UserProfileHibernate implements UserDAO {
             query.add(condition);
         }
 
-        return session.createQuery(query.toString(), UserProfile.class)
+        return (List<UserProfile>) session.createQuery(query.toString())
                 .list();
     }
 
@@ -61,18 +61,6 @@ public class UserProfileHibernate implements UserDAO {
                 s.update(profile);
             });
         } catch (TransactionalError error) {
-            throw new DaoError(error);
-        }
-    }
-
-    public void update(String email, String field, String value) throws DaoError {
-        try {
-            DbHibernate.doTransactional(session, s -> {
-                s.createQuery(String.format("update %s set %s = :value where email = :email", ENTITY_NAME, field)).
-                        setParameter("value",value).setParameter("email",email).executeUpdate();
-            });
-        }
-        catch (TransactionalError error){
             throw new DaoError(error);
         }
     }
