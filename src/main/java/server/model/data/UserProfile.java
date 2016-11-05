@@ -1,13 +1,9 @@
 package server.model.data;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.NaturalId;
-import server.model.UserMutable;
+import server.model.UserCanChange;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -22,7 +18,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @UserMutable
+    @UserCanChange
     @Column(name = "login")
     @NaturalId
     private String email;
@@ -31,11 +27,11 @@ public class UserProfile {
     @Temporal(TemporalType.DATE)
     private Date registrationDate = new Date();
 
-    @UserMutable
+    @UserCanChange
     @Column(name = "user_name")
     private String name;
 
-    @UserMutable
+    @UserCanChange
     @Column(nullable = false)
     private String password;
 
