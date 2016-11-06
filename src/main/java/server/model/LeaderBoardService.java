@@ -3,7 +3,7 @@ package server.model;
 /**
  * Created by eugene on 11/4/16.
  */
-public class LeaderBoardService extends UsersSignedInService {
+public class LeaderBoardService extends TokenService {
     // TODO: registerUser(UserProfile)
     // TODO: List<Score> getLeaders(int N)
     // TODO: List<Score> getLeaders()

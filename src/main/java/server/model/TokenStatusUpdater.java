@@ -10,7 +10,7 @@ import java.util.Calendar;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class TokenStatusUpdater
-    extends UsersSignedInService
+    extends TokenService
         implements Runnable{
     private static final Logger LOG = LogManager.getLogger("tokenupdr");
 

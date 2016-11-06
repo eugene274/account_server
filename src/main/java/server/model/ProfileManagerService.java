@@ -27,11 +27,10 @@ public class ProfileManagerService {
     private UserDAO dao = new UserProfileHibernate();
 
     private static boolean checkField(Field field){
-        return field.isAnnotationPresent(UserCanChange.class) &&
-                (
+        return field.isAnnotationPresent(UserCanChange.class) && (
                         field.isAnnotationPresent(Basic.class) ||
-                                field.isAnnotationPresent(Column.class) && field.getAnnotation(Column.class).updatable()
-                        );
+                        field.isAnnotationPresent(Column.class) && field.getAnnotation(Column.class).updatable()
+        );
     }
 
     static {

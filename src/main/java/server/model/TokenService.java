@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * Deals with usersSignedIn hashmap
  */
-public class UsersSignedInService {
+public class TokenService {
     protected static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
             = new ConcurrentHashMap<>();
     protected static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse

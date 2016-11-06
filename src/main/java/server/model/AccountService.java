@@ -23,7 +23,7 @@ import java.util.Collection;
  * login/logout/register
  */
 
-public class AccountService extends UsersSignedInService {
+public class AccountService extends TokenService {
     private static final Logger LOG = LogManager.getLogger("account");
 
     private UserDAO dao = new UserProfileHibernate();
