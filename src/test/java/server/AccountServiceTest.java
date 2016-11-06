@@ -1,7 +1,6 @@
 package server;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import server.model.AccountService;
 import server.model.dao.UserProfileHibernate;
@@ -59,9 +58,9 @@ public class AccountServiceTest {
     @Test
     public void logout() throws Exception {
         Token token = accountService.signIn(login,pass);
-        assertTrue(accountService.isTokenValid(token.toString()));
+        assertNotNull(accountService.validateToken(token.toString()));
         accountService.logout(token.toString());
-        assertFalse(accountService.isTokenValid(token.toString()));
+        assertNull(accountService.validateToken(token.toString()));
     }
 
     @Test

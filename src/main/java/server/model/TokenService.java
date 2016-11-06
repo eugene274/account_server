@@ -57,7 +57,12 @@ public class TokenService {
         return usersSignedInReverse.values();
     }
 
-    public boolean isTokenValid(String tokenString){
-        return tokens().contains(Token.valueOf(tokenString));
+    public Long validateToken(String tokenString){
+        try {
+            return getUserByTokenString(tokenString).getId();
+        }
+        catch (NullPointerException e){
+            return null;
+        }
     }
 }

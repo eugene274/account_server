@@ -1,6 +1,6 @@
 package server.api;
 
-import server.model.AccountService;
+import server.model.TokenService;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -15,17 +15,19 @@ import java.io.IOException;
 @Provider
 @Authorized
 public class AuthorizationFilter implements ContainerRequestFilter {
-    static final AccountService accountService = new AccountService();
-
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         String authHeader = containerRequestContext.getHeaderString("Authorization");
+        Long id = null;
+
         if(
                         null != authHeader &&
                         authHeader.matches("^Bearer -?[0-9]+$") &&
-                        accountService.isTokenValid(authHeader.split(" ")[1])
+                                (id = new TokenService().validateToken(authHeader.split(" ")[1])) != null
                 ){
+
             containerRequestContext.getHeaders().add("token",authHeader.split(" ")[1]);
+            containerRequestContext.getHeaders().add("userId",id.toString());
             return;
         }
         containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
