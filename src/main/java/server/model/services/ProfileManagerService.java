@@ -70,6 +70,10 @@ public class ProfileManagerService {
         }
     }
 
+    public UserProfile getProfile() {
+        return profile;
+    }
+
     @TestOnly
     public UserDAO getDao() {
         return dao;

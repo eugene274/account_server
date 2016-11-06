@@ -11,4 +11,5 @@ public interface UserProfileMixin {
 
     @JsonIgnore String getPassword();
     @JsonIgnore Long getId();
+    @JsonIgnore Long getVersion();
 }
