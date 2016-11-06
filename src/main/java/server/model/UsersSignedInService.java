@@ -10,9 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by eugene on 10/28/16.
  *
  * Deals with usersSignedIn hashmap
- * Should be moved to JDBC (same API)
  */
-public abstract class UsersSignedInService {
+public class UsersSignedInService {
     protected static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
             = new ConcurrentHashMap<>();
     protected static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
