@@ -6,6 +6,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.Server;
+import server.database.DbHibernate;
 import server.model.customer.CustomerRequestResponse;
 import server.model.customer.CustomerRequestStatus;
 
@@ -73,6 +74,7 @@ public class AuthTest {
 
     @BeforeClass
     public static void runServer() throws InterruptedException {
+        DbHibernate.newSession();
         thread.start();
         Thread.sleep(10_000);
     }
