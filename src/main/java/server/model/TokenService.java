@@ -56,4 +56,8 @@ public class TokenService {
     protected static Collection<Token> tokens(){
         return usersSignedInReverse.values();
     }
+
+    public boolean isTokenValid(String tokenString){
+        return tokens().contains(Token.valueOf(tokenString));
+    }
 }

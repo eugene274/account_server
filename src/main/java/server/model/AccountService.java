@@ -107,10 +107,6 @@ public class AccountService extends TokenService {
 
     public Collection<Token> getTokens(){ return tokens(); }
 
-    public boolean isTokenValid(String tokenString){
-        return tokens().contains(Token.valueOf(tokenString));
-    }
-
     public void logout(String tokenString){
         UserProfile profile = removeUserSession(Token.valueOf(tokenString));
         LOG.info(String.format("'%s' logged out", profile.getEmail()));
