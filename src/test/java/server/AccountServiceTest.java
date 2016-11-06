@@ -7,12 +7,10 @@ import server.model.AccountService;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.Token;
 import server.model.customer.CustomerRequestError;
-import server.model.customer.LoginExistsError;
-import server.model.customer.WrongCredentialsError;
+import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.data.UserProfile;
 
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

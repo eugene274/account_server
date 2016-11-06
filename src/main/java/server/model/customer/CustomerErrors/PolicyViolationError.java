@@ -1,4 +1,6 @@
-package server.model.customer;
+package server.model.customer.CustomerErrors;
+
+import server.model.customer.CustomerRequestError;
 
 /**
  * Created by eugene on 10/25/16.

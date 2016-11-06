@@ -1,4 +1,4 @@
-package server.model.customer;
+package server.model.customer.CustomerErrors;
 
 import server.model.customer.CustomerRequestError;
 

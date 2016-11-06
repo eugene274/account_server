@@ -1,7 +1,7 @@
 package server.model;
 
 import org.junit.Test;
-import server.model.customer.WrongFieldError;
+import server.model.customer.CustomerErrors.WrongFieldError;
 import server.model.data.UserProfile;
 
 import static org.junit.Assert.*;

@@ -3,13 +3,13 @@ package server.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.model.customer.PolicyViolationError;
+import server.model.customer.CustomerErrors.PolicyViolationError;
 import server.model.dao.DaoError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.customer.CustomerRequestError;
-import server.model.customer.LoginExistsError;
-import server.model.customer.WrongCredentialsError;
+import server.model.customer.CustomerErrors.LoginExistsError;
+import server.model.customer.CustomerErrors.WrongCredentialsError;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 
