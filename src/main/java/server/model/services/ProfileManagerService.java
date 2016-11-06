@@ -1,7 +1,9 @@
-package server.model;
+package server.model.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.TestOnly;
+import server.model.UserCanChange;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.WrongFieldError;
@@ -26,6 +28,7 @@ public class ProfileManagerService {
 
     private UserDAO dao = new UserProfileHibernate();
 
+
     private static boolean checkField(Field field){
         return field.isAnnotationPresent(UserCanChange.class) && (
                         field.isAnnotationPresent(Basic.class) ||
@@ -42,18 +45,31 @@ public class ProfileManagerService {
         LOG.info("mutable fields " + mutable.toString());
     }
 
-    public void update(String email, String field, String value) throws CustomerRequestError {
+    private UserProfile profile;
+
+    public ProfileManagerService(Long id) throws CustomerRequestError {
+        this.profile = dao.getById(id);
+
+        if(null == profile){
+            LOG.warn("ProfileManager initialized with invalid id:" + id.toString());
+            throw new InternalError();
+        }
+    }
+
+    public void update(String field, String value) throws CustomerRequestError {
         if(!mutable.contains(field)){
             throw new WrongFieldError(field);
         }
 
         try {
-            dao.update(email, field, value);
+            // TODO change to id
+            dao.update(profile.getEmail(), field, value);
         } catch (DaoError daoError) {
             throw new InternalError();
         }
     }
 
+    @TestOnly
     public UserDAO getDao() {
         return dao;
     }

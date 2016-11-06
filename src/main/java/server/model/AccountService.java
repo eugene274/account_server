@@ -3,6 +3,7 @@ package server.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.PolicyViolationError;
 import server.model.dao.DaoError;
 import server.model.dao.UserDAO;
@@ -113,7 +114,7 @@ public class AccountService extends TokenService {
     }
 
 
-    public void updateName(String tokenString, String newName) throws LoginExistsError {
+    public void updateName(String tokenString, String newName) throws CustomerRequestError {
         UserProfile user = getUserByTokenString(tokenString);
 
         // nothing to do
@@ -127,7 +128,7 @@ public class AccountService extends TokenService {
             dao.updateName(user.getEmail(), newName);
             user.setName(newName);
         } catch (DaoError daoError) {
-            daoError.printStackTrace();
+            throw new InternalError();
         }
 
     }

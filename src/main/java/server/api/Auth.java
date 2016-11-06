@@ -53,8 +53,10 @@ public class Auth {
     @Authorized
 
     public String logOut(
-            @HeaderParam("token") String token
+            @HeaderParam("token") String token,
+            @HeaderParam("userId") String userIdString
     ){
+        Long id = Long.parseLong(userIdString);
 
         accountService.logout(token);
         return CustomerRequestResponse.ok(null).toString();
