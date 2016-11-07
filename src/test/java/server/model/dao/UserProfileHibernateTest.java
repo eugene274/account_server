@@ -1,7 +1,9 @@
 package server.model.dao;
 
 import org.h2.jdbcx.JdbcDataSource;
+import org.hibernate.CacheMode;
 import org.jetbrains.annotations.NotNull;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import server.model.data.UserProfile;
 
@@ -13,14 +15,19 @@ import static org.junit.Assert.*;
  * Created by eugene on 10/22/16.
  */
 public class UserProfileHibernateTest  {
-
+    private static Long id = null;
 
     static {
         dao = new UserProfileHibernate();
     }
 
     @NotNull
-    static UserDAO dao;
+    static UserProfileHibernate dao;
+
+    @BeforeClass
+    public static void addUser(){
+        id = dao.insert(new UserProfile("test54321","test"));
+    }
 
     @Test
     public final void insert() throws Exception {
@@ -70,10 +77,11 @@ public class UserProfileHibernateTest  {
     }
 
     @Test
-    public void updateName() throws Exception {
-        UserProfile user = new UserProfile("testuser", "testpass");
-        dao.insert(user);
-        dao.updateName("testuser","testname");
-        assertEquals(dao.getByEmail("testuser").getName(),"testname");
+    public void update() throws Exception {
+        assertNull(dao.getById(id).getName());
+        dao.update(id,"name","qwerty");
+        // flushing session cache
+        dao.getSession().clear();
+        assertEquals(dao.getById(id).getName(), "qwerty");
     }
 }

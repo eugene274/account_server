@@ -63,13 +63,4 @@ public class AccountServiceTest {
         assertNull(accountService.validateToken(token.toString()));
     }
 
-    @Test
-    public void updateName() throws Exception {
-        Token token = accountService.signIn(login,pass);
-        accountService.updateName(token.toString(),"test2");
-
-        Collection<UserProfile> profiles = accountService.getDao().getWhere("name = 'test2'");
-        assertTrue(profiles.contains(new UserProfile(login,pass)));
-    }
-
 }
