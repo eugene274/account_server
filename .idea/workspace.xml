@@ -10,13 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9facbc28-d4bd-4bbc-a63c-4d70cdecd78a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/ConnectionConstants.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/DatabaseStorage.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/IStorage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/authorization_server.iml" afterPath="$PROJECT_DIR$/authorization_server.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/data/Score.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/data/Score.java" />
     </list>
@@ -1122,7 +1119,13 @@
       <option name="project" value="LOCAL" />
       <updated>1478519085055</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Не знаю что это за изменения, но они мне мешают">
+      <created>1478522104896</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1478522104896</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1172,6 +1175,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32869565" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32173914" sideWeight="0.4879154" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3547826" sideWeight="0.32598785" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22720365" sideWeight="0.47851002" order="7" side_tool="false" content_ui="tabs" />
@@ -1190,7 +1194,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32931036" sideWeight="0.6057402" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3955095" sideWeight="0.4914803" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32173914" sideWeight="0.4879154" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35049835" sideWeight="0.6740122" order="2" side_tool="false" content_ui="tabs" />
@@ -1256,6 +1259,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <MESSAGE value="Initial commit&#10;" />
     <MESSAGE value="Initial commit&#10;updateLogin() implemented&#10;" />
     <MESSAGE value="login/pass policy implemented" />
@@ -1278,7 +1282,8 @@
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId" />
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId&#10;ProfileManager initializes with userId" />
     <MESSAGE value="workspace.xml deleted" />
-    <option name="LAST_COMMIT_MESSAGE" value="workspace.xml deleted" />
+    <MESSAGE value="Не знаю что это за изменения, но они мне мешают" />
+    <option name="LAST_COMMIT_MESSAGE" value="Не знаю что это за изменения, но они мне мешают" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1508,6 +1513,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1515,6 +1521,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
