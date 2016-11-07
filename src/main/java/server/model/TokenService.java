@@ -12,6 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * Deals with usersSignedIn hashmap
  */
 public class TokenService {
+    // TODO move it to TokenDao
+    // TODO Token getTokenByUserId(Long id)
+    // TODO List<Long> getOnlineUsers() -- returns list of user ids from token db
+
     protected static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
             = new ConcurrentHashMap<>();
     protected static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse

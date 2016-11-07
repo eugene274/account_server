@@ -42,8 +42,8 @@ public class AccountService extends TokenService {
 
     /**
      *
-     * @param login
-     * @param pass
+     * @param email
+     * @param password
      * @return Token
      * @throws CustomerRequestError
      *
@@ -53,24 +53,26 @@ public class AccountService extends TokenService {
      * 3'. if not ok, throws "Wrong credentials"
      * 4. adds user session and returns token
      */
-    public Token signIn( String login, String pass)
+    public Token signIn( String email, String password)
             throws CustomerRequestError
     {
         // user's already signed in
         Token token = usersSignedInReverse.search(4, (u, t) -> {
-            if(u.checkCredentials(login,pass)) return t;
+            if(u.checkCredentials(email,password)) return t;
             else return null;
         });
         if(null != token) return token;
 
-        UserProfile user = dao.getByEmail(login);
-        if(null == user || !user.getPassword().equals(pass)) {
+        UserProfile user = dao.getByEmail(email);
+        if(null == user || !user.getPassword().equals(password)) {
             throw new WrongCredentialsError();
         }
 
+
+
         token = new Token();
         addUserSession(user, token);
-        LOG.info("'" + login + "' logged in");
+        LOG.info("'" + email + "' logged in");
         return token;
     }
 
@@ -105,8 +107,6 @@ public class AccountService extends TokenService {
     public Collection<UserProfile> getOnlineUsers(){
         return users();
     }
-
-    public Collection<Token> getTokens(){ return tokens(); }
 
     public void logout(String tokenString){
         UserProfile profile = removeUserSession(Token.valueOf(tokenString));
