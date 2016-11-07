@@ -6,8 +6,11 @@ import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.jws.soap.SOAPBinding;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -47,6 +50,11 @@ public class UserProfileHibernate implements UserDAO {
     @Override
     public List<UserProfile> getWhere(String... conditions) {
         return getWhereQuery(conditions).list();
+    }
+
+    @Override
+    public List<UserProfile> getAll() throws SQLException {
+        throw new NotImplementedException();
     }
 
     @Override

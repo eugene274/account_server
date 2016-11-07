@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import server.model.customer.CustomerErrors.WrongFieldError;
 import server.model.customer.CustomerRequestError;
+import server.model.dao.DaoError;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.UserProfile;
@@ -23,7 +24,10 @@ public class ProfileManagerServiceTest {
 
     @BeforeClass
     public static void setService() throws CustomerRequestError {
-        Long id = dao.insert(new UserProfile(login,passw));
+        Long id = null;
+        try {
+            id = dao.insert(new UserProfile(login,passw));
+        } catch (DaoError ignore) {}
         service = new ProfileManagerService(id);
     }
 

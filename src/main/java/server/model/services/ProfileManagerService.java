@@ -48,7 +48,12 @@ public class ProfileManagerService {
     private UserProfile profile;
 
     public ProfileManagerService(Long id) throws CustomerRequestError {
-        this.profile = dao.getById(id);
+        try {
+            this.profile = dao.getById(id);
+        } catch (DaoError daoError) {
+            // TODO report this
+            throw new InternalError();
+        }
 
         if(null == profile){
             LOG.warn("ProfileManager initialized with invalid id:" + id.toString());
