@@ -3,6 +3,7 @@ package server.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.TestOnly;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.PolicyViolationError;
 import server.model.dao.DaoError;
@@ -24,20 +25,18 @@ import java.util.Collection;
  * login/logout/register
  */
 
-public class AccountService extends TokenService {
+public class AccountService {
     private static final Logger LOG = LogManager.getLogger("account");
 
     private UserDAO dao = new UserProfileHibernate();
+    private TokenService tokenService = new TokenService();
 
     public AccountService() {
     }
 
+    @TestOnly
     public UserDAO getDao() {
         return dao;
-    }
-
-    public void setDao(UserDAO dao) {
-        this.dao = dao;
     }
 
     /**
@@ -57,10 +56,7 @@ public class AccountService extends TokenService {
             throws CustomerRequestError
     {
         // user's already signed in
-        Token token = usersSignedInReverse.search(4, (u, t) -> {
-            if(u.checkCredentials(email,password)) return t;
-            else return null;
-        });
+        Token token = tokenService.getTokenByEmail(email);
         if(null != token) return token;
 
         UserProfile user = dao.getByEmail(email);
@@ -68,10 +64,8 @@ public class AccountService extends TokenService {
             throw new WrongCredentialsError();
         }
 
-
-
-        token = new Token();
-        addUserSession(user, token);
+        token = new Token(user);
+        tokenService.addUserSession(user, token);
         LOG.info("'" + email + "' logged in");
         return token;
     }
@@ -108,12 +102,17 @@ public class AccountService extends TokenService {
     }
 
     public Collection<UserProfile> getOnlineUsers(){
-        return users();
+        return tokenService.users();
     }
 
-    public void logout(String tokenString){
-        UserProfile profile = removeUserSession(Token.valueOf(tokenString));
-        LOG.info(String.format("'%s' logged out", profile.getEmail()));
+    public void logout(String tokenString) throws InternalError {
+        try {
+            tokenService.removeUserSession(tokenString);
+        } catch (DaoError daoError) {
+            throw new InternalError();
+        }
+//        LOG.info(String.format("'%s' logged out", profile.getEmail()));
     }
+
 
 }

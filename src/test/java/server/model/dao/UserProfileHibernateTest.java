@@ -5,6 +5,7 @@ import org.hibernate.CacheMode;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.data.UserProfile;
 
 import java.util.Collection;
@@ -42,13 +43,11 @@ public class UserProfileHibernateTest  {
         UserProfile user2;
 
         Long id = dao.insert(user);
+        id = (id == -1L)? dao.getByEmail("test2").getId() : id;
 
         assertNull(dao.getById(-1L));
         assertNotNull(user2 = dao.getById(id));
         assertEquals(user, user2);
-
-        assertEquals(user.getRegistrationDate(), user2.getRegistrationDate());
-
     }
 
     @Test
