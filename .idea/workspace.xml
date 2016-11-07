@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9facbc28-d4bd-4bbc-a63c-4d70cdecd78a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/DatabaseStorage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" />
     </list>
@@ -1140,7 +1139,13 @@
       <option name="project" value="LOCAL" />
       <updated>1478522191008</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Класс DatabaseStorage для взаимодействия именно с БД">
+      <created>1478522214815</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1478522214815</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1275,7 +1280,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="Initial commit&#10;updateLogin() implemented&#10;" />
     <MESSAGE value="login/pass policy implemented" />
     <MESSAGE value="login/pass policy implemented&#10;username field, update login -&gt; update name" />
     <MESSAGE value="4AINAYA" />
@@ -1300,7 +1304,8 @@
     <MESSAGE value="Класс Score заполнен" />
     <MESSAGE value="Интерфейс для взаимодействия с базой" />
     <MESSAGE value="Константы для взаимодействия (временное решение пока не вывел в файл конфига)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Константы для взаимодействия (временное решение пока не вывел в файл конфига)" />
+    <MESSAGE value="Класс DatabaseStorage для взаимодействия именно с БД" />
+    <option name="LAST_COMMIT_MESSAGE" value="Класс DatabaseStorage для взаимодействия именно с БД" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
