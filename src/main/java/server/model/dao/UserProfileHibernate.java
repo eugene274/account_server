@@ -1,5 +1,7 @@
 package server.model.dao;
 
+import org.hibernate.CacheMode;
+import org.jetbrains.annotations.TestOnly;
 import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
@@ -16,6 +18,7 @@ import java.util.StringJoiner;
 public class UserProfileHibernate implements UserDAO {
     private static String ENTITY_NAME = "Profiles";
     private static String ALIAS = "user";
+
     private Session session = DbHibernate.newSession();
 
     private org.hibernate.query.Query<UserProfile> getWhereQuery(String ...conditions){
@@ -51,30 +54,22 @@ public class UserProfileHibernate implements UserDAO {
         return session.byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
     }
 
-    @Override
-    public void updateName(String email, String newName) throws DaoError {
-        try {
-            DbHibernate.doTransactional(s -> {
-                UserProfile profile = getByEmail(email);
-                profile.setName(newName);
-                s.update(profile);
-            });
-        } catch (TransactionalError error) {
-            throw new DaoError(error);
-        }
-    }
-
-    public void update(String email, String field, String value) throws DaoError {
+    public void update(Long id, String field, String value) throws DaoError {
         try {
             DbHibernate.doTransactional( s -> {
-                s.createQuery(String.format("update versioned %s set %s = :value where email = :email", ENTITY_NAME, field)).
+                s.createQuery(String.format("update versioned %s set %s = :value where id = :id", ENTITY_NAME, field)).
                         setParameter("value",value).
-                        setParameter("email",email).
+                        setParameter("id",id).
                         executeUpdate();
             });
         }
         catch (TransactionalError error){
             throw new DaoError(error);
         }
+    }
+
+    @TestOnly
+    public Session getSession() {
+        return session;
     }
 }

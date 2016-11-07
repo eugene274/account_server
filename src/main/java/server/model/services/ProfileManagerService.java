@@ -62,8 +62,7 @@ public class ProfileManagerService {
         }
 
         try {
-            // TODO change to id
-            dao.update(profile.getEmail(), field, value);
+            dao.update(profile.getId(), field, value);
             LOG.info(String.format("user '%d' change they '%s' to '%s'", profile.getId(),field,value));
         } catch (DaoError daoError) {
             throw new InternalError();

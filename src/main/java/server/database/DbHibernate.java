@@ -10,6 +10,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.jetbrains.annotations.TestOnly;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -24,6 +25,11 @@ public class DbHibernate {
     static {
         Configuration configuration = new Configuration().configure();
         factory = configuration.buildSessionFactory();
+    }
+
+    @TestOnly
+    public static SessionFactory getFactory() {
+        return factory;
     }
 
     public static Session newSession(){

@@ -113,23 +113,4 @@ public class AccountService extends TokenService {
         LOG.info(String.format("'%s' logged out", profile.getEmail()));
     }
 
-
-    public void updateName(String tokenString, String newName) throws CustomerRequestError {
-        UserProfile user = getUserByTokenString(tokenString);
-
-        // nothing to do
-        if(newName.equals(user.getName())){
-            return;
-        }
-
-        // update sign-in-array copy
-        // violates equality!!!
-        try {
-            dao.updateName(user.getEmail(), newName);
-            user.setName(newName);
-        } catch (DaoError daoError) {
-            throw new InternalError();
-        }
-
-    }
 }
