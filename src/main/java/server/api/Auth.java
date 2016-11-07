@@ -1,6 +1,7 @@
 package server.api;
 
 import server.model.AccountService;
+import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerRequestResponse;
 import server.model.dao.UserProfileHibernate;
@@ -58,8 +59,13 @@ public class Auth {
     ){
         Long id = Long.parseLong(userIdString);
 
-        accountService.logout(token);
-        return CustomerRequestResponse.ok(null).toString();
+        try {
+            accountService.logout(token);
+            return CustomerRequestResponse.ok(null).toString();
+        } catch (InternalError internalError) {
+            return CustomerRequestResponse.fail(internalError).toString();
+        }
+
     }
 }
 

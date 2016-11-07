@@ -21,9 +21,6 @@ public class AccountServiceTest {
 
 
     static AccountService accountService = new AccountService();
-    static {
-        accountService.setDao(new UserProfileHibernate());
-    }
 
     static final String login = "test";
     static final String pass = "testpass";
@@ -60,6 +57,8 @@ public class AccountServiceTest {
         Token token = accountService.signIn(login,pass);
         assertNotNull(accountService.validateToken(token.toString()));
         accountService.logout(token.toString());
+
+        accountService.getDao().getSession().clear();
         assertNull(accountService.validateToken(token.toString()));
     }
 

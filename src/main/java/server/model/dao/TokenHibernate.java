@@ -1,10 +1,12 @@
 package server.model.dao;
 
 import org.hibernate.Session;
+import org.jetbrains.annotations.TestOnly;
 import server.database.DbHibernate;
 import server.database.TransactionalError;
 import server.model.data.Token;
 import server.model.data.UserProfile;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,4 +57,26 @@ public class TokenHibernate implements TokenDAO {
     public List<Token> getAll() {
         return session.createQuery("from Tokens", Token.class).list();
     }
+
+    @Override
+    public void remove(Token token) throws DaoError {
+        try {
+            DbHibernate.doTransactional(s -> {
+                s.remove(token);
+            });
+        } catch (TransactionalError error) {
+            throw new DaoError(error);
+        }
+    }
+
+    @Override
+    public void remove(Long id) throws DaoError {
+        throw new NotImplementedException();
+    }
+
+    @TestOnly
+    public Session getSession() {
+        return session;
+    }
+
 }

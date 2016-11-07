@@ -6,6 +6,7 @@ import server.database.TransactionalError;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
@@ -16,6 +17,16 @@ import java.util.StringJoiner;
  */
 
 public class UserProfileHibernate implements UserDAO {
+    @Override
+    public void remove(Long id) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void remove(UserProfile in) throws DaoError {
+        throw new NotImplementedException();
+    }
+
     private static String ENTITY_NAME = "Profiles";
     private static String ALIAS = "user";
 

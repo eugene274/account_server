@@ -11,5 +11,4 @@ import java.util.List;
 public interface TokenDAO extends DAO<Token> {
     Token getTokenByTokenString(String tokenString);
     List<Token> getAll();
-
 }
