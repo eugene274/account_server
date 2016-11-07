@@ -48,11 +48,11 @@ public class TokenHibernate implements TokenDAO {
 
     @Override
     public Token getTokenByTokenString(String tokenString) {
-        return getWhereQuery(String.format("token.tokenString = '%s'", tokenString)).list().get(0);
+        return session.byNaturalId(Token.class).using("tokenString", tokenString).loadOptional().orElse(null);
     }
 
     @Override
     public List<Token> getAll() {
-        return session.createQuery(new String("from Tokens"), Token.class).list();
+        return session.createQuery("from Tokens", Token.class).list();
     }
 }

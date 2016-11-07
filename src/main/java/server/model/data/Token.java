@@ -1,5 +1,7 @@
 package server.model.data;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Random;
@@ -19,6 +21,7 @@ public class Token {
     @Column(name = "user_id")
     private Long userId;
 
+    @NaturalId
     @Column(name = "token_string")
     private String tokenString;
 
