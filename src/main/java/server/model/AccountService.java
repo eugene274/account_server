@@ -70,7 +70,7 @@ public class AccountService extends TokenService {
 
 
 
-        token = new Token();
+        token = new Token(user);
         addUserSession(user, token);
         LOG.info("'" + email + "' logged in");
         return token;

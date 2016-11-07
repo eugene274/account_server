@@ -28,7 +28,7 @@ public class TokenHibernate implements TokenDAO {
     }
 
     @Override
-    public Long insert(Object in) {
+    public Long insert(Token in) {
         try{
             return (Long) DbHibernate.getTransactional(s -> s.save(in));
         } catch (TransactionalError transactionalError) {

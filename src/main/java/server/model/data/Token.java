@@ -1,6 +1,7 @@
 package server.model.data;
 
 import org.hibernate.annotations.NaturalId;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -18,37 +19,22 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     @NaturalId
     @Column(name = "token_string")
     private String tokenString;
 
     @Column(name = "time_create")
-    private Calendar createdAt;
+    private Calendar createdAt = Calendar.getInstance();
 
     @Column(name = "last_request")
-    private Calendar lastRequestAt;
+    private Calendar lastRequestAt = createdAt;
 
     @Column(name = "active")
     private boolean active = true;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    @OneToOne
+    @JoinColumn(name = "USER_ID", nullable = false, unique = true, updatable = false)
+    private UserProfile user;
 
     private static Random generator = new Random();
 
@@ -56,27 +42,29 @@ public class Token {
         return ((Long) generator.nextLong()).toString();
     }
 
-
     public static Token valueOf(String tokenString){
         return new Token(tokenString);
     }
 
-
-    public Token() {
+    private Token() {
         this.tokenString = generateToken();
-        this.createdAt = Calendar.getInstance();
-        this.lastRequestAt = createdAt;
-    }
-
-    public Token(Long userId) {
-        this.userId = userId;
-        this.tokenString = generateToken();
-        this.createdAt = Calendar.getInstance();
-        this.lastRequestAt = createdAt;
     }
 
     private Token(String tokenString) {
         this.tokenString = tokenString;
+    }
+
+    public Token(@NotNull UserProfile user) {
+        this();
+        this.user = user;
+    }
+
+    public UserProfile getUser() {
+        return user;
+    }
+
+    public void setUser(@NotNull UserProfile user) {
+        this.user = user;
     }
 
     public Calendar getCreatedAt() {
@@ -97,6 +85,14 @@ public class Token {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
