@@ -2,6 +2,7 @@ package server.model.dao;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
+import server.database.DbHibernate;
 import server.model.data.Token;
 
 import java.util.Collection;
@@ -87,5 +88,19 @@ public class TokenHibernateTest {
         Token token1 = dao.getTokenByTokenString(tokenString);
 
         assertEquals(token, token1);
+    }
+
+    @Test
+    public final void remove() throws Exception {
+
+        Token token = new Token();
+        dao.insert(token);
+
+        String tokenString = token.toString();
+
+        dao.remove(tokenString);
+
+        Collection<Token> tokens = dao.getAll();
+        assertEquals(tokens.size(), 0);
     }
 }

@@ -53,6 +53,18 @@ public class TokenHibernate implements TokenDAO {
 
     @Override
     public List<Token> getAll() {
-        return session.createQuery("from Tokens", Token.class).list();
+        return session.createQuery(new String("from Tokens"), Token.class).list();
     }
+
+    @Override
+    public void remove(String tokenString) {
+
+        try {
+            DbHibernate.doTransactional(session -> session.delete(getTokenByTokenString(tokenString)));
+        } catch (TransactionalError transactionalError) {
+            transactionalError.printStackTrace();
+        }
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package server.model;
 
+import server.model.dao.TokenDAO;
+import server.model.dao.TokenHibernate;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 
@@ -12,6 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * Deals with usersSignedIn hashmap
  */
 public class TokenService {
+
+    private static TokenDAO dao = new TokenHibernate();
+
+    public TokenDAO getDao() {
+        return this.dao;
+    }
+
     protected static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
             = new ConcurrentHashMap<>();
     protected static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
@@ -22,8 +31,8 @@ public class TokenService {
     }
 
     protected static void addUserSession(UserProfile user, Token token){
-        usersSignedIn.putIfAbsent(token, user);
-        usersSignedInReverse.putIfAbsent(user,token);
+        token.setUserId(user.getId());
+        dao.insert(token);
     }
 
     protected static UserProfile removeUserSession(UserProfile user){
