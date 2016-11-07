@@ -10,7 +10,6 @@ import java.util.List;
  */
 public interface TokenDAO extends DAO {
     Token getTokenByTokenString(String tokenString);
-    void reload(UserProfile user);
     List<Token> getAll();
 
 }

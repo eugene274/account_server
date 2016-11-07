@@ -12,6 +12,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="server.model.data.UserProfile" />
+        <mapping class="server.model.data.Token" />
 
     </session-factory>
 </hibernate-configuration>
