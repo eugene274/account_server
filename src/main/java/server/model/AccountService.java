@@ -25,10 +25,11 @@ import java.util.Collection;
  * login/logout/register
  */
 
-public class AccountService extends TokenService {
+public class AccountService {
     private static final Logger LOG = LogManager.getLogger("account");
 
     private UserDAO dao = new UserProfileHibernate();
+    private TokenService tokenService = new TokenService();
 
     public AccountService() {
     }
@@ -55,7 +56,7 @@ public class AccountService extends TokenService {
             throws CustomerRequestError
     {
         // user's already signed in
-        Token token = getTokenByEmail(email);
+        Token token = tokenService.getTokenByEmail(email);
         if(null != token) return token;
 
         UserProfile user = dao.getByEmail(email);
@@ -64,7 +65,7 @@ public class AccountService extends TokenService {
         }
 
         token = new Token(user);
-        addUserSession(user, token);
+        tokenService.addUserSession(user, token);
         LOG.info("'" + email + "' logged in");
         return token;
     }
@@ -98,17 +99,16 @@ public class AccountService extends TokenService {
     }
 
     public Collection<UserProfile> getOnlineUsers(){
-        return users();
+        return tokenService.users();
     }
 
     public void logout(String tokenString) throws InternalError {
-        UserProfile profile = null;
         try {
-            profile = removeUserSession(tokenString);
+            tokenService.removeUserSession(tokenString);
         } catch (DaoError daoError) {
             throw new InternalError();
         }
-        LOG.info(String.format("'%s' logged out", profile.getEmail()));
+//        LOG.info(String.format("'%s' logged out", profile.getEmail()));
     }
 
 

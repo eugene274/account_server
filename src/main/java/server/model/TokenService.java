@@ -34,11 +34,8 @@ public class TokenService {
         dao.insert(token);
     }
 
-    protected UserProfile removeUserSession(String tokenString) throws DaoError {
-        Token token1 = dao.getTokenByTokenString(tokenString.toString());
-        dao.remove(token1);
-        return token1.getUser();
-
+    protected void removeUserSession(String tokenString) throws DaoError {
+        dao.removeByTokenString(tokenString);
     }
 
     protected Collection<UserProfile> users(){

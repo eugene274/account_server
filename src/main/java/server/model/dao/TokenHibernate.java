@@ -54,6 +54,19 @@ public class TokenHibernate implements TokenDAO {
     }
 
     @Override
+    public void removeByTokenString(String tokenString) throws DaoError {
+        try {
+            DbHibernate.doTransactional(s -> {
+                s.createQuery(String.format("delete %s where tokenString = :tokenString", ENTITY_NAME))
+                        .setParameter("tokenString",tokenString)
+                        .executeUpdate();
+            });
+        } catch (TransactionalError error) {
+            throw new DaoError(error);
+        }
+    }
+
+    @Override
     public List<Token> getAll() {
         return session.createQuery("from Tokens", Token.class).list();
     }
@@ -68,6 +81,8 @@ public class TokenHibernate implements TokenDAO {
             throw new DaoError(error);
         }
     }
+
+
 
     @Override
     public void remove(Long id) throws DaoError {

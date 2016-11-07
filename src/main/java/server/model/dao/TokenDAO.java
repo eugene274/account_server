@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface TokenDAO extends DAO<Token> {
     Token getTokenByTokenString(String tokenString);
+    void removeByTokenString(String tokenString) throws DaoError;
     List<Token> getAll();
 }
