@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
  * Created by ivan on 06.11.16.
  */
 public class TokenHibernateTest {
-    static UserProfile user = new UserProfile("test","test");
-    static UserProfile user2 = new UserProfile("test2","test");
+    static UserProfile user = new UserProfile("testiuytre","test");
+    static UserProfile user2 = new UserProfile("test2ytrew","test");
 
     @NotNull
     static TokenDAO tokendao;
