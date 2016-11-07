@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9facbc28-d4bd-4bbc-a63c-4d70cdecd78a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/ConnectionConstants.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/ConnectionConstants.java" />
     </list>
     <ignored path="hw1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,8 +110,8 @@
       <file leaf-file-name="AccountService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/server/model/AccountService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92410713">
-              <caret line="98" column="9" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.7723214">
+              <caret line="90" column="41" selection-start-line="90" selection-start-column="41" selection-end-line="90" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -1251,7 +1250,13 @@
       <option name="project" value="LOCAL" />
       <updated>1478522231546</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Введены константы для соединения с БД">
+      <created>1478522499829</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1478522499829</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1386,7 +1391,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="login/pass policy implemented&#10;username field, update login -&gt; update name" />
     <MESSAGE value="4AINAYA" />
     <MESSAGE value="4AINAYA2" />
     <MESSAGE value="1. Server starting moved out of `main`&#10;2. Api Auth tests realized&#10;3. Fixed bug at response deserialization" />
@@ -1411,7 +1415,8 @@
     <MESSAGE value="Константы для взаимодействия (временное решение пока не вывел в файл конфига)" />
     <MESSAGE value="Класс DatabaseStorage для взаимодействия именно с БД" />
     <MESSAGE value="Заполнен класс LeaderBoardService" />
-    <option name="LAST_COMMIT_MESSAGE" value="Заполнен класс LeaderBoardService" />
+    <MESSAGE value="Введены константы для соединения с БД" />
+    <option name="LAST_COMMIT_MESSAGE" value="Введены константы для соединения с БД" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1808,8 +1813,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/server/model/AccountService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92410713">
-          <caret line="98" column="9" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.7723214">
+          <caret line="90" column="41" selection-start-line="90" selection-start-column="41" selection-end-line="90" selection-end-column="41" />
           <folding />
         </state>
       </provider>
