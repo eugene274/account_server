@@ -15,7 +15,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/server/model/leaderboard/IStorage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/LeaderBoardService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/model/data/Score.java" afterPath="$PROJECT_DIR$/src/main/java/server/model/data/Score.java" />
     </list>
     <ignored path="hw1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1125,7 +1124,13 @@
       <option name="project" value="LOCAL" />
       <updated>1478522104896</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Класс Score заполнен">
+      <created>1478522127456</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1478522127456</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1283,7 +1288,8 @@
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId&#10;ProfileManager initializes with userId" />
     <MESSAGE value="workspace.xml deleted" />
     <MESSAGE value="Не знаю что это за изменения, но они мне мешают" />
-    <option name="LAST_COMMIT_MESSAGE" value="Не знаю что это за изменения, но они мне мешают" />
+    <MESSAGE value="Класс Score заполнен" />
+    <option name="LAST_COMMIT_MESSAGE" value="Класс Score заполнен" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
