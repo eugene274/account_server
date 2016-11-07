@@ -100,7 +100,10 @@ public class AccountService extends TokenService {
             throw new PolicyViolationError();
         }
 
-        dao.insert(new UserProfile(login,pass));
+        try {
+            dao.insert(new UserProfile(login,pass));
+        } catch (DaoError ignore) {
+        }
         LOG.info("'" + login + "' signed up");
     }
 

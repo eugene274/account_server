@@ -3,8 +3,8 @@ package server.model.dao;
 import org.hibernate.Session;
 import server.database.DbHibernate;
 import server.database.TransactionalError;
+import server.model.data.Score;
 import server.model.data.Token;
-import server.model.data.UserProfile;
 
 import java.util.Collection;
 import java.util.List;
