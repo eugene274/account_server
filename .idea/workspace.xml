@@ -1138,7 +1138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478398359842</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="workspace.xml deleted">
+      <created>1478519085055</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1478519085055</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1293,7 +1300,8 @@
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed" />
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId" />
     <MESSAGE value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId&#10;ProfileManager initializes with userId" />
-    <option name="LAST_COMMIT_MESSAGE" value="UsersSignedInService -&gt; TokenService&#10;isTokenValid moved to TokenService&#10;AuthTest fixed&#10;tokenService validates tokenString&#10;validateToken returns userId&#10;ProfileManager initializes with userId" />
+    <MESSAGE value="workspace.xml deleted" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace.xml deleted" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
