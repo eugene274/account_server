@@ -7,6 +7,7 @@ import server.model.data.Score;
 import server.model.services.LeaderBoardService;
 import server.model.services.LeaderBoardServiceImpl;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import java.util.List;
 
@@ -45,6 +46,25 @@ public class Data {
         try {
             leaders = (N == null)? lb.getLeaders() : lb.getLeaders(N);
             return CustomerRequestResponse.ok(leaders).toString();
+        } catch (InternalError internalError) {
+            return CustomerRequestResponse.fail(internalError).toString();
+        }
+    }
+
+    @GET
+    @Path("/leaderboard/me")
+    public String getScore (@NotNull @HeaderParam("userId") String userId){
+        LeaderBoardService lbs = null;
+        try{
+            lbs = new LeaderBoardServiceImpl();
+            Long id;
+            try{
+                id = Long.valueOf(userId);
+            } catch (Exception e){
+                throw new InternalError();
+            }
+            Score score = lbs.getScore(id);
+            return CustomerRequestResponse.ok(score.getScore()).toString();
         } catch (InternalError internalError) {
             return CustomerRequestResponse.fail(internalError).toString();
         }
