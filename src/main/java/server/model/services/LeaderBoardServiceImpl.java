@@ -19,10 +19,13 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
 
     private ScoreDAO dao;
 
-    public LeaderBoardServiceImpl() {
+    public LeaderBoardServiceImpl() throws InternalError {
         try {
             dao = new ScoreJDBC();
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InternalError();
+        }
     }
 
     @Override

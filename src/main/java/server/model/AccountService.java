@@ -32,7 +32,6 @@ public class AccountService {
 
     private UserDAO dao = new UserProfileHibernate();
     private TokenService tokenService = new TokenService();
-    private LeaderBoardService leaderBoardService = new LeaderBoardServiceImpl();
 
     public AccountService() {
     }
@@ -71,12 +70,13 @@ public class AccountService {
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
 
-            leaderBoardService.register(dao.getByEmail(email).getId());
+            new LeaderBoardServiceImpl().register(dao.getByEmail(email).getId());
             LOG.info("'" + email + "' registered to leaderboard");
             return token;
 
         } catch (DaoError daoError) {
             // TODO report this
+            daoError.printStackTrace();
             throw new InternalError();
         }
     }
@@ -118,9 +118,10 @@ public class AccountService {
 
     public void logout(String tokenString) throws InternalError {
         try {
-            leaderBoardService.remove(tokenService.getUserByTokenString(tokenString).getId());
+            new LeaderBoardServiceImpl().remove(tokenService.getUserByTokenString(tokenString).getId());
             tokenService.removeUserSession(tokenString);
         } catch (DaoError daoError) {
+            daoError.printStackTrace();
             throw new InternalError();
         }
 //        LOG.info(String.format("'%s' logged out", profile.getEmail()));

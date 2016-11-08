@@ -34,7 +34,12 @@ public class Data {
             @QueryParam("n") Integer N,
             @HeaderParam("userId") String userId
     ){
-        LeaderBoardService lb = new LeaderBoardServiceImpl();
+        LeaderBoardService lb = null;
+        try {
+            lb = new LeaderBoardServiceImpl();
+        } catch (InternalError internalError) {
+            return CustomerRequestResponse.fail(internalError).toString();
+        }
 
         List<Score> leaders = null;
         try {

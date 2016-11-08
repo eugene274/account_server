@@ -19,7 +19,7 @@
       </profile>
       <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="hw1" />
@@ -27,7 +27,7 @@
       </profile>
       <profile default="false" name="Annotation profile for authorization_server" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="authorization_server" />
@@ -35,6 +35,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authorization_server" target="1.8" />
+      <module name="hw2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
