@@ -62,4 +62,21 @@ public class ScoreJDBCTest {
 
     }
 
+    @Test
+    public void addPoints() throws Exception {
+
+        Integer points = 2;
+        Integer addedPoints = 123;
+        Long id = 100L;
+
+        Score score = new Score(id, points);
+
+        scoreDAO.insert(score);
+
+        scoreDAO.addPoints(id, addedPoints);
+        Integer scoresAfterAdd = scoreDAO.getById(id).getScore();
+
+        assertEquals(Integer.valueOf(addedPoints + points), scoresAfterAdd);
+    }
+
 }

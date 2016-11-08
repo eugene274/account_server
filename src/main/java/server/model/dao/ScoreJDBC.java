@@ -22,14 +22,16 @@ public class ScoreJDBC implements ScoreDAO {
 
     private static String CREATE_TABLE = null;
     private static String GET_ALL = null;
-    private static String GET_WHERE = null;
     private static String INSERT = null;
     private static String DELETE = null;
+    private static String UPDATE = null;
+
 
     private PreparedStatement createQuery;
     private PreparedStatement getQuery;
     private PreparedStatement insertQuery;
     private PreparedStatement deleteQuery;
+    private PreparedStatement updateQuery;
 
     static {
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS \"" + TABLE_NAME + "\"" +
@@ -43,6 +45,7 @@ public class ScoreJDBC implements ScoreDAO {
         GET_ALL = "SELECT user_id, score FROM \"" + TABLE_NAME + "\"";
         INSERT = "INSERT INTO \"" + TABLE_NAME + "\" (user_id, score) VALUES (?, ?)";
         DELETE = "DELETE FROM \"" + TABLE_NAME + "\" WHERE user_id = ?";
+        UPDATE = "UPDATE \"" + TABLE_NAME + "\" SET score=score + ? WHERE user_id=?";
     }
 
     private Connection dbConnection;
@@ -135,6 +138,7 @@ public class ScoreJDBC implements ScoreDAO {
             getQuery.close();
             insertQuery.close();
             deleteQuery.close();
+            updateQuery.close();
         }
         catch (NullPointerException ignore){}
 
@@ -146,11 +150,19 @@ public class ScoreJDBC implements ScoreDAO {
         getQuery = dbConnection.prepareStatement(GET_ALL);
         insertQuery = dbConnection.prepareStatement(INSERT);
         deleteQuery = dbConnection.prepareStatement(DELETE);
+        updateQuery = dbConnection.prepareStatement(UPDATE);
     }
 
     @Override
-    public void addPoints(Long id, Integer points) {
-        throw new NotImplementedException();
+    public void addPoints(Long id, Integer points) throws DaoError {
+        try {
+            updateQuery.setLong(1, points);
+            updateQuery.setLong(2, id);
+            JDBCExecutor.doQuery(updateQuery);
+        } catch (SQLException e) {
+            throw new DaoError(e);
+        }
+
     }
 
     @TestOnly
