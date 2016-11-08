@@ -14,6 +14,8 @@ import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.customer.CustomerErrors.WrongCredentialsError;
 import server.model.data.Token;
 import server.model.data.UserProfile;
+import server.model.services.LeaderBoardService;
+import server.model.services.LeaderBoardServiceImpl;
 
 
 import java.util.Collection;
@@ -30,6 +32,7 @@ public class AccountService {
 
     private UserDAO dao = new UserProfileHibernate();
     private TokenService tokenService = new TokenService();
+    private LeaderBoardService leaderBoardService = new LeaderBoardServiceImpl();
 
     public AccountService() {
     }
@@ -67,6 +70,9 @@ public class AccountService {
             token = new Token(user);
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
+
+            leaderBoardService.register(dao.getByEmail(email).getId());
+            LOG.info("'" + email + "' registered to leaderboard");
             return token;
 
         } catch (DaoError daoError) {
@@ -112,6 +118,7 @@ public class AccountService {
 
     public void logout(String tokenString) throws InternalError {
         try {
+            leaderBoardService.remove(tokenService.getUserByTokenString(tokenString).getId());
             tokenService.removeUserSession(tokenString);
         } catch (DaoError daoError) {
             throw new InternalError();

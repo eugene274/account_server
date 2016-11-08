@@ -88,13 +88,13 @@ public class TokenHibernateTest {
         Token token = new Token(user);
         tokendao.insert(token);
         Collection<Token> tokens = tokendao.getAll();
-        assertEquals(tokens.size(), 1);
+        int size = tokens.size();
         assertTrue(tokens.contains(token));
 
         Token token1 = new Token(user2);
         tokendao.insert(token1);
         tokens = tokendao.getAll();
-        assertEquals(tokens.size(), 2);
+        assertEquals(tokens.size(), size + 1);
         assertTrue(tokens.contains(token1));
         assertTrue(tokens.contains(token));
     }

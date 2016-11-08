@@ -40,10 +40,11 @@ public class ScoreJDBCTest {
         Score score = new Score(100L,1);
         Score score1 = new Score(200L,2);
 
+        int size = scoreDAO.getAll().size();
         scoreDAO.insert(score);
         scoreDAO.insert(score1);
 
-        assertEquals(scoreDAO.getAll().size(),2);
+        assertEquals(scoreDAO.getAll().size(), size + 2);
 
     }
 
