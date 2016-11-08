@@ -1,5 +1,6 @@
 package server.model.services;
 
+import org.jetbrains.annotations.TestOnly;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.dao.DaoError;
 import server.model.dao.ScoreDAO;
@@ -50,6 +51,7 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
 
     @Override
     public List<Score> getLeaders(int N) throws InternalError {
+        if(N < 1) return getLeaders();
         return getLeaders().subList(0, N);
     }
 
@@ -63,5 +65,9 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
             throw new InternalError();
         }
         return leaders;
+    }
+    @TestOnly
+    public ScoreDAO getDao() {
+        return dao;
     }
 }

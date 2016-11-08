@@ -148,6 +148,11 @@ public class ScoreJDBC implements ScoreDAO {
         deleteQuery = dbConnection.prepareStatement(DELETE);
     }
 
+    @Override
+    public void addPoints(Long id, Integer points) {
+        throw new NotImplementedException();
+    }
+
     @TestOnly
     public void drop() throws SQLException {
         JDBCExecutor.doQuery(dbConnection.prepareStatement("DROP TABLE \"" + TABLE_NAME + "\""));
