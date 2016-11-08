@@ -63,7 +63,7 @@ public class UserProfileHibernate implements UserDAO {
     }
 
     @Override
-    public List<UserProfile> getAll() throws SQLException {
+    public List<UserProfile> getAll() throws DaoError {
         throw new NotImplementedException();
     }
 

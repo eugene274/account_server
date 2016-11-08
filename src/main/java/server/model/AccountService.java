@@ -56,18 +56,23 @@ public class AccountService {
             throws CustomerRequestError
     {
         // user's already signed in
-        Token token = tokenService.getTokenByEmail(email);
-        if(null != token) return token;
+        Token token = null;
+        try {
+            token = tokenService.getTokenByEmail(email);
+            if(null != token) return token;
+            UserProfile user = dao.getByEmail(email);
+            if(null == user || !user.getPassword().equals(password)) {
+                throw new WrongCredentialsError();
+            }
+            token = new Token(user);
+            tokenService.addUserSession(user, token);
+            LOG.info("'" + email + "' logged in");
+            return token;
 
-        UserProfile user = dao.getByEmail(email);
-        if(null == user || !user.getPassword().equals(password)) {
-            throw new WrongCredentialsError();
+        } catch (DaoError daoError) {
+            // TODO report this
+            throw new InternalError();
         }
-
-        token = new Token(user);
-        tokenService.addUserSession(user, token);
-        LOG.info("'" + email + "' logged in");
-        return token;
     }
 
     /**

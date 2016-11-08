@@ -1,9 +1,16 @@
 package server.model.dao;
 
+import com.sun.java.swing.plaf.windows.WindowsBorders;
 import org.jetbrains.annotations.NotNull;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import server.database.DbHibernate;
 import server.model.data.Token;
 import server.model.data.UserProfile;
+
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -15,12 +22,13 @@ public class TokenHibernateTest {
     static UserProfile user2 = new UserProfile("test2ytrew","test");
 
     @NotNull
-    static TokenDAO tokendao;
+    static TokenHibernate tokendao;
     @NotNull
     static UserDAO userdao;
 
 
-    static {
+    @BeforeClass
+    public static void setUp() throws Exception{
         tokendao = new TokenHibernate();
         userdao = new UserProfileHibernate();
 
@@ -28,6 +36,15 @@ public class TokenHibernateTest {
         userdao.insert(user2);
     }
 
+    @After
+    public void removeTokens() throws Exception {
+        DbHibernate.doTransactional(session -> {
+            session.createQuery("delete Tokens").executeUpdate();
+        });
+
+        tokendao.getSession().clear();
+
+    }
 
 
     @Test
@@ -40,4 +57,73 @@ public class TokenHibernateTest {
         assertEquals(tokendao.getById(id2).getUser().getEmail(), user2.getEmail());
     }
 
+    @Test
+    public final void getById() throws Exception {
+        Token token = new Token(user);
+        Token token2;
+
+        Long id = tokendao.insert(token);
+
+        assertNull(tokendao.getById(-1L));
+        assertNotNull(token2 = (Token) tokendao.getById(id));
+        assertEquals(token, token2);
+    }
+
+    @Test
+    public final void getWhere() throws Exception {
+        Token token = new Token(user);
+        Long id = tokendao.insert(token);
+
+        Collection<Token> tokens = tokendao.getWhere(String.format("token.id = %d", id));
+        assertNotNull(tokens);
+        assertTrue(tokens.contains(token));
+
+        tokens = tokendao.getWhere("token.id = '135'");
+        assertFalse(tokens.contains(token));
+    }
+
+    @Test
+    public final void getAll() throws Exception {
+
+        Token token = new Token(user);
+        tokendao.insert(token);
+        Collection<Token> tokens = tokendao.getAll();
+        assertEquals(tokens.size(), 1);
+        assertTrue(tokens.contains(token));
+
+        Token token1 = new Token(user2);
+        tokendao.insert(token1);
+        tokens = tokendao.getAll();
+        assertEquals(tokens.size(), 2);
+        assertTrue(tokens.contains(token1));
+        assertTrue(tokens.contains(token));
+    }
+
+    @Test
+    public final void getTokenByTokenString() throws Exception {
+
+        Token token = new Token(user);
+        tokendao.insert(token);
+
+        String tokenString = token.toString();
+        Token token1 = tokendao.getTokenByTokenString(tokenString);
+
+        assertEquals(token, token1);
+    }
+
+    @Test
+    public final void remove() throws Exception {
+
+        Token token = new Token(user);
+        tokendao.insert(token);
+
+        String tokenString = token.toString();
+
+        tokendao.remove(token);
+
+        Collection<Token> tokens = tokendao.getAll();
+        assertEquals(tokens.size(), 0);
+    }
 }
+
+

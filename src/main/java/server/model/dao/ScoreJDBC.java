@@ -10,6 +10,7 @@ import server.database.executors.ScoreListExecutor;
 import server.model.dao.DaoError;
 import server.model.dao.ScoreDAO;
 import server.model.data.Score;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
 import java.util.*;
@@ -103,6 +104,16 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (DbError | SQLException dbError) {
             throw new DaoError(dbError);
         }
+    }
+
+    @Override
+    public void remove(Score in) throws DaoError {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void remove(Long id) throws DaoError {
+        throw new NotImplementedException();
     }
 
     private void checkConnection() throws SQLException {

@@ -29,7 +29,7 @@ public class TokenService {
         return dao.getTokenByTokenString(tokenString).getUser();
     }
 
-    protected void addUserSession(UserProfile user, Token token){
+    protected void addUserSession(UserProfile user, Token token) throws DaoError {
         token.setUser(user);
         dao.insert(token);
     }
@@ -47,7 +47,7 @@ public class TokenService {
         return dao.getAll();
     }
 
-    protected Token getTokenByEmail(String email){
+    protected Token getTokenByEmail(String email) throws DaoError {
         List<Token> result = dao.getWhere(String.format("user.email = '%s'", email));
         if(result.size() != 1){
             // TODO report
