@@ -1,7 +1,7 @@
 package server.model.data;
 
 
-public class Score {
+public class Score implements Comparable<Score> {
     private final Long userId;
     private Integer score;
 
@@ -36,5 +36,10 @@ public class Score {
     @Override
     public int hashCode() {
         return getUserId().hashCode();
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return getScore() - o.getScore();
     }
 }
