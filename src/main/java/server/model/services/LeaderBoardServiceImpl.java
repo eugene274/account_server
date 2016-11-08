@@ -8,8 +8,6 @@ import server.model.dao.ScoreJDBC;
 import server.model.data.Score;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             dao.insert(score);
         } catch (DaoError daoError) {
+            daoError.printStackTrace();
             throw new InternalError();
         }
     }
@@ -45,6 +44,7 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             dao.remove(id);
         } catch (DaoError daoError) {
+            daoError.printStackTrace();
             throw new InternalError();
         }
     }
@@ -62,10 +62,24 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
             leaders = dao.getAll();
             Collections.sort(leaders);
         } catch (DaoError daoError) {
+            // TODO report this
+            daoError.printStackTrace();
             throw new InternalError();
         }
         return leaders;
     }
+
+    @Override
+    public Score getScore(Long id) throws InternalError {
+        try {
+            return dao.getById(id);
+        } catch (DaoError daoError) {
+            daoError.printStackTrace();
+            // TODO report this
+            throw new InternalError();
+        }
+    }
+
     @TestOnly
     public ScoreDAO getDao() {
         return dao;

@@ -11,6 +11,7 @@ import java.util.List;
 public interface LeaderBoardService {
     void register(Long id) throws InternalError;
     void remove(Long id) throws InternalError;
+    Score getScore(Long id) throws InternalError;
     List<Score> getLeaders(int N) throws InternalError;
     List<Score> getLeaders() throws InternalError;
 }
