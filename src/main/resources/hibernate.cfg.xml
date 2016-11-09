@@ -10,6 +10,7 @@
         <property name="hibernate.connection.password">atom22</property>
 
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 
         <mapping class="server.model.data.UserProfile" />
         <mapping class="server.model.data.Token" />
