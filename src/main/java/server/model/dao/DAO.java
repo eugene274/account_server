@@ -1,12 +1,14 @@
 package server.model.dao;
 
 import org.jetbrains.annotations.TestOnly;
+
+import java.io.Closeable;
 import java.util.List;
 
 /**
  * Created by eugene on 10/18/16.
  */
-public interface DAO<T> {
+public interface DAO<T> extends AutoCloseable {
     Long insert(T in) throws DaoError;
     T getById(Long id) throws DaoError;
     List<T> getWhere(String ... conditions) throws DaoError;

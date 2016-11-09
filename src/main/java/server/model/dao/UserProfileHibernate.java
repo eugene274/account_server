@@ -90,4 +90,13 @@ public class UserProfileHibernate implements UserDAO {
     public Session getSession() {
         return session;
     }
+
+    /**
+     * Closes current Hibernate session
+     * @throws Exception
+     */
+    @Override
+    public void close() throws Exception {
+        throw new NotImplementedException();
+    }
 }

@@ -8,6 +8,7 @@ import server.model.data.Token;
 import server.model.data.UserProfile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
@@ -92,6 +93,15 @@ public class TokenHibernate implements TokenDAO {
     @TestOnly
     public Session getSession() {
         return session;
+    }
+
+    /**
+     * closes current Hibernate session
+     * @throws Exception
+     */
+    @Override
+    public void close() throws Exception {
+        throw new NotImplementedException();
     }
 
 }

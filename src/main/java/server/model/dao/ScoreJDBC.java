@@ -169,4 +169,13 @@ public class ScoreJDBC implements ScoreDAO {
     public void drop() throws SQLException {
         JDBCExecutor.doQuery(dbConnection.prepareStatement("DROP TABLE \"" + TABLE_NAME + "\""));
     }
+
+    /**
+     * Closes current JDBC connection
+     * @throws Exception
+     */
+    @Override
+    public void close() throws Exception {
+        throw new NotImplementedException();
+    }
 }
