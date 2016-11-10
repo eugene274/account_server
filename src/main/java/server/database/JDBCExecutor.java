@@ -20,7 +20,7 @@ public class JDBCExecutor {
         }
     }
 
-    public static <T> T getQuery(PreparedStatement statement, Executor<T> operation) throws SQLException, DbError {
+    public static <T> T getQuery(PreparedStatement statement, Executor<T> operation) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         T result = operation.execute(resultSet);
         return result;

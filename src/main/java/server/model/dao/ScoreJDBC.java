@@ -71,6 +71,7 @@ public class ScoreJDBC implements ScoreDAO {
             LOG.info("Entity '" + in.getUserId() + "' inserted");
         } catch (SQLException e) {
             LOG.error(e.getMessage());
+            LOG.error("SQLState: " + e.getSQLState());
             if(e.getSQLState().equals("23505")) throw new EntityExists();
             throw new DaoError(e);
         }
@@ -101,7 +102,10 @@ public class ScoreJDBC implements ScoreDAO {
             return JDBCExecutor.getQuery(
                     dbConnection.prepareStatement(selectWhere.toString()),
                     new ScoreListExecutor());
-        } catch (SQLException | DbError e) {
+        }
+        catch (SQLException e) {
+            LOG.error(e.getMessage());
+            LOG.error("SQLState: " + e.getSQLState());
             throw new DaoError(e);
         }
     }
@@ -110,8 +114,10 @@ public class ScoreJDBC implements ScoreDAO {
     public List<Score> getAll() throws DaoError {
         try {
             return JDBCExecutor.getQuery(getQuery, new ScoreListExecutor());
-        } catch (DbError | SQLException dbError) {
-            throw new DaoError(dbError);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            LOG.error("SQLState: " + e.getSQLState());
+            throw new DaoError(e);
         }
     }
 
@@ -127,6 +133,8 @@ public class ScoreJDBC implements ScoreDAO {
             JDBCExecutor.doQuery(deleteQuery);
             LOG.info("Entity '" + id.toString() + "' removed");
         } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            LOG.error("SQLState: " + e.getSQLState());
             throw new DaoError(e);
         }
     }
@@ -169,6 +177,8 @@ public class ScoreJDBC implements ScoreDAO {
             JDBCExecutor.doQuery(updateQuery);
             LOG.info("Entity '" + id.toString() + "' updated");
         } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            LOG.error("SQLState: " + e.getSQLState());
             throw new DaoError(e);
         }
 
