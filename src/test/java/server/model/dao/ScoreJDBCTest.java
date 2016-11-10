@@ -2,9 +2,13 @@ package server.model.dao;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import server.model.dao.ScoreJDBC;
+import server.model.dao.exceptions.EntityExists;
 import server.model.data.Score;
+
+import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
@@ -12,27 +16,28 @@ import static org.junit.Assert.*;
  * Created by eugene on 11/7/16.
  */
 public class ScoreJDBCTest {
-
-
-
     private static ScoreJDBC scoreDAO = null;
 
-    @Before
-    public void setDao() throws Exception {
+    @BeforeClass
+    public static void setUpDAO() throws SQLException {
         scoreDAO = new ScoreJDBC();
     }
 
-    @After
-    public void dropDb() throws Exception {
-        scoreDAO.drop();
+    @Before
+    public void removeStuff() throws Exception {
+        scoreDAO.removeAll();
     }
 
     @Test
     public void insert() throws Exception {
         Score score = new Score(100L,2);
         scoreDAO.insert(score);
-
         assertTrue(scoreDAO.getAll().contains(score));
+
+        try {
+            scoreDAO.insert(score);
+            fail();
+        }catch (EntityExists ignore){}
     }
 
     @Test

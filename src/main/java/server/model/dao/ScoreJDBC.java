@@ -9,6 +9,7 @@ import server.database.JDBCExecutor;
 import server.database.executors.ScoreListExecutor;
 import server.model.dao.DaoError;
 import server.model.dao.ScoreDAO;
+import server.model.dao.exceptions.EntityExists;
 import server.model.data.Score;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -18,7 +19,7 @@ import java.util.*;
 public class ScoreJDBC implements ScoreDAO {
     private static final String TABLE_NAME = "leaderboard";
 
-    private static Logger LOG = LogManager.getLogger("SCOREDAO");
+    private static Logger LOG = LogManager.getLogger(ScoreJDBC.class);
 
     private static String CREATE_TABLE = null;
     private static String GET_ALL = null;
@@ -63,10 +64,14 @@ public class ScoreJDBC implements ScoreDAO {
     @Override
     public Long insert(Score in) throws DaoError {
         try {
+            checkConnection();
             insertQuery.setLong(1,in.getUserId());
             insertQuery.setLong(2,in.getScore());
             JDBCExecutor.doQuery(insertQuery);
+            LOG.info("Entity '" + in.getUserId() + "' inserted");
         } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            if(e.getSQLState().equals("23505")) throw new EntityExists();
             throw new DaoError(e);
         }
         return in.getUserId();
@@ -120,6 +125,7 @@ public class ScoreJDBC implements ScoreDAO {
         try {
             deleteQuery.setLong(1,id);
             JDBCExecutor.doQuery(deleteQuery);
+            LOG.info("Entity '" + id.toString() + "' removed");
         } catch (SQLException e) {
             throw new DaoError(e);
         }
@@ -130,6 +136,7 @@ public class ScoreJDBC implements ScoreDAO {
     }
 
     private void renewConnection() throws SQLException {
+        LOG.info("Connection renew");
         try {
             dbConnection.commit();
             dbConnection.close();
@@ -144,6 +151,7 @@ public class ScoreJDBC implements ScoreDAO {
 
         DbHibernate.newSession().doWork(connection -> {
             dbConnection = connection;
+            dbConnection.setAutoCommit(false);
         });
 
         createQuery = dbConnection.prepareStatement(CREATE_TABLE);
@@ -159,6 +167,7 @@ public class ScoreJDBC implements ScoreDAO {
             updateQuery.setLong(1, points);
             updateQuery.setLong(2, id);
             JDBCExecutor.doQuery(updateQuery);
+            LOG.info("Entity '" + id.toString() + "' updated");
         } catch (SQLException e) {
             throw new DaoError(e);
         }
@@ -166,7 +175,8 @@ public class ScoreJDBC implements ScoreDAO {
     }
 
     @TestOnly
-    public void drop() throws SQLException {
-        JDBCExecutor.doQuery(dbConnection.prepareStatement("DROP TABLE \"" + TABLE_NAME + "\""));
+    void removeAll() throws SQLException {
+        LOG.debug("Table flushed");
+        JDBCExecutor.doQuery(dbConnection.prepareStatement("DELETE FROM \"" + TABLE_NAME + "\""));
     }
 }
