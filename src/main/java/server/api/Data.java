@@ -33,7 +33,7 @@ public class Data {
     @Path("/leaderboard")
     public String getLeaderboard(
             @QueryParam("n") Integer N,
-            @HeaderParam("userId") String userId
+            @HeaderParam("userId") Long userId
     ){
         LeaderBoardService lb = null;
         try {
@@ -53,17 +53,11 @@ public class Data {
 
     @GET
     @Path("/leaderboard/me")
-    public String getScore (@NotNull @HeaderParam("userId") String userId){
+    public String getScore (@NotNull @HeaderParam("userId") Long userId){
         LeaderBoardService lbs = null;
         try{
             lbs = new LeaderBoardServiceImpl();
-            Long id;
-            try{
-                id = Long.valueOf(userId);
-            } catch (Exception e){
-                throw new InternalError();
-            }
-            Score score = lbs.getScore(id);
+            Score score = lbs.getScore(userId);
             return CustomerRequestResponse.ok(score.getScore()).toString();
         } catch (InternalError internalError) {
             return CustomerRequestResponse.fail(internalError).toString();

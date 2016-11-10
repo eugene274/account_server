@@ -23,12 +23,12 @@ public class Profile {
     @Consumes("application/x-www-form-urlencoded")
     public String renewName(
             @HeaderParam("token") String token,
-            @HeaderParam("userId") String userIdString,
+            @HeaderParam("userId") Long userId,
             @PathParam("field_name") String fName,
             @FormParam("value") String fValue
     ){
         try {
-            new ProfileManagerService(Long.parseLong(userIdString)).update(fName,fValue);
+            new ProfileManagerService(userId).update(fName,fValue);
             return CustomerRequestResponse.ok(null).toString();
         } catch (CustomerRequestError error) {
             return CustomerRequestResponse.fail(error).toString();
@@ -39,10 +39,10 @@ public class Profile {
     @Path("/")
     public String getMe(
             @HeaderParam("token") String token,
-            @HeaderParam("userId") String userIdString
+            @HeaderParam("userId") Long userId
     ){
         try {
-            UserProfile profile = new ProfileManagerService(Long.parseLong(userIdString)).getProfile();
+            UserProfile profile = new ProfileManagerService(userId).getProfile();
             return CustomerRequestResponse.ok(profile).toString();
         } catch (CustomerRequestError customerRequestError) {
             return CustomerRequestResponse.fail(customerRequestError).toString();
