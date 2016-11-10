@@ -1,5 +1,6 @@
 package server.model.data;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,9 +24,12 @@ public class Token {
     @Column(name = "token_string")
     private String tokenString;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time_create")
     private Calendar createdAt = Calendar.getInstance();
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_request")
     private Calendar lastRequestAt = createdAt;
 

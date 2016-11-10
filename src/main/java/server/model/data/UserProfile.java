@@ -1,5 +1,6 @@
 package server.model.data;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
 import server.model.UserCanChange;
 
@@ -24,6 +25,7 @@ public class UserProfile {
     private String email;
 
     @Column(name = "registration_date", nullable = false, updatable = false)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
