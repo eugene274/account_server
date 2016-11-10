@@ -12,12 +12,8 @@ import java.sql.SQLException;
  */
 public class ScoreSingleExecutor implements Executor<Score> {
     @Override
-    public Score execute(ResultSet resultSet) throws DbError {
-        try {
-            resultSet.next();
-            return new Score(resultSet.getLong(1), resultSet.getInt(2));
-        } catch (SQLException e) {
-            throw new DbError(e);
-        }
+    public Score execute(ResultSet resultSet) throws SQLException {
+        resultSet.next();
+        return new Score(resultSet.getLong(1), resultSet.getInt(2));
     }
 }

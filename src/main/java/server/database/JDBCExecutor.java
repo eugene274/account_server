@@ -11,11 +11,16 @@ import java.util.function.Function;
 public class JDBCExecutor {
 
     public static void doQuery(PreparedStatement statement) throws SQLException {
-        statement.executeUpdate();
-        statement.getConnection().commit();
+        try {
+            statement.executeUpdate();
+            statement.getConnection().commit();
+        } catch (SQLException e){
+            statement.getConnection().rollback();
+            throw e;
+        }
     }
 
-    public static <T> T getQuery(PreparedStatement statement, Executor<T> operation) throws SQLException, DbError {
+    public static <T> T getQuery(PreparedStatement statement, Executor<T> operation) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         T result = operation.execute(resultSet);
         return result;

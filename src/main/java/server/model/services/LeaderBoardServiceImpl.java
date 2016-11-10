@@ -1,5 +1,7 @@
 package server.model.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.dao.DaoError;
@@ -17,12 +19,14 @@ import java.util.List;
 public class LeaderBoardServiceImpl implements LeaderBoardService {
 
     private ScoreDAO dao;
+    private static Logger LOG = LogManager.getLogger(LeaderBoardService.class);
 
     public LeaderBoardServiceImpl() throws InternalError {
         try {
             dao = new ScoreJDBC();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.debug(e.getStackTrace());
+            LOG.info(e.getMessage());
             throw new InternalError();
         }
     }
@@ -34,7 +38,8 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             dao.insert(score);
         } catch (DaoError daoError) {
-            daoError.printStackTrace();
+            LOG.debug(daoError.getCause().getStackTrace());
+            LOG.info(daoError.getCause().getMessage());
             throw new InternalError();
         }
     }
@@ -44,7 +49,8 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             dao.remove(id);
         } catch (DaoError daoError) {
-            daoError.printStackTrace();
+            LOG.debug(daoError.getCause().getStackTrace());
+            LOG.info(daoError.getCause().getMessage());
             throw new InternalError();
         }
     }
@@ -62,8 +68,8 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
             leaders = dao.getAll();
             Collections.sort(leaders);
         } catch (DaoError daoError) {
-            // TODO report this
-            daoError.printStackTrace();
+            LOG.debug(daoError.getCause().getStackTrace());
+            LOG.info(daoError.getCause().getMessage());
             throw new InternalError();
         }
         return leaders;
@@ -74,8 +80,8 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             return dao.getById(id);
         } catch (DaoError daoError) {
-            daoError.printStackTrace();
-            // TODO report this
+            LOG.debug(daoError.getCause().getStackTrace());
+            LOG.info(daoError.getCause().getMessage());
             throw new InternalError();
         }
     }
