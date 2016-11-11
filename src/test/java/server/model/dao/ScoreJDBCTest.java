@@ -41,6 +41,13 @@ public class ScoreJDBCTest {
     }
 
     @Test
+    public void insertTwoEqualScore() throws Exception {
+        Score score = new Score(100l, 2);
+        scoreDAO.insert(score);
+        scoreDAO.insert(score);
+    }
+
+    @Test
     public void getAll() throws Exception {
         Score score = new Score(100L,1);
         Score score1 = new Score(200L,2);

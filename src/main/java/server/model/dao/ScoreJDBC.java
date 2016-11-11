@@ -63,6 +63,14 @@ public class ScoreJDBC implements ScoreDAO {
 
     @Override
     public Long insert(Score in) throws DaoError {
+
+        Long id = in.getUserId();
+        if (getById(id) != null) {
+            remove(id);
+            insert(in);
+            return id;
+        }
+
         try {
             checkConnection();
             insertQuery.setLong(1,in.getUserId());
