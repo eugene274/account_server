@@ -1,14 +1,19 @@
 package server.model.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
+import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.TestOnly;
 import server.database.TransactionalError;
+import server.model.dao.exceptions.EntityExists;
 import server.model.data.UserProfile;
 import server.database.DbHibernate;
 import org.hibernate.Session;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.jws.soap.SOAPBinding;
+import javax.persistence.PersistenceException;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +36,7 @@ public class UserProfileHibernate implements UserDAO {
 
     private static String ENTITY_NAME = "Profiles";
     private static String ALIAS = "user";
+    private static Logger LOG = LogManager.getLogger(UserProfileHibernate.class);
 
     private Session session = DbHibernate.newSession();
 
@@ -44,11 +50,15 @@ public class UserProfileHibernate implements UserDAO {
     }
 
     @Override
-    public Long insert(UserProfile in) {
+    public Long insert(UserProfile in) throws DaoError {
         try {
             return (Long) DbHibernate.getTransactional( s -> s.save(in));
-        } catch (TransactionalError transactionalError) {
-            return -1L;
+        } catch (TransactionalError error) {
+            Exception cause = (Exception) error.getCause();
+            if (cause instanceof PersistenceException &&
+                    cause.getCause() instanceof ConstraintViolationException) throw new EntityExists();
+            LOG.error(cause.getMessage());
+            throw new DaoError(cause);
         }
     }
 

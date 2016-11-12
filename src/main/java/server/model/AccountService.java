@@ -12,6 +12,7 @@ import server.model.dao.UserProfileHibernate;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.customer.CustomerErrors.WrongCredentialsError;
+import server.model.dao.exceptions.EntityExists;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 import server.model.services.LeaderBoardService;
@@ -69,16 +70,15 @@ public class AccountService {
             token = new Token(user);
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
-
-            new LeaderBoardServiceImpl().register(dao.getByEmail(email).getId());
-            LOG.info("'" + email + "' registered to leaderboard");
-            return token;
-
         } catch (DaoError daoError) {
-            // TODO report this
-            daoError.printStackTrace();
+            LOG.error(daoError.getCause().getMessage());
             throw new InternalError();
         }
+
+        new LeaderBoardServiceImpl().register(dao.getByEmail(email).getId());
+        LOG.info("'" + email + "' registered to leader board");
+
+        return token;
     }
 
     /**
@@ -96,10 +96,6 @@ public class AccountService {
 
     public void signUp( String login, String pass)
             throws CustomerRequestError {
-        if(null != dao.getByEmail(login)) {
-            LOG.warn("'" + login + "' exists");
-            throw new LoginExistsError(login);
-        }
 
         if(!CredentialsPolicy.checkLogin(login) || !CredentialsPolicy.checkPassword(pass)){
             throw new PolicyViolationError();
@@ -107,7 +103,13 @@ public class AccountService {
 
         try {
             dao.insert(new UserProfile(login,pass));
-        } catch (DaoError ignore) {
+        }
+        catch (EntityExists error){
+            throw new LoginExistsError(login);
+        }
+        catch (DaoError error) {
+            LOG.error(error.getCause().getMessage());
+            throw new InternalError();
         }
         LOG.info("'" + login + "' signed up");
     }
