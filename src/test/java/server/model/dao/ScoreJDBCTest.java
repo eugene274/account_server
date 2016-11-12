@@ -33,11 +33,7 @@ public class ScoreJDBCTest {
         Score score = new Score(100L,2);
         scoreDAO.insert(score);
         assertTrue(scoreDAO.getAll().contains(score));
-
-        try {
-            scoreDAO.insert(score);
-            fail();
-        }catch (EntityExists ignore){}
+        scoreDAO.insert(score);
     }
 
     @Test
