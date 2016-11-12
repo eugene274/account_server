@@ -92,7 +92,9 @@ public class UserProfileHibernate implements UserDAO {
             });
         }
         catch (TransactionalError error){
-            throw new DaoError(error);
+            Exception cause = (Exception) error.getCause();
+            LOG.error(cause.getMessage());
+            throw new DaoError(cause);
         }
     }
 
