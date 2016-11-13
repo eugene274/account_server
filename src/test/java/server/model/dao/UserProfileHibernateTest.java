@@ -26,7 +26,7 @@ public class UserProfileHibernateTest  {
     static UserProfileHibernate dao;
 
     @BeforeClass
-    public static void addUser(){
+    public static void addUser() throws Exception{
         id = dao.insert(new UserProfile("test54321","test"));
     }
 

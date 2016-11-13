@@ -37,24 +37,28 @@ public class DbHibernate {
     }
 
     public static void doTransactional(Consumer<Session> operation) throws TransactionalError {
+        Transaction transaction = null;
         try (Session session = newSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             operation.accept(session);
             transaction.commit();
         }
         catch (RuntimeException e){
+            if (transaction != null) transaction.rollback();
             throw new TransactionalError(e);
         }
     }
 
     public static <T> T getTransactional(Function<Session,T> operation) throws TransactionalError {
+        Transaction transaction = null;
         try (Session session = newSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             T result = operation.apply(session);
             transaction.commit();
             return result;
         }
         catch (RuntimeException e){
+            if (transaction != null) transaction.rollback();
             throw new TransactionalError(e);
         }
     }
