@@ -192,6 +192,11 @@ public class ScoreJDBC implements ScoreDAO {
 
     }
 
+    @Override
+    public List<Score> getAllOrdered() throws DaoError {
+        throw new NotImplementedException();
+    }
+
     @TestOnly
     void removeAll() throws SQLException {
         LOG.debug("Table flushed");
