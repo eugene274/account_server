@@ -7,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.model.dao.database.DbHibernate;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 

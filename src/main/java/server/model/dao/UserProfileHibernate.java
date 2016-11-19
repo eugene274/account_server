@@ -54,7 +54,7 @@ public class UserProfileHibernate
 
     @Override
     public Long insert(UserProfile in) throws DaoError {
-        try (TransactionHolder holder = new TransactionHolder(this.holder)) {
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             return (Long) holder.getSession().save(in);
         }
         catch (PersistenceException e){
@@ -89,7 +89,7 @@ public class UserProfileHibernate
     }
 
     public void update(Long id, String field, String value) throws DaoError {
-        try (TransactionHolder holder = new TransactionHolder(this.holder)) {
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().createQuery(String.format("update versioned %s set %s = :value where id = :id", ENTITY_NAME, field)).
                     setParameter("value",value).
                     setParameter("id",id).

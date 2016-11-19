@@ -38,7 +38,7 @@ public class TokenHibernate
 
     @Override
     public Long insert(Token in) {
-        try (TransactionHolder holder = new TransactionHolder(this.holder)) {
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             return (Long) holder.getSession().save(in);
         } catch (Exception e) {
             return -1L;
@@ -66,7 +66,7 @@ public class TokenHibernate
 
     @Override
     public void removeByTokenString(String tokenString) throws DaoError {
-        try (TransactionHolder holder = new TransactionHolder(this.holder)) {
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().createQuery(String.format("delete %s where tokenString = :tokenString", ENTITY_NAME))
                     .setParameter("tokenString",tokenString)
                     .executeUpdate();
@@ -82,7 +82,7 @@ public class TokenHibernate
 
     @Override
     public void remove(Token token) throws DaoError {
-        try (TransactionHolder holder = new TransactionHolder(this.holder)) {
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().remove(token);
         } catch (Exception e) {
             throw new DaoError(e);

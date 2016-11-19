@@ -18,8 +18,9 @@ public class TransactionHolder extends SessionHolder {
 
     public static TransactionHolder getTransactionHolder(){
         TransactionHolder holder = transactionsPool.get(Thread.currentThread());
-        if (holder == null) {
+        if (holder == null || !holder.transaction.isActive()) {
             holder = new TransactionHolder(getHolder());
+            LOG.debug("New transaction spawned");
             transactionsPool.put(Thread.currentThread(),holder);
         }
         return holder;
@@ -59,6 +60,7 @@ public class TransactionHolder extends SessionHolder {
 
     @Override
     public void close() throws Exception {
+        LOG.debug("Closing transaction");
         if(transaction.isActive()){
             if(transaction.getRollbackOnly()) {
                 LOG.debug("Transaction marked as rollback-only");
