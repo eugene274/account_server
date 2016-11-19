@@ -1,18 +1,11 @@
-package server;
+package server.model.services;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import server.database.SessionHolder;
-import server.model.AccountService;
-import server.model.TokenService;
-import server.model.dao.UserProfileHibernate;
 import server.model.data.Token;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerErrors.LoginExistsError;
-import server.model.data.UserProfile;
-
-import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -60,7 +53,7 @@ public class AccountServiceTest {
         assertNotNull(tokenService.validateToken(token.toString()));
         accountService.logout(token.toString());
 
-        SessionHolder.getHolder().getSession().clear();
+        SessionHolder.renew();
         assertNull(tokenService.validateToken(token.toString()));
     }
 

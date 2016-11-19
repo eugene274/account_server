@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.Server;
-import server.model.dao.database.DbHibernate;
+import server.database.DbHibernate;
 import server.model.customer.CustomerRequestResponse;
 import server.model.customer.CustomerRequestStatus;
 

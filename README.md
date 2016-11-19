@@ -15,5 +15,5 @@ Jackson API
 
 ## Authenticated users
 
-server.model.TokenService provides \<Token,Profile\> Map and some handy methods
-server.model.AccountService provides all accounting stuff (email, logout, etc)
+server.model.services.TokenService provides \<Token,Profile\> Map and some handy methods
+server.model.services.AccountService provides all accounting stuff (email, logout, etc)

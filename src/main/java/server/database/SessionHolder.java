@@ -30,17 +30,21 @@ public class SessionHolder implements AutoCloseable{
     }
 
     public static SessionHolder getHolder(){
-        return pool.getOrDefault(Thread.currentThread(), new SessionHolder());
+        SessionHolder holder = pool.get(Thread.currentThread());
+        if (holder == null) {
+            holder = new SessionHolder();
+            LOG.debug("New session spawned");
+            pool.put(Thread.currentThread(), holder);
+            LOG.info(String.format("SessionPool{size=%d}", pool.size()));
+        }
+        return holder;
     }
 
     private Session session;
     protected static Logger LOG = LogManager.getLogger(SessionHolder.class);
 
-    private SessionHolder() {
+    public SessionHolder() {
         this(DbHibernate.newSession());
-        LOG.debug("New session spawned");
-        getPool().putIfAbsent(Thread.currentThread(), this);
-        LOG.info(String.format("SessionPool{size=%d}", pool.size()));
     }
 
     public SessionHolder(Session session) {

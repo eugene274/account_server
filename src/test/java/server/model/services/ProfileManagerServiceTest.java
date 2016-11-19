@@ -1,4 +1,4 @@
-package server.model;
+package server.model.services;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

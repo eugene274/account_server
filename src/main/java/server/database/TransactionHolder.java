@@ -1,15 +1,32 @@
 package server.database;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by eugene on 11/19/16.
  */
 public class TransactionHolder extends SessionHolder {
+    private static final Map<Thread,TransactionHolder> transactionsPool = new ConcurrentHashMap<>();
+
+    public static Map<Thread, TransactionHolder> getTransactionsPool() {
+        return transactionsPool;
+    }
+
+    public static TransactionHolder getTransactionHolder(){
+        TransactionHolder holder = transactionsPool.get(Thread.currentThread());
+        if (holder == null) {
+            holder = new TransactionHolder(getHolder());
+            transactionsPool.put(Thread.currentThread(),holder);
+        }
+        return holder;
+    }
+
     private Transaction transaction;
+
 
     public TransactionHolder(Session session) {
         super(session);
@@ -34,6 +51,10 @@ public class TransactionHolder extends SessionHolder {
     public void rollback(){
         LOG.debug("Transaction rollback");
         transaction.rollback();
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
     }
 
     @Override

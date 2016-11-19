@@ -1,4 +1,4 @@
-package server.model;
+package server.model.services;
 
 import org.jetbrains.annotations.TestOnly;
 import server.model.customer.CustomerErrors.InternalError;
