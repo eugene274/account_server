@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
 import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.TestOnly;
+import server.database.SessionHolder;
+import server.database.TransactionHolder;
 import server.database.TransactionalError;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.UserProfile;
@@ -23,7 +25,8 @@ import java.util.StringJoiner;
  * Created by eugene on 10/10/16.
  */
 
-public class UserProfileHibernate implements UserDAO {
+public class UserProfileHibernate
+        implements UserDAO {
     @Override
     public void remove(Long id) {
         throw new NotImplementedException();
@@ -38,7 +41,7 @@ public class UserProfileHibernate implements UserDAO {
     private static String ALIAS = "user";
     private static Logger LOG = LogManager.getLogger(UserProfileHibernate.class);
 
-    private Session session = DbHibernate.newSession();
+    private final SessionHolder holder = SessionHolder.getHolder();
 
     private org.hibernate.query.Query<UserProfile> getWhereQuery(String ...conditions){
         StringJoiner query = new StringJoiner(" and ", String.format("from %s as %s where ", ENTITY_NAME, ALIAS) ,"");
@@ -46,25 +49,28 @@ public class UserProfileHibernate implements UserDAO {
             query.add(condition);
         }
 
-        return session.createQuery(query.toString(), UserProfile.class);
+        return holder.getSession().createQuery(query.toString(), UserProfile.class);
     }
 
     @Override
     public Long insert(UserProfile in) throws DaoError {
-        try {
-            return (Long) DbHibernate.getTransactional( s -> s.save(in));
-        } catch (TransactionalError error) {
-            Exception cause = (Exception) error.getCause();
-            if (cause instanceof PersistenceException &&
-                    cause.getCause() instanceof ConstraintViolationException) throw new EntityExists();
-            LOG.error(cause.getMessage());
-            throw new DaoError(cause);
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
+            return (Long) holder.getSession().save(in);
+        }
+        catch (PersistenceException e){
+            if(e.getCause() instanceof ConstraintViolationException) throw new EntityExists();
+            LOG.error(e.getMessage());
+            throw new DaoError(e);
+        }
+        catch (Exception e) {
+            LOG.error(e.getMessage());
+            throw new DaoError(e);
         }
     }
 
     @Override
     public UserProfile getById(Long id) {
-        return session.get(UserProfile.class, id);
+        return holder.getSession().get(UserProfile.class, id);
     }
 
     @Override
@@ -79,36 +85,19 @@ public class UserProfileHibernate implements UserDAO {
 
     @Override
     public UserProfile getByEmail(String email) {
-        return session.byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
+        return holder.getSession().byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
     }
 
     public void update(Long id, String field, String value) throws DaoError {
-        try {
-            DbHibernate.doTransactional( s -> {
-                s.createQuery(String.format("update versioned %s set %s = :value where id = :id", ENTITY_NAME, field)).
-                        setParameter("value",value).
-                        setParameter("id",id).
-                        executeUpdate();
-            });
-        }
-        catch (TransactionalError error){
-            Exception cause = (Exception) error.getCause();
-            LOG.error(cause.getMessage());
-            throw new DaoError(cause);
+        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
+            holder.getSession().createQuery(String.format("update versioned %s set %s = :value where id = :id", ENTITY_NAME, field)).
+                    setParameter("value",value).
+                    setParameter("id",id).
+                    executeUpdate();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            throw new DaoError(e);
         }
     }
 
-    @TestOnly
-    public Session getSession() {
-        return session;
-    }
-
-    /**
-     * Closes current Hibernate session
-     * @throws Exception
-     */
-    @Override
-    public void close() throws Exception {
-        throw new NotImplementedException();
-    }
 }

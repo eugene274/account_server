@@ -1,6 +1,6 @@
 package server.api;
 
-import server.model.AccountService;
+import server.model.services.AccountService;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerRequestResponse;
 import server.model.data.Score;

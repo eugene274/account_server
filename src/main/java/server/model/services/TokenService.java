@@ -1,5 +1,6 @@
-package server.model;
+package server.model.services;
 
+import org.jetbrains.annotations.TestOnly;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.dao.DaoError;
 import server.model.dao.TokenDAO;
@@ -19,11 +20,6 @@ import java.util.stream.Collectors;
  */
 public class TokenService {
     private TokenDAO dao = new TokenHibernate();
-
-    protected static final ConcurrentHashMap<Token, UserProfile> usersSignedIn
-            = new ConcurrentHashMap<>();
-    protected static final ConcurrentHashMap<UserProfile,Token> usersSignedInReverse
-            = new ConcurrentHashMap<>();
 
     protected UserProfile getUserByTokenString(String tokenString){
         return dao.getTokenByTokenString(tokenString).getUser();
@@ -63,5 +59,10 @@ public class TokenService {
         catch (NullPointerException e){
             return null;
         }
+    }
+
+    @TestOnly
+    public TokenDAO getDao() {
+        return dao;
     }
 }

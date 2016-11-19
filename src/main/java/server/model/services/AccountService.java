@@ -1,9 +1,10 @@
-package server.model;
+package server.model.services;
 
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
+import server.model.CredentialsPolicy;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.PolicyViolationError;
 import server.model.dao.DaoError;
@@ -15,8 +16,6 @@ import server.model.customer.CustomerErrors.WrongCredentialsError;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.Token;
 import server.model.data.UserProfile;
-import server.model.services.LeaderBoardService;
-import server.model.services.LeaderBoardServiceImpl;
 
 
 import java.util.Collection;
@@ -34,8 +33,6 @@ public class AccountService {
     private UserDAO dao = new UserProfileHibernate();
     private TokenService tokenService = new TokenService();
 
-    public AccountService() {
-    }
 
     @TestOnly
     public UserDAO getDao() {

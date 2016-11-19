@@ -1,17 +1,11 @@
-package server;
+package server.model.services;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import server.model.AccountService;
-import server.model.TokenService;
-import server.model.dao.UserProfileHibernate;
+import server.database.SessionHolder;
 import server.model.data.Token;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerErrors.LoginExistsError;
-import server.model.data.UserProfile;
-
-import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +14,6 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class AccountServiceTest {
-
-
     static AccountService accountService = new AccountService();
     static TokenService tokenService = new TokenService();
 
@@ -55,14 +47,13 @@ public class AccountServiceTest {
         assertEquals(token1, token2);
     }
 
-    @Ignore
     @Test
     public void logout() throws Exception {
         Token token = accountService.signIn(login,pass);
         assertNotNull(tokenService.validateToken(token.toString()));
         accountService.logout(token.toString());
 
-        accountService.getDao().getSession().clear();
+        SessionHolder.renew();
         assertNull(tokenService.validateToken(token.toString()));
     }
 

@@ -1,10 +1,9 @@
 package server.api;
 
-import server.model.AccountService;
+import server.model.services.AccountService;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerRequestResponse;
-import server.model.dao.UserProfileHibernate;
 import server.model.data.Token;
 
 import javax.ws.rs.*;
