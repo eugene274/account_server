@@ -1,4 +1,4 @@
-package server.model.dao;
+package server.model.dao.exceptions;
 
 /**
  * Created by eugene on 11/4/16.

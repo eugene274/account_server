@@ -2,6 +2,7 @@ package server.model.dao;
 
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
+import server.model.dao.exceptions.DaoException;
 import server.model.data.Token;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

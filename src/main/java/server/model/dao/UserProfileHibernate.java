@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.exception.ConstraintViolationException;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
+import server.model.dao.exceptions.DaoException;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.UserProfile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

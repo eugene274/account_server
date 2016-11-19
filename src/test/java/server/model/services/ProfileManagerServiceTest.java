@@ -5,7 +5,7 @@ import org.junit.Test;
 import server.database.SessionHolder;
 import server.model.response.ApiErrors.WrongFieldError;
 import server.model.response.ApiRequestError;
-import server.model.dao.DaoException;
+import server.model.dao.exceptions.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.UserProfile;

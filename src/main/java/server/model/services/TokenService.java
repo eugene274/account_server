@@ -1,7 +1,7 @@
 package server.model.services;
 
 import org.jetbrains.annotations.TestOnly;
-import server.model.dao.DaoException;
+import server.model.dao.exceptions.DaoException;
 import server.model.dao.TokenDAO;
 import server.model.dao.TokenHibernate;
 import server.model.data.Token;

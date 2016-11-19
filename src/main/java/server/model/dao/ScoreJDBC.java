@@ -6,7 +6,9 @@ import org.jetbrains.annotations.TestOnly;
 import server.database.DbHibernate;
 import server.database.JDBCExecutor;
 import server.database.executors.ScoreListExecutor;
+import server.model.dao.exceptions.DaoException;
 import server.model.dao.exceptions.EntityExists;
+import server.model.dao.exceptions.ScoreDaoException;
 import server.model.data.Score;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -61,12 +63,12 @@ public class ScoreJDBC implements ScoreDAO {
     @Override
     public Long insert(Score in) throws DaoException {
 
-        Long id = in.getUserId();
-        if (getById(id) != null) {
-            remove(id);
-            insert(in);
-            return id;
-        }
+//        Long id = in.getUserId();
+//        if (getById(id) != null) {
+//            remove(id);
+//            insert(in);
+//            return id;
+//        }
 
         try {
             checkConnection();
@@ -78,7 +80,7 @@ public class ScoreJDBC implements ScoreDAO {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
             if(e.getSQLState().equals("23505")) throw new EntityExists();
-            throw new DaoException(e);
+            throw new ScoreDaoException(e);
         }
         return in.getUserId();
     }
@@ -111,7 +113,7 @@ public class ScoreJDBC implements ScoreDAO {
         catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoException(e);
+            throw new ScoreDaoException(e);
         }
     }
 
@@ -122,7 +124,7 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoException(e);
+            throw new ScoreDaoException(e);
         }
     }
 
@@ -140,7 +142,7 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoException(e);
+            throw new ScoreDaoException(e);
         }
     }
 
@@ -184,8 +186,9 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoException(e);
+            throw new ScoreDaoException(e);
         }
+
 
     }
 

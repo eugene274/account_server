@@ -1,5 +1,6 @@
 package server.model.dao;
 
+import server.model.dao.exceptions.DaoException;
 import server.model.data.Token;
 
 import java.util.List;

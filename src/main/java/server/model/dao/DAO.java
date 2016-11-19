@@ -1,5 +1,7 @@
 package server.model.dao;
 
+import server.model.dao.exceptions.DaoException;
+
 import java.util.List;
 
 /**

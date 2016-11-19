@@ -3,8 +3,9 @@ package server.model.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
+import server.model.dao.exceptions.EntityExists;
 import server.model.response.ApiErrors.InternalError;
-import server.model.dao.DaoException;
+import server.model.dao.exceptions.DaoException;
 import server.model.dao.ScoreDAO;
 import server.model.dao.ScoreJDBC;
 import server.model.data.Score;
@@ -32,15 +33,15 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
     }
 
     @Override
-    public void register(Long id) throws InternalError {
+    public void register(Long id) throws DaoException {
         Score score = new Score(id, 0);
 
         try {
             dao.insert(score);
-        } catch (DaoException daoException) {
-            LOG.debug(daoException.getCause().getStackTrace());
-            LOG.info(daoException.getCause().getMessage());
-            throw new InternalError();
+        }
+        catch (EntityExists e){
+            dao.remove(id);
+            dao.insert(score);
         }
     }
 
@@ -49,7 +50,6 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
         try {
             dao.remove(id);
         } catch (DaoException daoException) {
-            LOG.debug(daoException.getCause().getStackTrace());
             LOG.info(daoException.getCause().getMessage());
             throw new InternalError();
         }
@@ -68,7 +68,6 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
             leaders = dao.getAll();
             Collections.sort(leaders);
         } catch (DaoException daoException) {
-            LOG.debug(daoException.getCause().getStackTrace());
             LOG.info(daoException.getCause().getMessage());
             throw new InternalError();
         }
