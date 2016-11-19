@@ -7,7 +7,7 @@ import server.model.UserCanChange;
 import server.model.customer.CustomerRequestError;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.WrongFieldError;
-import server.model.dao.DaoError;
+import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.UserProfile;
@@ -50,7 +50,7 @@ public class ProfileManagerService {
     public ProfileManagerService(Long id) throws CustomerRequestError {
         try {
             this.profile = dao.getById(id);
-        } catch (DaoError daoError) {
+        } catch (DaoException daoException) {
             // TODO report this
             throw new InternalError();
         }
@@ -69,7 +69,7 @@ public class ProfileManagerService {
         try {
             dao.update(profile.getId(), field, value);
             LOG.info(String.format("user '%d' change they '%s' to '%s'", profile.getId(),field,value));
-        } catch (DaoError daoError) {
+        } catch (DaoException daoException) {
             throw new InternalError();
         }
     }

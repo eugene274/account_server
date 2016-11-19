@@ -7,7 +7,7 @@ import org.jetbrains.annotations.TestOnly;
 import server.model.CredentialsPolicy;
 import server.model.customer.CustomerErrors.InternalError;
 import server.model.customer.CustomerErrors.PolicyViolationError;
-import server.model.dao.DaoError;
+import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.customer.CustomerRequestError;
@@ -67,8 +67,8 @@ public class AccountService {
             token = new Token(user);
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
-        } catch (DaoError daoError) {
-            LOG.error(daoError.getCause().getMessage());
+        } catch (DaoException daoException) {
+            LOG.error(daoException.getCause().getMessage());
             throw new InternalError();
         }
 
@@ -104,7 +104,7 @@ public class AccountService {
         catch (EntityExists error){
             throw new LoginExistsError(login);
         }
-        catch (DaoError error) {
+        catch (DaoException error) {
             LOG.error(error.getCause().getMessage());
             throw new InternalError();
         }
@@ -119,8 +119,8 @@ public class AccountService {
         try {
             new LeaderBoardServiceImpl().remove(tokenService.getUserByTokenString(tokenString).getId());
             tokenService.removeUserSession(tokenString);
-        } catch (DaoError daoError) {
-            daoError.printStackTrace();
+        } catch (DaoException daoException) {
+            daoException.printStackTrace();
             throw new InternalError();
         }
 //        LOG.info(String.format("'%s' logged out", profile.getEmail()));

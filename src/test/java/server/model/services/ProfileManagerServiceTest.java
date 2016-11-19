@@ -5,11 +5,10 @@ import org.junit.Test;
 import server.database.SessionHolder;
 import server.model.customer.CustomerErrors.WrongFieldError;
 import server.model.customer.CustomerRequestError;
-import server.model.dao.DaoError;
+import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
 import server.model.data.UserProfile;
-import server.model.services.ProfileManagerService;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +27,7 @@ public class ProfileManagerServiceTest {
         Long id = null;
         try {
             id = dao.insert(new UserProfile(login,passw));
-        } catch (DaoError ignore) {}
+        } catch (DaoException ignore) {}
         service = new ProfileManagerService(id);
     }
 

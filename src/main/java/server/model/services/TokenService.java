@@ -1,16 +1,13 @@
 package server.model.services;
 
 import org.jetbrains.annotations.TestOnly;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.dao.DaoError;
+import server.model.dao.DaoException;
 import server.model.dao.TokenDAO;
 import server.model.dao.TokenHibernate;
 import server.model.data.Token;
 import server.model.data.UserProfile;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -25,12 +22,12 @@ public class TokenService {
         return dao.getTokenByTokenString(tokenString).getUser();
     }
 
-    protected void addUserSession(UserProfile user, Token token) throws DaoError {
+    protected void addUserSession(UserProfile user, Token token) throws DaoException {
         token.setUser(user);
         dao.insert(token);
     }
 
-    protected void removeUserSession(String tokenString) throws DaoError {
+    protected void removeUserSession(String tokenString) throws DaoException {
         dao.removeByTokenString(tokenString);
     }
 
@@ -43,7 +40,7 @@ public class TokenService {
         return dao.getAll();
     }
 
-    protected Token getTokenByEmail(String email) throws DaoError {
+    protected Token getTokenByEmail(String email) throws DaoException {
         List<Token> result = dao.getWhere(String.format("user.email = '%s'", email));
         if(result.size() != 1){
             // TODO report

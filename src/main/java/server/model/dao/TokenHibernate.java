@@ -1,18 +1,10 @@
 package server.model.dao;
 
-import org.hibernate.CacheMode;
-import org.hibernate.Session;
-import org.jetbrains.annotations.TestOnly;
-import server.database.DbHibernate;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.database.TransactionalError;
 import server.model.data.Token;
-import server.model.data.UserProfile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -65,13 +57,13 @@ public class TokenHibernate
     }
 
     @Override
-    public void removeByTokenString(String tokenString) throws DaoError {
+    public void removeByTokenString(String tokenString) throws DaoException {
         try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().createQuery(String.format("delete %s where tokenString = :tokenString", ENTITY_NAME))
                     .setParameter("tokenString",tokenString)
                     .executeUpdate();
         } catch (Exception e) {
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
@@ -81,16 +73,16 @@ public class TokenHibernate
     }
 
     @Override
-    public void remove(Token token) throws DaoError {
+    public void remove(Token token) throws DaoException {
         try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().remove(token);
         } catch (Exception e) {
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public void remove(Long id) throws DaoError {
+    public void remove(Long id) throws DaoException {
         throw new NotImplementedException();
     }
 

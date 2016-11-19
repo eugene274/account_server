@@ -3,12 +3,9 @@ package server.model.dao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
-import server.database.DbError;
 import server.database.DbHibernate;
 import server.database.JDBCExecutor;
 import server.database.executors.ScoreListExecutor;
-import server.model.dao.DaoError;
-import server.model.dao.ScoreDAO;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.Score;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -62,7 +59,7 @@ public class ScoreJDBC implements ScoreDAO {
 
 
     @Override
-    public Long insert(Score in) throws DaoError {
+    public Long insert(Score in) throws DaoException {
 
         Long id = in.getUserId();
         if (getById(id) != null) {
@@ -81,13 +78,13 @@ public class ScoreJDBC implements ScoreDAO {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
             if(e.getSQLState().equals("23505")) throw new EntityExists();
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
         return in.getUserId();
     }
 
     @Override
-    public Score getById(Long id) throws DaoError {
+    public Score getById(Long id) throws DaoException {
         List<Score> scores = getWhere(String.format("user_id = %d", id));
         try {
             return scores.get(0);
@@ -99,7 +96,7 @@ public class ScoreJDBC implements ScoreDAO {
     }
 
     @Override
-    public List<Score> getWhere(String... conditions) throws DaoError {
+    public List<Score> getWhere(String... conditions) throws DaoException {
         StringJoiner selectWhere = new StringJoiner(" AND ", GET_ALL + " WHERE ","");
         for (String condition :
                 conditions) {
@@ -114,28 +111,28 @@ public class ScoreJDBC implements ScoreDAO {
         catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public List<Score> getAll() throws DaoError {
+    public List<Score> getAll() throws DaoException {
         try {
             return JDBCExecutor.getQuery(getQuery, new ScoreListExecutor());
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public void remove(Score in) throws DaoError {
+    public void remove(Score in) throws DaoException {
         throw new NotImplementedException();
     }
 
     @Override
-    public void remove(Long id) throws DaoError {
+    public void remove(Long id) throws DaoException {
         try {
             deleteQuery.setLong(1,id);
             JDBCExecutor.doQuery(deleteQuery);
@@ -143,7 +140,7 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
@@ -178,7 +175,7 @@ public class ScoreJDBC implements ScoreDAO {
     }
 
     @Override
-    public void addPoints(Long id, Integer points) throws DaoError {
+    public void addPoints(Long id, Integer points) throws DaoException {
         try {
             updateQuery.setLong(1, points);
             updateQuery.setLong(2, id);
@@ -187,13 +184,13 @@ public class ScoreJDBC implements ScoreDAO {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             LOG.error("SQLState: " + e.getSQLState());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
 
     }
 
     @Override
-    public List<Score> getAllOrdered() throws DaoError {
+    public List<Score> getAllOrdered() throws DaoException {
         throw new NotImplementedException();
     }
 

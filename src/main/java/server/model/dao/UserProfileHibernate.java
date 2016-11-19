@@ -2,22 +2,14 @@ package server.model.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.CacheMode;
 import org.hibernate.exception.ConstraintViolationException;
-import org.jetbrains.annotations.TestOnly;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.database.TransactionalError;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.UserProfile;
-import server.database.DbHibernate;
-import org.hibernate.Session;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.PersistenceException;
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -33,7 +25,7 @@ public class UserProfileHibernate
     }
 
     @Override
-    public void remove(UserProfile in) throws DaoError {
+    public void remove(UserProfile in) throws DaoException {
         throw new NotImplementedException();
     }
 
@@ -53,18 +45,18 @@ public class UserProfileHibernate
     }
 
     @Override
-    public Long insert(UserProfile in) throws DaoError {
+    public Long insert(UserProfile in) throws DaoException {
         try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             return (Long) holder.getSession().save(in);
         }
         catch (PersistenceException e){
             if(e.getCause() instanceof ConstraintViolationException) throw new EntityExists();
             LOG.error(e.getMessage());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
         catch (Exception e) {
             LOG.error(e.getMessage());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 
@@ -79,7 +71,7 @@ public class UserProfileHibernate
     }
 
     @Override
-    public List<UserProfile> getAll() throws DaoError {
+    public List<UserProfile> getAll() throws DaoException {
         throw new NotImplementedException();
     }
 
@@ -88,7 +80,7 @@ public class UserProfileHibernate
         return holder.getSession().byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
     }
 
-    public void update(Long id, String field, String value) throws DaoError {
+    public void update(Long id, String field, String value) throws DaoException {
         try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
             holder.getSession().createQuery(String.format("update versioned %s set %s = :value where id = :id", ENTITY_NAME, field)).
                     setParameter("value",value).
@@ -96,7 +88,7 @@ public class UserProfileHibernate
                     executeUpdate();
         } catch (Exception e) {
             LOG.error(e.getMessage());
-            throw new DaoError(e);
+            throw new DaoException(e);
         }
     }
 

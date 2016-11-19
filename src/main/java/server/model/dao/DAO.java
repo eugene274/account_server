@@ -1,20 +1,17 @@
 package server.model.dao;
 
-import org.jetbrains.annotations.TestOnly;
-
-import java.io.Closeable;
 import java.util.List;
 
 /**
  * Created by eugene on 10/18/16.
  */
 public interface DAO<T> {
-    Long insert(T in) throws DaoError;
-    T getById(Long id) throws DaoError;
-    List<T> getWhere(String ... conditions) throws DaoError;
-    List<T> getAll() throws DaoError;
+    Long insert(T in) throws DaoException;
+    T getById(Long id) throws DaoException;
+    List<T> getWhere(String ... conditions) throws DaoException;
+    List<T> getAll() throws DaoException;
 
-    void remove(T in) throws DaoError;
-    void remove(Long id) throws DaoError;
+    void remove(T in) throws DaoException;
+    void remove(Long id) throws DaoException;
 
 }

@@ -1,6 +1,5 @@
 package server.database.executors;
 
-import server.database.DbError;
 import server.database.Executor;
 import server.model.data.Score;
 

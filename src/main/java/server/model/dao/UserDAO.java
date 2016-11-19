@@ -1,8 +1,5 @@
 package server.model.dao;
 
-import org.hibernate.Session;
-import org.jetbrains.annotations.TestOnly;
-import org.junit.Test;
 import server.model.data.UserProfile;
 
 /**
@@ -11,5 +8,5 @@ import server.model.data.UserProfile;
 @SuppressWarnings("DefaultFileTemplate")
 public interface UserDAO extends DAO<UserProfile> {
     UserProfile getByEmail(String login);
-    void update(Long id, String field, String value) throws DaoError;
+    void update(Long id, String field, String value) throws DaoException;
 }
