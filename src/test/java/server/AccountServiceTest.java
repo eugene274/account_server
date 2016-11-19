@@ -3,6 +3,7 @@ package server;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import server.database.SessionHolder;
 import server.model.AccountService;
 import server.model.TokenService;
 import server.model.dao.UserProfileHibernate;
@@ -59,6 +60,7 @@ public class AccountServiceTest {
         assertNotNull(tokenService.validateToken(token.toString()));
         accountService.logout(token.toString());
 
+        SessionHolder.getHolder().getSession().clear();
         assertNull(tokenService.validateToken(token.toString()));
     }
 

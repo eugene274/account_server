@@ -49,7 +49,7 @@ public class UserProfileHibernate
             query.add(condition);
         }
 
-        return getSession().createQuery(query.toString(), UserProfile.class);
+        return holder.getSession().createQuery(query.toString(), UserProfile.class);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UserProfileHibernate
 
     @Override
     public UserProfile getById(Long id) {
-        return getSession().get(UserProfile.class, id);
+        return holder.getSession().get(UserProfile.class, id);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class UserProfileHibernate
 
     @Override
     public UserProfile getByEmail(String email) {
-        return getSession().byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
+        return holder.getSession().byNaturalId(UserProfile.class).using("email",email).loadOptional().orElse(null);
     }
 
     public void update(Long id, String field, String value) throws DaoError {
@@ -100,8 +100,4 @@ public class UserProfileHibernate
         }
     }
 
-    @TestOnly
-    public Session getSession() {
-        return holder.getSession();
-    }
 }

@@ -5,6 +5,7 @@ import org.hibernate.CacheMode;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import server.database.SessionHolder;
 import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.data.UserProfile;
 
@@ -80,7 +81,7 @@ public class UserProfileHibernateTest  {
         assertNull(dao.getById(id).getName());
         dao.update(id,"name","qwerty");
         // flushing session cache
-        dao.getSession().clear();
+        SessionHolder.renew();
         assertEquals(dao.getById(id).getName(), "qwerty");
     }
 }

@@ -2,6 +2,7 @@ package server.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import server.database.SessionHolder;
 import server.model.customer.CustomerErrors.WrongFieldError;
 import server.model.customer.CustomerRequestError;
 import server.model.dao.DaoError;
@@ -43,6 +44,7 @@ public class ProfileManagerServiceTest {
 
         service.update("name", "qwerty");
 
+        SessionHolder.renew();
         assertEquals(dao.getByEmail(login).getName(), "qwerty");
     }
 

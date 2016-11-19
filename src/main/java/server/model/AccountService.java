@@ -34,8 +34,6 @@ public class AccountService {
     private UserDAO dao = new UserProfileHibernate();
     private TokenService tokenService = new TokenService();
 
-    public AccountService() {
-    }
 
     @TestOnly
     public UserDAO getDao() {
