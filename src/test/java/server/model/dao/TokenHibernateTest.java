@@ -1,12 +1,13 @@
 package server.model.dao;
 
-import com.sun.java.swing.plaf.windows.WindowsBorders;
 import org.jetbrains.annotations.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.database.DbHibernate;
+import server.database.SessionHolder;
+import server.database.TransactionHolder;
+import server.model.dao.database.DbHibernate;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 
@@ -18,8 +19,8 @@ import static org.junit.Assert.*;
  * Created by ivan on 06.11.16.
  */
 public class TokenHibernateTest {
-    static UserProfile user = new UserProfile("testiuytre","test");
-    static UserProfile user2 = new UserProfile("test2ytrew","test");
+    static UserProfile user = new UserProfile("testbiuytre","test");
+    static UserProfile user2 = new UserProfile("testb2ytrew","test");
 
     @NotNull
     static TokenHibernate tokendao;
@@ -36,13 +37,14 @@ public class TokenHibernateTest {
         userdao.insert(user2);
     }
 
-    @After
+    @Before
     public void removeTokens() throws Exception {
-        DbHibernate.doTransactional(session -> {
-            session.createQuery("delete Tokens").executeUpdate();
-        });
+        TransactionHolder holder = new TransactionHolder(SessionHolder.getHolder());
+        holder.getSession().createQuery("delete Tokens").executeUpdate();
+        holder.commit();
+        holder.close();
 
-        tokendao.getSession().clear();
+        SessionHolder.getHolder().getSession().clear();
 
     }
 

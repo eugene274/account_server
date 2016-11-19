@@ -3,7 +3,7 @@
 ## HIBERNATE
 H2 in-memo db for tests 
 
-@see server.database
+@see server.model.dao.database
 @see hibernate.cfg.xml
 @see server.model.dao
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by eugene on 10/18/16.
  */
-public interface DAO<T> extends AutoCloseable {
+public interface DAO<T> {
     Long insert(T in) throws DaoError;
     T getById(Long id) throws DaoError;
     List<T> getWhere(String ... conditions) throws DaoError;

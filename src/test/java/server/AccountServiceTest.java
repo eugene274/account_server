@@ -20,8 +20,6 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class AccountServiceTest {
-
-
     static AccountService accountService = new AccountService();
     static TokenService tokenService = new TokenService();
 
@@ -55,14 +53,12 @@ public class AccountServiceTest {
         assertEquals(token1, token2);
     }
 
-    @Ignore
     @Test
     public void logout() throws Exception {
         Token token = accountService.signIn(login,pass);
         assertNotNull(tokenService.validateToken(token.toString()));
         accountService.logout(token.toString());
 
-        accountService.getDao().getSession().clear();
         assertNull(tokenService.validateToken(token.toString()));
     }
 

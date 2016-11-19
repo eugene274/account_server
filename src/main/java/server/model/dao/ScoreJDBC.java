@@ -207,7 +207,6 @@ public class ScoreJDBC implements ScoreDAO {
      * Closes current JDBC connection
      * @throws Exception
      */
-    @Override
     public void close() throws Exception {
         throw new NotImplementedException();
     }
