@@ -23,7 +23,7 @@ public class SessionHolder implements AutoCloseable{
         else renew(holder);
     }
 
-    public static void renew(SessionHolder holder) throws Exception {
+    public static void renew(SessionHolder holder) {
         if(holder.session.isOpen()) holder.session.close();
         holder.session = DbHibernate.newSession();
         LOG.debug("Session renewed");
@@ -37,6 +37,7 @@ public class SessionHolder implements AutoCloseable{
             pool.put(Thread.currentThread(), holder);
             LOG.info(String.format("SessionPool{size=%d}", pool.size()));
         }
+        else if (!holder.getSession().isOpen()) renew(holder);
         return holder;
     }
 
@@ -60,7 +61,12 @@ public class SessionHolder implements AutoCloseable{
     }
 
     @Override
-    public void close() throws Exception {
-        SessionHolder.renew(this);
+    public void close() throws DbException {
+        try {
+            this.session.close();
+        }
+        catch (RuntimeException e) {
+            throw new DbException(e);
+        }
     }
 }
