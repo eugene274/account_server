@@ -46,7 +46,12 @@ public class TransactionHolder extends SessionHolder {
 
     public void commit(){
         LOG.debug("Transaction commit");
-        transaction.commit();
+        try {
+            transaction.commit();
+        }
+        catch (RuntimeException e){
+            throw new DbException(e);
+        }
     }
 
     public void rollback(){
@@ -59,7 +64,7 @@ public class TransactionHolder extends SessionHolder {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws DbException {
         LOG.debug("Closing transaction");
         if(transaction.isActive()){
             if(transaction.getRollbackOnly()) {

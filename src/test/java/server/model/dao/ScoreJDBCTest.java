@@ -1,10 +1,8 @@
 package server.model.dao;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.model.dao.ScoreJDBC;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.Score;
 
@@ -33,14 +31,13 @@ public class ScoreJDBCTest {
         Score score = new Score(100L,2);
         scoreDAO.insert(score);
         assertTrue(scoreDAO.getAll().contains(score));
-        scoreDAO.insert(score);
-    }
 
-    @Test
-    public void insertTwoEqualScore() throws Exception {
-        Score score = new Score(100l, 2);
-        scoreDAO.insert(score);
-        scoreDAO.insert(score);
+        try {
+            scoreDAO.insert(score);
+            fail();
+        }
+        catch (EntityExists e){
+        }
     }
 
     @Test

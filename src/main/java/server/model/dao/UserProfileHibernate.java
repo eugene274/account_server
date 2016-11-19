@@ -2,15 +2,12 @@ package server.model.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.exception.ConstraintViolationException;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
 import server.model.dao.exceptions.DaoException;
-import server.model.dao.exceptions.EntityExists;
 import server.model.data.UserProfile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -47,15 +44,10 @@ public class UserProfileHibernate
 
     @Override
     public Long insert(UserProfile in) throws DaoException {
-        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
-            return (Long) holder.getSession().save(in);
+        try {
+            return (Long) TransactionHolder.getTransactionHolder().getSession().save(in);
         }
-        catch (PersistenceException e){
-            if(e.getCause() instanceof ConstraintViolationException) throw new EntityExists();
-            LOG.error(e.getMessage());
-            throw new DaoException(e);
-        }
-        catch (Exception e) {
+        catch (RuntimeException e) {
             LOG.error(e.getMessage());
             throw new DaoException(e);
         }

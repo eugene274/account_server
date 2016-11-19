@@ -30,11 +30,11 @@ public class TokenHibernate
     }
 
     @Override
-    public Long insert(Token in) {
-        try (TransactionHolder holder = TransactionHolder.getTransactionHolder()) {
-            return (Long) holder.getSession().save(in);
-        } catch (Exception e) {
-            return -1L;
+    public Long insert(Token in) throws DaoException {
+        try {
+            return (Long) TransactionHolder.getTransactionHolder().getSession().save(in);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
 

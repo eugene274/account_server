@@ -1,7 +1,6 @@
 package server.model.dao;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,10 +37,8 @@ public class TokenHibernateTest {
 
     @Before
     public void removeTokens() throws Exception {
-        TransactionHolder holder = new TransactionHolder(SessionHolder.getHolder());
-        holder.getSession().createQuery("delete Tokens").executeUpdate();
-        holder.commit();
-        holder.close();
+        TransactionHolder.getTransactionHolder().getSession().createQuery("delete Tokens").executeUpdate();
+        TransactionHolder.getTransactionHolder().close();
 
         SessionHolder.getHolder().getSession().clear();
 
@@ -66,7 +63,7 @@ public class TokenHibernateTest {
         Long id = tokendao.insert(token);
 
         assertNull(tokendao.getById(-1L));
-        assertNotNull(token2 = (Token) tokendao.getById(id));
+        assertNotNull(token2 = tokendao.getById(id));
         assertEquals(token, token2);
     }
 

@@ -3,12 +3,12 @@ package server.model.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
-import server.model.dao.exceptions.EntityExists;
-import server.model.response.ApiErrors.InternalError;
-import server.model.dao.exceptions.DaoException;
 import server.model.dao.ScoreDAO;
 import server.model.dao.ScoreJDBC;
+import server.model.dao.exceptions.DaoException;
+import server.model.dao.exceptions.EntityExists;
 import server.model.data.Score;
+import server.model.response.ApiErrors.InternalError;
 
 import java.sql.SQLException;
 import java.util.Collections;

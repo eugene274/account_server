@@ -4,19 +4,18 @@ package server.model.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
+import server.database.TransactionHolder;
 import server.model.CredentialsPolicy;
-import server.model.response.ApiErrors.InternalError;
-import server.model.response.ApiErrors.PolicyViolationError;
-import server.model.dao.exceptions.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
-import server.model.response.ApiRequestError;
-import server.model.response.ApiErrors.LoginExistsError;
-import server.model.response.ApiErrors.WrongCredentialsError;
-import server.model.dao.exceptions.EntityExists;
+import server.model.dao.exceptions.DaoException;
 import server.model.data.Token;
 import server.model.data.UserProfile;
-
+import server.model.response.ApiErrors.InternalError;
+import server.model.response.ApiErrors.LoginExistsError;
+import server.model.response.ApiErrors.PolicyViolationError;
+import server.model.response.ApiErrors.WrongCredentialsError;
+import server.model.response.ApiRequestError;
 
 import java.util.Collection;
 
@@ -57,7 +56,7 @@ public class AccountService {
     {
         // user's already signed in
         Token token = null;
-        try {
+        try (TransactionHolder ignored = TransactionHolder.getTransactionHolder()){
             token = tokenService.getTokenByEmail(email);
             if(null != token) return token;
             UserProfile user = dao.getByEmail(email);
@@ -67,13 +66,21 @@ public class AccountService {
             token = new Token(user);
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
+
+            try {
+                new LeaderBoardServiceImpl().register(user.getId());
+                LOG.info("'" + email + "' registered to leader board");
+            }
+            catch (DaoException e){
+                TransactionHolder.getTransactionHolder().rollback();
+                LOG.warn("Transaction rollbacked due to LeaderBoard registration error");
+            }
         } catch (DaoException daoException) {
             LOG.error(daoException.getCause().getMessage());
             throw new InternalError();
         }
 
-        new LeaderBoardServiceImpl().register(dao.getByEmail(email).getId());
-        LOG.info("'" + email + "' registered to leader board");
+
 
         return token;
     }
@@ -98,11 +105,9 @@ public class AccountService {
             throw new PolicyViolationError();
         }
 
-        try {
+        try (TransactionHolder ignored = TransactionHolder.getTransactionHolder()){
+            if (dao.getByEmail(login) != null) throw new LoginExistsError(login);
             dao.insert(new UserProfile(login,pass));
-        }
-        catch (EntityExists error){
-            throw new LoginExistsError(login);
         }
         catch (DaoException error) {
             LOG.error(error.getCause().getMessage());
