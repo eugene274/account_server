@@ -1,9 +1,9 @@
-package server.model.customer;
+package server.model.response;
 
 /**
  * Created by eugene on 10/13/16.
  */
 @SuppressWarnings("DefaultFileTemplate")
-public enum CustomerRequestStatus {
+public enum ApiRequestStatus {
     OK,ERROR
 }

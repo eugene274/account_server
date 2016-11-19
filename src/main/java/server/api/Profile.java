@@ -1,7 +1,7 @@
 package server.api;
 
-import server.model.customer.CustomerRequestError;
-import server.model.customer.CustomerRequestResponse;
+import server.model.response.ApiRequestError;
+import server.model.response.ApiRequestResponse;
 import server.model.data.UserProfile;
 import server.model.services.ProfileManagerService;
 
@@ -28,9 +28,9 @@ public class Profile {
     ){
         try {
             new ProfileManagerService(userId).update(fName,fValue);
-            return CustomerRequestResponse.ok(null).toString();
-        } catch (CustomerRequestError error) {
-            return CustomerRequestResponse.fail(error).toString();
+            return ApiRequestResponse.ok(null).toString();
+        } catch (ApiRequestError error) {
+            return ApiRequestResponse.fail(error).toString();
         }
     }
 
@@ -42,9 +42,9 @@ public class Profile {
     ){
         try {
             UserProfile profile = new ProfileManagerService(userId).getProfile();
-            return CustomerRequestResponse.ok(profile).toString();
-        } catch (CustomerRequestError customerRequestError) {
-            return CustomerRequestResponse.fail(customerRequestError).toString();
+            return ApiRequestResponse.ok(profile).toString();
+        } catch (ApiRequestError apiRequestError) {
+            return ApiRequestResponse.fail(apiRequestError).toString();
         }
     }
 }

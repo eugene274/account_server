@@ -1,4 +1,4 @@
-package server.model.customer;
+package server.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by eugene on 10/13/16.
  */
 @SuppressWarnings("DefaultFileTemplate")
-public class CustomerRequestResponse {
+public class ApiRequestResponse {
     private static String PROCESSING_ERROR = "{" +
             "\"status\": \"ERROR\"," +
             "\"error\" : { " +
@@ -24,10 +24,10 @@ public class CustomerRequestResponse {
             "}" +
             "}";
 
-    private CustomerRequestStatus status;
+    private ApiRequestStatus status;
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private CustomerRequestError error;
+    private ApiRequestError error;
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Object response;
 
@@ -41,16 +41,16 @@ public class CustomerRequestResponse {
         mapper.addMixIn(Token.class, TokenMixin.class);
     }
 
-    public static CustomerRequestResponse ok(Object response){
-        return new CustomerRequestResponse(CustomerRequestStatus.OK, null, response);
+    public static ApiRequestResponse ok(Object response){
+        return new ApiRequestResponse(ApiRequestStatus.OK, null, response);
     }
 
-    public static CustomerRequestResponse fail(CustomerRequestError error){
-        return new CustomerRequestResponse(CustomerRequestStatus.ERROR, error, null);
+    public static ApiRequestResponse fail(ApiRequestError error){
+        return new ApiRequestResponse(ApiRequestStatus.ERROR, error, null);
     }
 
-    public static CustomerRequestResponse readJson(String input) throws IOException {
-        return mapper.readValue(input,CustomerRequestResponse.class);
+    public static ApiRequestResponse readJson(String input) throws IOException {
+        return mapper.readValue(input,ApiRequestResponse.class);
     }
 
     @Override
@@ -63,21 +63,21 @@ public class CustomerRequestResponse {
         }
     }
 
-    private CustomerRequestResponse() {
+    private ApiRequestResponse() {
     }
 
-    private CustomerRequestResponse(CustomerRequestStatus status, CustomerRequestError error, Object response) {
+    private ApiRequestResponse(ApiRequestStatus status, ApiRequestError error, Object response) {
         this.status = status;
         this.error = error;
         this.response = response;
     }
 
 
-    public CustomerRequestStatus getStatus() {
+    public ApiRequestStatus getStatus() {
         return status;
     }
 
-    public CustomerRequestError getError() {
+    public ApiRequestError getError() {
         return error;
     }
 

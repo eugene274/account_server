@@ -1,8 +1,8 @@
 package server.api;
 
 import server.model.services.AccountService;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.customer.CustomerRequestResponse;
+import server.model.response.ApiErrors.InternalError;
+import server.model.response.ApiRequestResponse;
 import server.model.data.Score;
 import server.model.services.LeaderBoardService;
 import server.model.services.LeaderBoardServiceImpl;
@@ -26,7 +26,7 @@ public class Data {
     @GET
     @Path("/users")
     public String getAllUsers(){
-        return CustomerRequestResponse.ok(accountService.getOnlineUsers()).toString();
+        return ApiRequestResponse.ok(accountService.getOnlineUsers()).toString();
     }
 
     @GET
@@ -39,15 +39,15 @@ public class Data {
         try {
             lb = new LeaderBoardServiceImpl();
         } catch (InternalError internalError) {
-            return CustomerRequestResponse.fail(internalError).toString();
+            return ApiRequestResponse.fail(internalError).toString();
         }
 
         List<Score> leaders = null;
         try {
             leaders = (N == null)? lb.getLeaders() : lb.getLeaders(N);
-            return CustomerRequestResponse.ok(leaders).toString();
+            return ApiRequestResponse.ok(leaders).toString();
         } catch (InternalError internalError) {
-            return CustomerRequestResponse.fail(internalError).toString();
+            return ApiRequestResponse.fail(internalError).toString();
         }
     }
 
@@ -58,9 +58,9 @@ public class Data {
         try{
             lbs = new LeaderBoardServiceImpl();
             Score score = lbs.getScore(userId);
-            return CustomerRequestResponse.ok(score.getScore()).toString();
+            return ApiRequestResponse.ok(score.getScore()).toString();
         } catch (InternalError internalError) {
-            return CustomerRequestResponse.fail(internalError).toString();
+            return ApiRequestResponse.fail(internalError).toString();
         }
     }
 

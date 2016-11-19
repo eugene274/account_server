@@ -7,8 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import server.Server;
 import server.database.DbHibernate;
-import server.model.customer.CustomerRequestResponse;
-import server.model.customer.CustomerRequestStatus;
+import server.model.response.ApiRequestResponse;
+import server.model.response.ApiRequestStatus;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,17 +55,17 @@ public class AuthTest {
                 .build();
     }
 
-    private static CustomerRequestResponse parseResponse(Response response) throws IOException {
-        return CustomerRequestResponse.readJson(response.body().string());
+    private static ApiRequestResponse parseResponse(Response response) throws IOException {
+        return ApiRequestResponse.readJson(response.body().string());
     }
 
-    private static CustomerRequestResponse register(String name, String password) throws IOException {
+    private static ApiRequestResponse register(String name, String password) throws IOException {
         Request request = genAuthRequest("register", requestBodyWrapper(credentialsBody(name, password)));
         Response response = client.newCall(request).execute();
         return parseResponse(response);
     }
 
-    private static CustomerRequestResponse login(String name, String password) throws IOException {
+    private static ApiRequestResponse login(String name, String password) throws IOException {
         Request request = genAuthRequest("login", requestBodyWrapper(credentialsBody(name, password)));
         Response response = client.newCall(request).execute();
         return parseResponse(response);
@@ -91,11 +91,11 @@ public class AuthTest {
 
         register(name, pass);
 
-        CustomerRequestResponse response = login(name,pass);
+        ApiRequestResponse response = login(name,pass);
 
         assertEquals(
                 response.getStatus(),
-                CustomerRequestStatus.OK
+                ApiRequestStatus.OK
         );
 
         String tokenString = ((LinkedHashMap<String,String>) response.getResponse()).get("token");
@@ -118,13 +118,13 @@ public class AuthTest {
 
         assertEquals(
                 register(name,pass).getStatus(),
-                CustomerRequestStatus.OK
+                ApiRequestStatus.OK
         );
 
         // login exists
         assertEquals(
                 register(name, pass).getStatus(),
-                CustomerRequestStatus.ERROR
+                ApiRequestStatus.ERROR
         );
 
 
@@ -147,7 +147,7 @@ public class AuthTest {
         response = client.newCall(request).execute();
         assertEquals(response.code(), 200);
 
-        assertEquals(parseResponse(response).getStatus(), CustomerRequestStatus.OK);
+        assertEquals(parseResponse(response).getStatus(), ApiRequestStatus.OK);
 
         // invalid token
         request = genAuthRequest(token,"logout",requestBodyWrapper(""));

@@ -1,10 +1,8 @@
 package server.model.services;
 
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.data.Score;
+import server.model.response.ApiErrors.InternalError;
 
 import static org.junit.Assert.*;
 

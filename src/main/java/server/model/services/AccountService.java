@@ -5,14 +5,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
 import server.model.CredentialsPolicy;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.customer.CustomerErrors.PolicyViolationError;
+import server.model.response.ApiErrors.InternalError;
+import server.model.response.ApiErrors.PolicyViolationError;
 import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
-import server.model.customer.CustomerRequestError;
-import server.model.customer.CustomerErrors.LoginExistsError;
-import server.model.customer.CustomerErrors.WrongCredentialsError;
+import server.model.response.ApiRequestError;
+import server.model.response.ApiErrors.LoginExistsError;
+import server.model.response.ApiErrors.WrongCredentialsError;
 import server.model.dao.exceptions.EntityExists;
 import server.model.data.Token;
 import server.model.data.UserProfile;
@@ -44,7 +44,7 @@ public class AccountService {
      * @param email
      * @param password
      * @return Token
-     * @throws CustomerRequestError
+     * @throws ApiRequestError
      *
      * 1. checks out users already signed in. if present, returns issued token
      * 2. checks out db
@@ -53,7 +53,7 @@ public class AccountService {
      * 4. adds user session and returns token
      */
     public Token signIn( String email, String password)
-            throws CustomerRequestError
+            throws ApiRequestError
     {
         // user's already signed in
         Token token = null;
@@ -82,7 +82,7 @@ public class AccountService {
      *
      * @param login
      * @param pass
-     * @throws CustomerRequestError
+     * @throws ApiRequestError
      *
      * 1. checks db for login existence
      * 2. if ok, check policy violation (empty login, forbidden symbols)
@@ -92,7 +92,7 @@ public class AccountService {
      */
 
     public void signUp( String login, String pass)
-            throws CustomerRequestError {
+            throws ApiRequestError {
 
         if(!CredentialsPolicy.checkLogin(login) || !CredentialsPolicy.checkPassword(pass)){
             throw new PolicyViolationError();

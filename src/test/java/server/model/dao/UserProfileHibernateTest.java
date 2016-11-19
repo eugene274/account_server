@@ -1,12 +1,9 @@
 package server.model.dao;
 
-import org.h2.jdbcx.JdbcDataSource;
-import org.hibernate.CacheMode;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.database.SessionHolder;
-import server.model.customer.CustomerErrors.LoginExistsError;
 import server.model.data.UserProfile;
 
 import java.util.Collection;

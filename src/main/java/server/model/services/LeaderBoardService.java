@@ -1,6 +1,6 @@
 package server.model.services;
 
-import server.model.customer.CustomerErrors.InternalError;
+import server.model.response.ApiErrors.InternalError;
 import server.model.data.Score;
 
 import java.util.List;

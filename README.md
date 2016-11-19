@@ -10,7 +10,7 @@ H2 in-memo db for tests
 ## RESPONSE FORMAT
 Jackson API
 
-@see server.model.customer
+@see server.model.response
 @see server.model.mixin
 
 ## Authenticated users

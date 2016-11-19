@@ -1,12 +1,12 @@
-package server.model.customer.CustomerErrors;
+package server.model.response.ApiErrors;
 
-import server.model.customer.CustomerRequestError;
+import server.model.response.ApiRequestError;
 
 /**
  * Created by eugene on 10/13/16.
  */
 @SuppressWarnings("DefaultFileTemplate")
-public class WrongCredentialsError extends CustomerRequestError {
+public class WrongCredentialsError extends ApiRequestError {
     public WrongCredentialsError() {
         super("Wrong credentials", 1);
     }

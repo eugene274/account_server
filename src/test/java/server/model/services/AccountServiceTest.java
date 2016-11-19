@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import server.database.SessionHolder;
 import server.model.data.Token;
-import server.model.customer.CustomerRequestError;
-import server.model.customer.CustomerErrors.LoginExistsError;
+import server.model.response.ApiRequestError;
+import server.model.response.ApiErrors.LoginExistsError;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +21,7 @@ public class AccountServiceTest {
     static final String pass = "testpass";
 
     @Before
-    public void registerSomeUsers() throws CustomerRequestError {
+    public void registerSomeUsers() throws ApiRequestError {
         try {
             accountService.signUp(login,pass);
         } catch (LoginExistsError ignore) {

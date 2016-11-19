@@ -3,8 +3,8 @@ package server.model.services;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.database.SessionHolder;
-import server.model.customer.CustomerErrors.WrongFieldError;
-import server.model.customer.CustomerRequestError;
+import server.model.response.ApiErrors.WrongFieldError;
+import server.model.response.ApiRequestError;
 import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
@@ -23,7 +23,7 @@ public class ProfileManagerServiceTest {
     private final static String passw = "passwwdd";
 
     @BeforeClass
-    public static void setService() throws CustomerRequestError {
+    public static void setService() throws ApiRequestError {
         Long id = null;
         try {
             id = dao.insert(new UserProfile(login,passw));

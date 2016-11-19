@@ -4,9 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
 import server.model.UserCanChange;
-import server.model.customer.CustomerRequestError;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.customer.CustomerErrors.WrongFieldError;
+import server.model.response.ApiRequestError;
+import server.model.response.ApiErrors.InternalError;
+import server.model.response.ApiErrors.WrongFieldError;
 import server.model.dao.DaoException;
 import server.model.dao.UserDAO;
 import server.model.dao.UserProfileHibernate;
@@ -47,7 +47,7 @@ public class ProfileManagerService {
 
     private UserProfile profile;
 
-    public ProfileManagerService(Long id) throws CustomerRequestError {
+    public ProfileManagerService(Long id) throws ApiRequestError {
         try {
             this.profile = dao.getById(id);
         } catch (DaoException daoException) {
@@ -61,7 +61,7 @@ public class ProfileManagerService {
         }
     }
 
-    public void update(String field, String value) throws CustomerRequestError {
+    public void update(String field, String value) throws ApiRequestError {
         if(!mutable.contains(field)){
             throw new WrongFieldError(field);
         }

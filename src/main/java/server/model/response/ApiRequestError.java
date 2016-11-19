@@ -1,4 +1,4 @@
-package server.model.customer;
+package server.model.response;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
         fieldVisibility = JsonAutoDetect.Visibility.NONE,
         getterVisibility = JsonAutoDetect.Visibility.NONE
 )
-public class CustomerRequestError extends Exception{
+public class ApiRequestError extends Exception{
     private Integer code;
 
     @JsonProperty("code")
@@ -31,7 +31,7 @@ public class CustomerRequestError extends Exception{
     }
 
     @JsonCreator
-    public CustomerRequestError(
+    public ApiRequestError(
             @JsonProperty("reason") String message,
             @JsonProperty("code") Integer code
     ) {
@@ -39,12 +39,12 @@ public class CustomerRequestError extends Exception{
         this.code = code;
     }
 
-    public CustomerRequestError(String message, Throwable cause, Integer code) {
+    public ApiRequestError(String message, Throwable cause, Integer code) {
         super(message, cause);
         this.code = code;
     }
 
-    public CustomerRequestError(Throwable cause, Integer code) {
+    public ApiRequestError(Throwable cause, Integer code) {
         super(cause);
         this.code = code;
     }

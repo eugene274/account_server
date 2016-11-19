@@ -1,9 +1,9 @@
 package server.api;
 
 import server.model.services.AccountService;
-import server.model.customer.CustomerErrors.InternalError;
-import server.model.customer.CustomerRequestError;
-import server.model.customer.CustomerRequestResponse;
+import server.model.response.ApiErrors.InternalError;
+import server.model.response.ApiRequestError;
+import server.model.response.ApiRequestResponse;
 import server.model.data.Token;
 
 import javax.ws.rs.*;
@@ -26,9 +26,9 @@ public class Auth {
     ){
         try {
             Token token = accountService.signIn(login, password);
-            return CustomerRequestResponse.ok(token).toString();
-        } catch (CustomerRequestError authenticationError) {
-            return CustomerRequestResponse.fail(authenticationError).toString();
+            return ApiRequestResponse.ok(token).toString();
+        } catch (ApiRequestError authenticationError) {
+            return ApiRequestResponse.fail(authenticationError).toString();
         }
 
     }
@@ -42,9 +42,9 @@ public class Auth {
     ){
         try {
             accountService.signUp(login,password);
-            return CustomerRequestResponse.ok(null).toString();
-        } catch (CustomerRequestError customerRequestError) {
-            return CustomerRequestResponse.fail(customerRequestError).toString();
+            return ApiRequestResponse.ok(null).toString();
+        } catch (ApiRequestError apiRequestError) {
+            return ApiRequestResponse.fail(apiRequestError).toString();
         }
     }
 
@@ -58,9 +58,9 @@ public class Auth {
     ){
         try {
             accountService.logout(token);
-            return CustomerRequestResponse.ok(null).toString();
+            return ApiRequestResponse.ok(null).toString();
         } catch (InternalError internalError) {
-            return CustomerRequestResponse.fail(internalError).toString();
+            return ApiRequestResponse.fail(internalError).toString();
         }
 
     }
