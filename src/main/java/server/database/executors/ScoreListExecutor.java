@@ -15,7 +15,7 @@ import java.util.List;
 public class ScoreListExecutor implements Executor<List<Score>>{
     @Override
     public List execute(ResultSet resultSet) throws SQLException {
-        List<Score> scores = new ArrayList<Score>();
+        List<Score> scores = new ArrayList<>();
         while (resultSet.next()){
             scores.add(new Score(resultSet.getLong(1), resultSet.getInt(2)));
         }

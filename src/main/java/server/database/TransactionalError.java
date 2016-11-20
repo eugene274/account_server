@@ -3,7 +3,7 @@ package server.database;
 /**
  * Created by eugene on 10/22/16.
  */
-public class TransactionalError extends Exception {
+class TransactionalError extends Exception {
     public TransactionalError(String message) {
         super(message);
     }

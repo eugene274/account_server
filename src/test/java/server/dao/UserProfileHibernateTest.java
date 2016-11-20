@@ -21,7 +21,7 @@ public class UserProfileHibernateTest  {
     }
 
     @NotNull
-    static UserProfileHibernate dao;
+    private static final UserProfileHibernate dao;
 
     @BeforeClass
     public static void addUser() throws Exception{

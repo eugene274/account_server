@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class AccountServiceTest {
-    static AccountService accountService = new AccountService();
-    static TokenService tokenService = new TokenService();
+    private static final AccountService accountService = new AccountService();
+    private static final TokenService tokenService = new TokenService();
 
-    static final String login = "test";
-    static final String pass = "testpass";
+    private static final String login = "test";
+    private static final String pass = "testpass";
 
     @Before
     public void registerSomeUsers() throws ApiRequestError {

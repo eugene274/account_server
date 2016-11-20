@@ -22,12 +22,12 @@ public class Token {
 
     @NaturalId
     @Column(name = "token_string")
-    private String tokenString;
+    private final String tokenString;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time_create")
-    private Calendar createdAt = Calendar.getInstance();
+    private final Calendar createdAt = Calendar.getInstance();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_request")
@@ -40,7 +40,7 @@ public class Token {
     @JoinColumn(name = "USER_ID", nullable = false, unique = true, updatable = false)
     private UserProfile user;
 
-    private static Random generator = new Random();
+    private static final Random generator = new Random();
 
     private static String generateToken(){
         return ((Long) generator.nextLong()).toString();

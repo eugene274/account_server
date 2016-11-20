@@ -14,8 +14,8 @@ import java.util.StringJoiner;
  */
 public class TokenHibernate
         implements TokenDAO {
-    private static String ENTITY_NAME = "Tokens";
-    private static String ALIAS = "token";
+    private static final String ENTITY_NAME = "Tokens";
+    private static final String ALIAS = "token";
 
     private final SessionHolder holder = SessionHolder.getHolder();
 

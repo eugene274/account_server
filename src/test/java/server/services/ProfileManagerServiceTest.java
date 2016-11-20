@@ -18,7 +18,7 @@ import static org.junit.Assert.fail;
  */
 public class ProfileManagerServiceTest {
     private static ProfileManagerService service;
-    private static UserDAO dao = new UserProfileHibernate();
+    private static final UserDAO dao = new UserProfileHibernate();
 
     private final static String login = "testuser555";
     private final static String passw = "passwwdd";

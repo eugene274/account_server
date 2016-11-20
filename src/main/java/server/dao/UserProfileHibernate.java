@@ -27,9 +27,9 @@ public class UserProfileHibernate
         throw new NotImplementedException();
     }
 
-    private static String ENTITY_NAME = "Profiles";
-    private static String ALIAS = "user";
-    private static Logger LOG = LogManager.getLogger(UserProfileHibernate.class);
+    private static final String ENTITY_NAME = "Profiles";
+    private static final String ALIAS = "user";
+    private static final Logger LOG = LogManager.getLogger(UserProfileHibernate.class);
 
     private final SessionHolder holder = SessionHolder.getHolder();
 

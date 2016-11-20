@@ -17,13 +17,13 @@ public class SessionHolder implements AutoCloseable{
         return pool;
     }
 
-    public static void renew() throws Exception {
+    public static void renew() {
         SessionHolder holder = pool.get(Thread.currentThread());
         if (holder == null) new SessionHolder();
         else renew(holder);
     }
 
-    public static void renew(SessionHolder holder) {
+    private static void renew(SessionHolder holder) {
         if(holder.session.isOpen()) holder.session.close();
         holder.session = DbHibernate.newSession();
         LOG.debug("Session renewed");
@@ -42,17 +42,17 @@ public class SessionHolder implements AutoCloseable{
     }
 
     private Session session;
-    protected static Logger LOG = LogManager.getLogger(SessionHolder.class);
+    static final Logger LOG = LogManager.getLogger(SessionHolder.class);
 
-    public SessionHolder() {
+    SessionHolder() {
         this(DbHibernate.newSession());
     }
 
-    public SessionHolder(Session session) {
+    SessionHolder(Session session) {
         this.session = session;
     }
 
-    public SessionHolder(SessionHolder holder){
+    SessionHolder(SessionHolder holder){
         this(holder.getSession());
     }
 

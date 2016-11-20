@@ -29,8 +29,8 @@ import java.util.Collection;
 public class AccountService {
     private static final Logger LOG = LogManager.getLogger("account");
 
-    private UserDAO dao = new UserProfileHibernate();
-    private TokenService tokenService = new TokenService();
+    private final UserDAO dao = new UserProfileHibernate();
+    private final TokenService tokenService = new TokenService();
 
 
     @TestOnly
@@ -55,7 +55,7 @@ public class AccountService {
             throws ApiRequestError
     {
         // user's already signed in
-        Token token = null;
+        Token token;
         try (TransactionHolder ignored = TransactionHolder.getTransactionHolder()){
             token = tokenService.getTokenByEmail(email);
             if(null != token) return token;

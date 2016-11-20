@@ -20,7 +20,7 @@ import java.util.List;
 public class LeaderBoardServiceImpl implements LeaderBoardService {
 
     private ScoreDAO dao;
-    private static Logger LOG = LogManager.getLogger(LeaderBoardService.class);
+    private static final Logger LOG = LogManager.getLogger(LeaderBoardService.class);
 
     public LeaderBoardServiceImpl() throws InternalError {
         try {

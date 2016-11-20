@@ -35,14 +35,14 @@ public class Data {
             @QueryParam("n") Integer N,
             @HeaderParam("userId") Long userId
     ){
-        LeaderBoardService lb = null;
+        LeaderBoardService lb;
         try {
             lb = new LeaderBoardServiceImpl();
         } catch (InternalError internalError) {
             return ApiRequestResponse.fail(internalError).toString();
         }
 
-        List<Score> leaders = null;
+        List<Score> leaders;
         try {
             leaders = (N == null)? lb.getLeaders() : lb.getLeaders(N);
             return ApiRequestResponse.ok(leaders).toString();
@@ -54,7 +54,7 @@ public class Data {
     @GET
     @Path("/leaderboard/me")
     public String getScore (@NotNull @HeaderParam("userId") Long userId){
-        LeaderBoardService lbs = null;
+        LeaderBoardService lbs;
         try{
             lbs = new LeaderBoardServiceImpl();
             Score score = lbs.getScore(userId);

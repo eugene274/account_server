@@ -20,10 +20,10 @@ import static org.junit.Assert.assertNotNull;
  * Created by eugene on 11/4/16.
  */
 public class AuthTest {
-    private static Thread thread = new Thread(new AccountServer());
-    private static OkHttpClient client = new OkHttpClient();
+    private static final Thread thread = new Thread(new AccountServer());
+    private static final OkHttpClient client = new OkHttpClient();
 
-    private static String AUTH_URL = "http://localhost:8080/auth/";
+    private static final String AUTH_URL = "http://localhost:8080/auth/";
 
     private static String credentialsBody(String user, String pass){
         return new StringBuilder()

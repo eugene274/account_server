@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AddressImpl implements Address {
     private final static AtomicInteger currentId = new AtomicInteger(0);
-    private Integer id;
+    private final Integer id;
 
     public AddressImpl() {
         id = currentId.getAndIncrement();

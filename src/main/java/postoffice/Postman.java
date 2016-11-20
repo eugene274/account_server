@@ -13,11 +13,10 @@ public class Postman {
     private final static Map<Address,ConcurrentLinkedQueue<Message>> mailboxes =
             new HashMap<>();
 
-    private static Logger LOG = Logger.getLogger("POSTMAN");
+    private static final Logger LOG = Logger.getLogger("POSTMAN");
 
     private static Queue<Message> getMailbox(Address address) {
-        ConcurrentLinkedQueue<Message> messages = mailboxes.get(address);
-        return messages;
+        return mailboxes.get(address);
     }
 
     public static void sendMessage(Message message) {
@@ -38,7 +37,7 @@ public class Postman {
         register(subscriber.getAddress());
     }
 
-    public static void register(Address address){
+    private static void register(Address address){
         mailboxes.putIfAbsent(address, new ConcurrentLinkedQueue<>());
         LOG.info(address.toString() + " registered, total " + mailboxes.size());
     }

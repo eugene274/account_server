@@ -18,7 +18,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         String authHeader = containerRequestContext.getHeaderString("Authorization");
-        Long id = null;
+        Long id;
 
         if(
                         null != authHeader &&

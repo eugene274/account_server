@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
  * Created by eugene on 11/5/16.
  */
 public class ProfileManagerService {
-    private static List<String> mutable = null;
-    private static List<String> sensitive = null;
-    private static Logger LOG = LogManager.getLogger("PROFILEMGR");
+    private static List<String> mutable;
+    private static List<String> sensitive;
+    private static final Logger LOG = LogManager.getLogger("PROFILEMGR");
 
-    private UserDAO dao = new UserProfileHibernate();
+    private final UserDAO dao = new UserProfileHibernate();
 
 
     private static boolean checkField(Field field){

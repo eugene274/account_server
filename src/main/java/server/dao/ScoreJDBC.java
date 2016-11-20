@@ -21,7 +21,7 @@ import java.util.StringJoiner;
 public class ScoreJDBC implements ScoreDAO {
     private static final String TABLE_NAME = "leaderboard";
 
-    private static Logger LOG = LogManager.getLogger(ScoreJDBC.class);
+    private static final Logger LOG = LogManager.getLogger(ScoreJDBC.class);
 
     private static String CREATE_TABLE = null;
     private static String GET_ALL = null;

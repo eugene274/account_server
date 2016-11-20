@@ -16,14 +16,15 @@ import static org.junit.Assert.*;
 /**
  * Created by ivan on 06.11.16.
  */
+@SuppressWarnings("NullableProblems")
 public class TokenHibernateTest {
-    static UserProfile user = new UserProfile("testbiuytre","test");
-    static UserProfile user2 = new UserProfile("testb2ytrew","test");
+    private static final UserProfile user = new UserProfile("testbiuytre","test");
+    private static final UserProfile user2 = new UserProfile("testb2ytrew","test");
 
     @NotNull
-    static TokenHibernate tokendao;
+    private static TokenHibernate tokendao;
     @NotNull
-    static UserDAO userdao;
+    private static UserDAO userdao;
 
 
     @BeforeClass
@@ -114,8 +115,6 @@ public class TokenHibernateTest {
 
         Token token = new Token(user);
         tokendao.insert(token);
-
-        String tokenString = token.toString();
 
         tokendao.remove(token);
 

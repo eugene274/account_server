@@ -3,8 +3,6 @@ package server;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import server.jmx.controller.JMXInit;
-import server.services.TokenStatusUpdater;
 
 /**
  * Created by eugene on 10/7/16.
@@ -12,24 +10,16 @@ import server.services.TokenStatusUpdater;
 
 @SuppressWarnings("DefaultFileTemplate")
 public class AccountServer implements Runnable {
-    private static Integer PORT = 8080;
-    private static String ROOT_SERVLET_PATH = "/*";
 
-    private static Logger LOG = org.apache.logging.log4j.LogManager.getLogger("server");
-
-
-    static {
-        JMXInit.init();
-    }
+    private static final Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AccountServer.class);
 
     public void run(){
-        Thread tokenupdater = new Thread(new TokenStatusUpdater());
-
-
+        Integer PORT = 8080;
         org.eclipse.jetty.server.Server jettyServer = new org.eclipse.jetty.server.Server(PORT);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
+        String ROOT_SERVLET_PATH = "/*";
         ServletHolder jersey = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, ROOT_SERVLET_PATH);
 
         jersey.setInitOrder(0);
@@ -39,7 +29,6 @@ public class AccountServer implements Runnable {
 
         try {
             jettyServer.start();
-            tokenupdater.start();
             LOG.info(String.format("server started at %d", PORT));
             jettyServer.join();
         } catch (InterruptedException e) {

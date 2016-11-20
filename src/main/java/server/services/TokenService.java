@@ -17,22 +17,22 @@ import java.util.stream.Collectors;
  * Deals with usersSignedIn hashmap
  */
 public class TokenService {
-    private TokenDAO dao = new TokenHibernate();
+    private final TokenDAO dao = new TokenHibernate();
 
-    protected UserProfile getUserByTokenString(String tokenString){
+    UserProfile getUserByTokenString(String tokenString){
         return dao.getTokenByTokenString(tokenString).getUser();
     }
 
-    protected void addUserSession(UserProfile user, Token token) throws DaoException {
+    void addUserSession(UserProfile user, Token token) throws DaoException {
         token.setUser(user);
         dao.insert(token);
     }
 
-    protected void removeUserSession(String tokenString) throws DaoException {
+    void removeUserSession(String tokenString) throws DaoException {
         dao.removeByTokenString(tokenString);
     }
 
-    protected Collection<UserProfile> users(){
+    Collection<UserProfile> users(){
         return dao.getAll().stream().map(Token::getUser)
                 .collect(Collectors.toList());
     }
@@ -41,7 +41,7 @@ public class TokenService {
         return dao.getAll();
     }
 
-    protected Token getTokenByEmail(String email) throws DaoException {
+    Token getTokenByEmail(String email) throws DaoException {
         List<Token> result = dao.getWhere(String.format("user.email = '%s'", email));
         if(result.size() != 1){
             // TODO report

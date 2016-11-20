@@ -36,7 +36,7 @@ public class ScoreJDBCTest {
             scoreDAO.insert(score);
             fail();
         }
-        catch (EntityExists e){
+        catch (EntityExists ignored){
         }
     }
 
@@ -60,11 +60,6 @@ public class ScoreJDBCTest {
 
         assertEquals(scoreDAO.getById(450L), score);
         assertNull(scoreDAO.getById(451L));
-    }
-
-    @Test
-    public void getWhere() throws Exception {
-
     }
 
     @Test

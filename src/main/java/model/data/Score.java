@@ -1,6 +1,8 @@
 package model.data;
 
 
+import org.jetbrains.annotations.NotNull;
+
 public class Score implements Comparable<Score> {
     private final Long userId;
     private Integer score;
@@ -39,7 +41,7 @@ public class Score implements Comparable<Score> {
     }
 
     @Override
-    public int compareTo(Score o) {
+    public int compareTo(@NotNull Score o) {
         return getScore() - o.getScore();
     }
 }

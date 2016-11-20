@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 @SuppressWarnings("DefaultFileTemplate")
 public class ApiRequestResponse {
-    private static String PROCESSING_ERROR = "{" +
+    private static final String PROCESSING_ERROR = "{" +
             "\"status\": \"ERROR\"," +
             "\"error\" : { " +
             "\"code\"  : 0," +
