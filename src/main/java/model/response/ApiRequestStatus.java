@@ -1,4 +1,4 @@
-package server.model.response;
+package model.response;
 
 /**
  * Created by eugene on 10/13/16.

@@ -1,4 +1,4 @@
-package server.model.data;
+package model.data;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;

@@ -1,8 +1,8 @@
 package server.services;
 
+import model.response.ApiErrors.InternalError;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.model.response.ApiErrors.InternalError;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

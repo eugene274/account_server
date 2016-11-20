@@ -1,4 +1,4 @@
-package server.model.data;
+package model.data;
 
 
 public class Score implements Comparable<Score> {

@@ -1,10 +1,10 @@
 package server.dao;
 
+import model.data.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.database.SessionHolder;
-import server.model.data.UserProfile;
 
 import java.util.Collection;
 

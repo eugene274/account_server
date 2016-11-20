@@ -1,4 +1,4 @@
-package server.model.response;
+package model.response;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;

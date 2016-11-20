@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="hw1" />
         <module name="hw2" />
+        <module name="zagar_io" />
       </profile>
       <profile default="false" name="Annotation profile for authorization_server" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -36,6 +37,7 @@
     <bytecodeTargetLevel>
       <module name="authorization_server" target="1.8" />
       <module name="hw2" target="1.8" />
+      <module name="zagar_io" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

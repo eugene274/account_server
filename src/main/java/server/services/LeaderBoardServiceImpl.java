@@ -1,5 +1,7 @@
 package server.services;
 
+import model.data.Score;
+import model.response.ApiErrors.InternalError;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
@@ -7,8 +9,6 @@ import server.dao.ScoreDAO;
 import server.dao.ScoreJDBC;
 import server.dao.exceptions.DaoException;
 import server.dao.exceptions.EntityExists;
-import server.model.data.Score;
-import server.model.response.ApiErrors.InternalError;
 
 import java.sql.SQLException;
 import java.util.Collections;

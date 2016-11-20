@@ -1,4 +1,4 @@
-package server.model.mixins;
+package model.mixins;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -1,8 +1,8 @@
 package server.api;
 
-import server.model.data.UserProfile;
-import server.model.response.ApiRequestError;
-import server.model.response.ApiRequestResponse;
+import model.data.UserProfile;
+import model.response.ApiRequestError;
+import model.response.ApiRequestResponse;
 import server.services.ProfileManagerService;
 
 import javax.ws.rs.*;

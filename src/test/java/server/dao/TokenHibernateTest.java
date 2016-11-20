@@ -1,13 +1,13 @@
 package server.dao;
 
+import model.data.Token;
+import model.data.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.model.data.Token;
-import server.model.data.UserProfile;
 
 import java.util.Collection;
 

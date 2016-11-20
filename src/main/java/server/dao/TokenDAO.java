@@ -1,7 +1,7 @@
 package server.dao;
 
+import model.data.Token;
 import server.dao.exceptions.DaoException;
-import server.model.data.Token;
 
 import java.util.List;
 

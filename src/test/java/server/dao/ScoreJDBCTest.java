@@ -1,10 +1,10 @@
 package server.dao;
 
+import model.data.Score;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.dao.exceptions.EntityExists;
-import server.model.data.Score;
 
 import java.sql.SQLException;
 

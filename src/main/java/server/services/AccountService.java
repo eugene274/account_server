@@ -1,6 +1,13 @@
 package server.services;
 
 
+import model.data.Token;
+import model.data.UserProfile;
+import model.response.ApiErrors.InternalError;
+import model.response.ApiErrors.LoginExistsError;
+import model.response.ApiErrors.PolicyViolationError;
+import model.response.ApiErrors.WrongCredentialsError;
+import model.response.ApiRequestError;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
@@ -9,13 +16,6 @@ import server.dao.UserProfileHibernate;
 import server.dao.exceptions.DaoException;
 import server.database.TransactionHolder;
 import server.misc.CredentialsPolicy;
-import server.model.data.Token;
-import server.model.data.UserProfile;
-import server.model.response.ApiErrors.InternalError;
-import server.model.response.ApiErrors.LoginExistsError;
-import server.model.response.ApiErrors.PolicyViolationError;
-import server.model.response.ApiErrors.WrongCredentialsError;
-import server.model.response.ApiRequestError;
 
 import java.util.Collection;
 
@@ -75,8 +75,8 @@ public class AccountService {
                 TransactionHolder.getTransactionHolder().rollback();
                 LOG.warn("Transaction rollbacked due to LeaderBoard registration error");
             }
-        } catch (DaoException daoException) {
-            LOG.error(daoException.getCause().getMessage());
+        } catch (DaoException e1) {
+            LOG.error(e1.getCause().getMessage());
             throw new InternalError();
         }
 
@@ -109,8 +109,8 @@ public class AccountService {
             if (dao.getByEmail(login) != null) throw new LoginExistsError(login);
             dao.insert(new UserProfile(login,pass));
         }
-        catch (DaoException error) {
-            LOG.error(error.getCause().getMessage());
+        catch (DaoException e) {
+            LOG.error(e.getCause().getMessage());
             throw new InternalError();
         }
         LOG.info("'" + login + "' signed up");
@@ -124,8 +124,8 @@ public class AccountService {
         try {
             new LeaderBoardServiceImpl().remove(tokenService.getUserByTokenString(tokenString).getId());
             tokenService.removeUserSession(tokenString);
-        } catch (DaoException daoException) {
-            daoException.printStackTrace();
+        } catch (DaoException e) {
+            LOG.error(e.getCause().getMessage());
             throw new InternalError();
         }
 //        LOG.info(String.format("'%s' logged out", profile.getEmail()));

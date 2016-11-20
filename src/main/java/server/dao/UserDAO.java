@@ -1,7 +1,7 @@
 package server.dao;
 
+import model.data.UserProfile;
 import server.dao.exceptions.DaoException;
-import server.model.data.UserProfile;
 
 /**
  * Created by eugene on 10/18/16.

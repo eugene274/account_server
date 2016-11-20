@@ -1,26 +1,26 @@
 package server.api;
 
 import com.squareup.okhttp.*;
-
+import model.response.ApiRequestResponse;
+import model.response.ApiRequestStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.Server;
+import server.AccountServer;
 import server.database.DbHibernate;
-import server.model.response.ApiRequestResponse;
-import server.model.response.ApiRequestStatus;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by eugene on 11/4/16.
  */
 public class AuthTest {
-    private static Thread thread = new Thread(new Server());
+    private static Thread thread = new Thread(new AccountServer());
     private static OkHttpClient client = new OkHttpClient();
 
     private static String AUTH_URL = "http://localhost:8080/auth/";

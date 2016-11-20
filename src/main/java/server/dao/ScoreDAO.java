@@ -1,7 +1,7 @@
 package server.dao;
 
+import model.data.Score;
 import server.dao.exceptions.DaoException;
-import server.model.data.Score;
 
 import java.util.List;
 

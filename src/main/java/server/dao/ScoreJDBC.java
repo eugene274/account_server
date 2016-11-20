@@ -1,5 +1,6 @@
 package server.dao;
 
+import model.data.Score;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
@@ -9,7 +10,6 @@ import server.dao.exceptions.ScoreDaoException;
 import server.database.DbHibernate;
 import server.database.JDBCExecutor;
 import server.database.executors.ScoreListExecutor;
-import server.model.data.Score;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.Connection;

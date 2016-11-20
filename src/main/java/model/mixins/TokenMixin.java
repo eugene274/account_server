@@ -1,8 +1,8 @@
-package server.model.mixins;
+package model.mixins;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.model.data.UserProfile;
+import model.data.UserProfile;
 
 /**
  * Created by eugene on 10/18/16.

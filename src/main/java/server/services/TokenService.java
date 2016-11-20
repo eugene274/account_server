@@ -1,11 +1,11 @@
 package server.services;
 
+import model.data.Token;
+import model.data.UserProfile;
 import org.jetbrains.annotations.TestOnly;
 import server.dao.TokenDAO;
 import server.dao.TokenHibernate;
 import server.dao.exceptions.DaoException;
-import server.model.data.Token;
-import server.model.data.UserProfile;
 
 import java.util.Collection;
 import java.util.List;

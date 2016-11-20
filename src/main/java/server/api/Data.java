@@ -1,8 +1,8 @@
 package server.api;
 
-import server.model.data.Score;
-import server.model.response.ApiErrors.InternalError;
-import server.model.response.ApiRequestResponse;
+import model.data.Score;
+import model.response.ApiErrors.InternalError;
+import model.response.ApiRequestResponse;
 import server.services.AccountService;
 import server.services.LeaderBoardService;
 import server.services.LeaderBoardServiceImpl;

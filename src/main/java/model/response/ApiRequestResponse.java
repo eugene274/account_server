@@ -1,13 +1,13 @@
-package server.model.response;
+package model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import server.model.data.UserProfile;
-import server.model.mixins.TokenMixin;
-import server.model.mixins.UserProfileMixin;
-import server.model.data.Token;
+import model.data.Token;
+import model.data.UserProfile;
+import model.mixins.TokenMixin;
+import model.mixins.UserProfileMixin;
 
 import java.io.IOException;
 

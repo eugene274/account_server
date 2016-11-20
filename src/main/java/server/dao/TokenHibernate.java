@@ -1,9 +1,9 @@
 package server.dao;
 
+import model.data.Token;
 import server.dao.exceptions.DaoException;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.model.data.Token;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;

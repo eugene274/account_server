@@ -11,7 +11,7 @@ import server.services.TokenStatusUpdater;
  */
 
 @SuppressWarnings("DefaultFileTemplate")
-public class Server implements Runnable {
+public class AccountServer implements Runnable {
     private static Integer PORT = 8080;
     private static String ROOT_SERVLET_PATH = "/*";
 
@@ -51,6 +51,6 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args){
-        new Server().run();
+        new AccountServer().run();
     }
 }

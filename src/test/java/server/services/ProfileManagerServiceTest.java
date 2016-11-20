@@ -1,14 +1,14 @@
 package server.services;
 
+import model.data.UserProfile;
+import model.response.ApiErrors.WrongFieldError;
+import model.response.ApiRequestError;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.dao.UserDAO;
 import server.dao.UserProfileHibernate;
 import server.dao.exceptions.DaoException;
 import server.database.SessionHolder;
-import server.model.data.UserProfile;
-import server.model.response.ApiErrors.WrongFieldError;
-import server.model.response.ApiRequestError;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

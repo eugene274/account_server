@@ -1,7 +1,7 @@
 package server.database.executors;
 
+import model.data.Score;
 import server.database.Executor;
-import server.model.data.Score;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

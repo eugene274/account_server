@@ -1,6 +1,6 @@
-package server.model.response.ApiErrors;
+package model.response.ApiErrors;
 
-import server.model.response.ApiRequestError;
+import model.response.ApiRequestError;
 
 /**
  * Created by eugene on 10/25/16.
