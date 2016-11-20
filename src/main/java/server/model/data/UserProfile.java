@@ -2,6 +2,7 @@ package server.model.data;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
+import server.misc.Sensitive;
 import server.misc.UserCanChange;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class UserProfile {
     @Column(name = "user_name")
     private String name;
 
+    @Sensitive
     @UserCanChange
     @Column(nullable = false)
     private String password;
