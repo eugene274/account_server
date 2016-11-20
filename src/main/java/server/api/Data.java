@@ -1,11 +1,11 @@
 package server.api;
 
-import server.model.services.AccountService;
+import server.model.data.Score;
 import server.model.response.ApiErrors.InternalError;
 import server.model.response.ApiRequestResponse;
-import server.model.data.Score;
-import server.model.services.LeaderBoardService;
-import server.model.services.LeaderBoardServiceImpl;
+import server.services.AccountService;
+import server.services.LeaderBoardService;
+import server.services.LeaderBoardServiceImpl;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;

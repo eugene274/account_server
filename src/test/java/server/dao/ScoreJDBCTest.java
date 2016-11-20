@@ -1,9 +1,9 @@
-package server.model.dao;
+package server.dao;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import server.model.dao.exceptions.EntityExists;
+import server.dao.exceptions.EntityExists;
 import server.model.data.Score;
 
 import java.sql.SQLException;

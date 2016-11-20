@@ -1,10 +1,10 @@
-package server.model.dao;
+package server.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.dao.exceptions.DaoException;
 import server.database.SessionHolder;
 import server.database.TransactionHolder;
-import server.model.dao.exceptions.DaoException;
 import server.model.data.UserProfile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

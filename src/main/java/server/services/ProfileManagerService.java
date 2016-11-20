@@ -1,16 +1,16 @@
-package server.model.services;
+package server.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
-import server.model.UserCanChange;
-import server.model.response.ApiRequestError;
+import server.dao.UserDAO;
+import server.dao.UserProfileHibernate;
+import server.dao.exceptions.DaoException;
+import server.misc.UserCanChange;
+import server.model.data.UserProfile;
 import server.model.response.ApiErrors.InternalError;
 import server.model.response.ApiErrors.WrongFieldError;
-import server.model.dao.exceptions.DaoException;
-import server.model.dao.UserDAO;
-import server.model.dao.UserProfileHibernate;
-import server.model.data.UserProfile;
+import server.model.response.ApiRequestError;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

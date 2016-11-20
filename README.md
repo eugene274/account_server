@@ -3,9 +3,9 @@
 ## HIBERNATE
 H2 in-memo db for tests 
 
-@see server.model.dao.database
+@see server.dao.database
 @see hibernate.cfg.xml
-@see server.model.dao
+@see server.dao
 
 ## RESPONSE FORMAT
 Jackson API
@@ -15,5 +15,5 @@ Jackson API
 
 ## Authenticated users
 
-server.model.services.TokenService provides \<Token,Profile\> Map and some handy methods
-server.model.services.AccountService provides all accounting stuff (email, logout, etc)
+server.services.TokenService provides \<Token,Profile\> Map and some handy methods
+server.services.AccountService provides all accounting stuff (email, logout, etc)

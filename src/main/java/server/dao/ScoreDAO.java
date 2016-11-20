@@ -1,6 +1,6 @@
-package server.model.dao;
+package server.dao;
 
-import server.model.dao.exceptions.DaoException;
+import server.dao.exceptions.DaoException;
 import server.model.data.Score;
 
 import java.util.List;

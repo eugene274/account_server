@@ -1,14 +1,14 @@
-package server.model.services;
+package server.services;
 
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
+import server.dao.UserDAO;
+import server.dao.UserProfileHibernate;
+import server.dao.exceptions.DaoException;
 import server.database.TransactionHolder;
-import server.model.CredentialsPolicy;
-import server.model.dao.UserDAO;
-import server.model.dao.UserProfileHibernate;
-import server.model.dao.exceptions.DaoException;
+import server.misc.CredentialsPolicy;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 import server.model.response.ApiErrors.InternalError;

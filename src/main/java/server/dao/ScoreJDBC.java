@@ -1,19 +1,22 @@
-package server.model.dao;
+package server.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.TestOnly;
+import server.dao.exceptions.DaoException;
+import server.dao.exceptions.EntityExists;
+import server.dao.exceptions.ScoreDaoException;
 import server.database.DbHibernate;
 import server.database.JDBCExecutor;
 import server.database.executors.ScoreListExecutor;
-import server.model.dao.exceptions.DaoException;
-import server.model.dao.exceptions.EntityExists;
-import server.model.dao.exceptions.ScoreDaoException;
 import server.model.data.Score;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class ScoreJDBC implements ScoreDAO {
     private static final String TABLE_NAME = "leaderboard";

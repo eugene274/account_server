@@ -1,4 +1,4 @@
-package server.model.dao;
+package server.dao;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;

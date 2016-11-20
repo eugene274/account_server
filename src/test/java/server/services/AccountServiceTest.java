@@ -1,11 +1,11 @@
-package server.model.services;
+package server.services;
 
 import org.junit.Before;
 import org.junit.Test;
 import server.database.SessionHolder;
 import server.model.data.Token;
-import server.model.response.ApiRequestError;
 import server.model.response.ApiErrors.LoginExistsError;
+import server.model.response.ApiRequestError;
 
 import static org.junit.Assert.*;
 

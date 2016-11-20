@@ -1,8 +1,8 @@
-package server.model.services;
+package server.services;
 
-import server.model.dao.exceptions.DaoException;
-import server.model.response.ApiErrors.InternalError;
+import server.dao.exceptions.DaoException;
 import server.model.data.Score;
+import server.model.response.ApiErrors.InternalError;
 
 import java.util.List;
 

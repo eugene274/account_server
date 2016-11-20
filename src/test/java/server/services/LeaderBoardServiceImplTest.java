@@ -1,10 +1,11 @@
-package server.model.services;
+package server.services;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import server.model.response.ApiErrors.InternalError;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by eugene on 11/8/16.

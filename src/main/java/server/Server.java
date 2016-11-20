@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import server.jmx.controller.JMXInit;
-import server.model.TokenStatusUpdater;
+import server.services.TokenStatusUpdater;
 
 /**
  * Created by eugene on 10/7/16.

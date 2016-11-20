@@ -2,7 +2,7 @@ package server.model.data;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
-import server.model.UserCanChange;
+import server.misc.UserCanChange;
 
 import javax.persistence.*;
 import java.util.Date;

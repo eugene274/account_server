@@ -1,10 +1,10 @@
 package server.api;
 
-import server.model.services.AccountService;
+import server.model.data.Token;
 import server.model.response.ApiErrors.InternalError;
 import server.model.response.ApiRequestError;
 import server.model.response.ApiRequestResponse;
-import server.model.data.Token;
+import server.services.AccountService;
 
 import javax.ws.rs.*;
 

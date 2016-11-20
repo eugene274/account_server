@@ -1,8 +1,7 @@
-package server.model;
+package server.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.model.services.TokenService;
 
 import java.util.Calendar;
 

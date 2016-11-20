@@ -1,6 +1,6 @@
 package server.api;
 
-import server.model.services.TokenService;
+import server.services.TokenService;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;

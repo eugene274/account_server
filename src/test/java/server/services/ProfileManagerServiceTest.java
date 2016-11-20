@@ -1,16 +1,17 @@
-package server.model.services;
+package server.services;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import server.dao.UserDAO;
+import server.dao.UserProfileHibernate;
+import server.dao.exceptions.DaoException;
 import server.database.SessionHolder;
+import server.model.data.UserProfile;
 import server.model.response.ApiErrors.WrongFieldError;
 import server.model.response.ApiRequestError;
-import server.model.dao.exceptions.DaoException;
-import server.model.dao.UserDAO;
-import server.model.dao.UserProfileHibernate;
-import server.model.data.UserProfile;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by eugene on 11/5/16.

@@ -1,13 +1,14 @@
-package server.model.services;
+package server.services;
 
 import org.jetbrains.annotations.TestOnly;
-import server.model.dao.exceptions.DaoException;
-import server.model.dao.TokenDAO;
-import server.model.dao.TokenHibernate;
+import server.dao.TokenDAO;
+import server.dao.TokenHibernate;
+import server.dao.exceptions.DaoException;
 import server.model.data.Token;
 import server.model.data.UserProfile;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
