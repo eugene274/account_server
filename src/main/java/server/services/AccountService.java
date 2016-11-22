@@ -54,10 +54,8 @@ public class AccountService {
     public Token signIn( String email, String password)
             throws ApiRequestError
     {
-        // user's already signed in
-        Token token;
         try (TransactionHolder ignored = TransactionHolder.getTransactionHolder()){
-            token = tokenService.getTokenByEmail(email);
+            Token token = tokenService.getTokenByEmail(email);
             if(null != token) return token;
             UserProfile user = dao.getByEmail(email);
             if(null == user || !user.getPassword().equals(password)) {
@@ -67,22 +65,16 @@ public class AccountService {
             tokenService.addUserSession(user, token);
             LOG.info("'" + email + "' logged in");
 
-            try {
-                new LeaderBoardServiceImpl().register(user.getId());
-                LOG.info("'" + email + "' registered to leader board");
-            }
-            catch (DaoException e){
-                TransactionHolder.getTransactionHolder().rollback();
-                LOG.warn("Transaction rollbacked due to LeaderBoard registration error");
-            }
-        } catch (DaoException e1) {
-            LOG.error(e1.getCause().getMessage());
+            new LeaderBoardServiceImpl().register(user.getId());
+            LOG.info("'" + email + "' registered to leader board");
+
+            return token;
+        } catch (DaoException e) {
+            TransactionHolder.getTransactionHolder().rollback();
+            LOG.error(e.getCause().getMessage());
             throw new InternalError();
         }
 
-
-
-        return token;
     }
 
     /**

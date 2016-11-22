@@ -53,8 +53,7 @@ public class ApiRequestResponse {
         return mapper.readValue(input,ApiRequestResponse.class);
     }
 
-    @Override
-    public String toString() {
+    public String write() {
         try {
             return mapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
