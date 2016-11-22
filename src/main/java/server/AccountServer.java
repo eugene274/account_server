@@ -1,6 +1,7 @@
 package server;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
@@ -9,37 +10,47 @@ import org.eclipse.jetty.servlet.ServletHolder;
  */
 
 @SuppressWarnings("DefaultFileTemplate")
-public class AccountServer implements Runnable {
+public class AccountServer extends Thread {
+  private final Server jettyServer;
+  private final String rootPath;
+  private final int port;
 
-    private static final Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AccountServer.class);
+  private static final Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AccountServer.class);
 
-    public void run(){
-        Integer PORT = 8080;
-        org.eclipse.jetty.server.Server jettyServer = new org.eclipse.jetty.server.Server(PORT);
 
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+  public AccountServer() {
+    this(8080,"/*");
+  }
 
-        String ROOT_SERVLET_PATH = "/*";
-        ServletHolder jersey = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, ROOT_SERVLET_PATH);
+  public AccountServer(int port, String rootPath) {
+    this.jettyServer = new Server(port);
+    this.rootPath = rootPath;
+    this.port = port;
+  }
 
-        jersey.setInitOrder(0);
-        jersey.setInitParameter("jersey.config.server.provider.packages", "server.api");
+  public void run(){
+    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        jettyServer.setHandler(context);
+    ServletHolder jersey = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, rootPath);
 
-        try {
-            jettyServer.start();
-            LOG.info(String.format("server started at %d", PORT));
-            jettyServer.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+    jersey.setInitOrder(0);
+    jersey.setInitParameter("jersey.config.server.provider.packages", "server.api");
+
+    jettyServer.setHandler(context);
+
+    try {
+      jettyServer.start();
+      LOG.info(String.format("server started at %d", port));
+      jettyServer.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
     }
+  }
 
-    public static void main(String[] args){
-        new AccountServer().run();
-    }
+  public static void main(String[] args){
+    new AccountServer().run();
+  }
 }

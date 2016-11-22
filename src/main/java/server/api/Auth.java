@@ -11,14 +11,13 @@ import javax.ws.rs.*;
 /**
  * Created by eugene on 10/13/16.
  */
-@SuppressWarnings("DefaultFileTemplate")
 @Path("/auth")
 @Produces({"application/json","text/plain"})
 public class Auth {
     private static final AccountService accountService = new AccountService();
 
     @POST
-    @Path("/login")
+    @Path("login")
     @Consumes("application/x-www-form-urlencoded")
     public String signIn(
             @DefaultValue("") @FormParam("user") String login,
@@ -34,7 +33,7 @@ public class Auth {
     }
 
     @POST
-    @Path("/register")
+    @Path("register")
     @Consumes("application/x-www-form-urlencoded")
     public String signUp(
             @DefaultValue("") @FormParam("user") String login,
