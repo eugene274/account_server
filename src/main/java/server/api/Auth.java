@@ -1,67 +1,60 @@
 package server.api;
 
 import model.data.Token;
-import model.response.ApiErrors.InternalError;
+import model.response.ApiErrors.LoginExistsError;
+import model.response.ApiErrors.WrongCredentialsError;
 import model.response.ApiRequestError;
-import model.response.ApiRequestResponse;
 import server.services.AccountService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by eugene on 10/13/16.
  */
 @Path("/auth")
-@Produces({"application/json","text/plain"})
+@Produces("text/plain")
+@Consumes("application/x-www-form-urlencoded")
 public class Auth {
     private static final AccountService accountService = new AccountService();
 
     @POST
     @Path("login")
-    @Consumes("application/x-www-form-urlencoded")
-    public String signIn(
+    public Response signIn(
             @DefaultValue("") @FormParam("user") String login,
             @DefaultValue("") @FormParam("password") String password
     ){
+        Token token;
         try {
-            Token token = accountService.signIn(login, password);
-            return ApiRequestResponse.ok(token).toString();
-        } catch (ApiRequestError authenticationError) {
-            return ApiRequestResponse.fail(authenticationError).toString();
+            token = accountService.signIn(login, password);
+        }
+        catch (WrongCredentialsError e){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        catch (ApiRequestError error) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        return Response.ok(token.toString()).build();
     }
 
     @POST
     @Path("register")
-    @Consumes("application/x-www-form-urlencoded")
-    public String signUp(
+    public Response signUp(
             @DefaultValue("") @FormParam("user") String login,
             @DefaultValue("") @FormParam("password") String password
     ){
         try {
             accountService.signUp(login,password);
-            return ApiRequestResponse.ok(null).toString();
-        } catch (ApiRequestError apiRequestError) {
-            return ApiRequestResponse.fail(apiRequestError).toString();
         }
-    }
-
-    @POST
-    @Path("/logout")
-    @Authorized
-
-    public String logOut(
-            @HeaderParam("token") String token,
-            @HeaderParam("userId") Long userId
-    ){
-        try {
-            accountService.logout(token);
-            return ApiRequestResponse.ok(null).toString();
-        } catch (InternalError internalError) {
-            return ApiRequestResponse.fail(internalError).toString();
+        catch (LoginExistsError e){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        catch (ApiRequestError apiRequestError) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        return Response.ok("User " + login + " registered.").build();
     }
 }
 
