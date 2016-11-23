@@ -1,9 +1,9 @@
 package model.data;
 
+import misc.Sensitive;
+import misc.UserCanChange;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
-import server.misc.Sensitive;
-import server.misc.UserCanChange;
 
 import javax.persistence.*;
 import java.util.Date;
