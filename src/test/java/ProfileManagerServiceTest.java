@@ -2,12 +2,12 @@ import dao.UserDAO;
 import dao.UserProfileHibernate;
 import dao.exceptions.DaoException;
 import database.SessionHolder;
+import main.ProfileManagerService;
 import model.data.UserProfile;
 import model.response.ApiErrors.WrongFieldError;
 import model.response.ApiRequestError;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import services.ProfileManagerService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

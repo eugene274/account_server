@@ -1,4 +1,4 @@
-package services;
+package main;
 
 import dao.TokenDAO;
 import dao.TokenHibernate;
@@ -19,8 +19,13 @@ import java.util.stream.Collectors;
 public class TokenService {
     private final TokenDAO dao = new TokenHibernate();
 
-    UserProfile getUserByTokenString(String tokenString){
-        return dao.getTokenByTokenString(tokenString).getUser();
+    public UserProfile getUserByTokenString(String tokenString){
+        Token token = dao.getTokenByTokenString(tokenString);
+        if (token == null) {
+            return null;
+        }
+
+        return token.getUser();
     }
 
     void addUserSession(UserProfile user, Token token) throws DaoException {
@@ -50,13 +55,8 @@ public class TokenService {
         else return result.get(0);
     }
 
-    public Long validateToken(String tokenString){
-        try {
-            return getUserByTokenString(tokenString).getId();
-        }
-        catch (NullPointerException e){
-            return null;
-        }
+    public boolean validateToken(String tokenString){
+        return getUserByTokenString(tokenString) != null;
     }
 
     @TestOnly

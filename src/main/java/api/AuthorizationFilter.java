@@ -1,6 +1,7 @@
 package api;
 
-import services.TokenService;
+import main.TokenService;
+import model.data.UserProfile;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -18,16 +19,16 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         String authHeader = containerRequestContext.getHeaderString("Authorization");
-        Long id;
+        UserProfile user;
 
         if(
                         null != authHeader &&
                         authHeader.matches("^Bearer -?[0-9]+$") &&
-                                (id = new TokenService().validateToken(authHeader.split(" ")[1])) != null
+                                (user = new TokenService().getUserByTokenString(authHeader.split(" ")[1])) != null
                 ){
 
             containerRequestContext.getHeaders().add("token",authHeader.split(" ")[1]);
-            containerRequestContext.getHeaders().add("userId",id.toString());
+            containerRequestContext.getHeaders().add("userId",user.getId().toString());
             return;
         }
 

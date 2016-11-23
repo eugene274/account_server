@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>AgarioMakers</groupId>
+    <groupId>zagariomakers</groupId>
     <artifactId>account-server</artifactId>
     <version>1.0</version>
     <build>
@@ -34,7 +34,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>Server</mainClass>
+                            <mainClass>main.AccountServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -119,12 +119,6 @@
             <version>5.2.3.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.192</version>
-        </dependency>
 
 
 
@@ -135,7 +129,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
         </dependency>
 
 
@@ -167,13 +161,7 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>2.7.5</version>
-            <scope>test</scope>
-        </dependency>
+
 
     </dependencies>
 

@@ -1,11 +1,11 @@
 import database.SessionHolder;
+import main.AccountService;
+import main.TokenService;
 import model.data.Token;
 import model.response.ApiErrors.LoginExistsError;
 import model.response.ApiRequestError;
 import org.junit.Before;
 import org.junit.Test;
-import services.AccountService;
-import services.TokenService;
 
 import static org.junit.Assert.*;
 
@@ -50,11 +50,11 @@ public class AccountServiceTest {
     @Test
     public void logout() throws Exception {
         Token token = accountService.signIn(login,pass);
-        assertNotNull(tokenService.validateToken(token.toString()));
+        assertTrue(tokenService.validateToken(token.toString()));
         accountService.logout(token.toString());
 
         SessionHolder.renew();
-        assertNull(tokenService.validateToken(token.toString()));
+        assertFalse(tokenService.validateToken(token.toString()));
     }
 
 }

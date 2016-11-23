@@ -15,5 +15,5 @@ Jackson API
 
 ## Authenticated users
 
-services.TokenService provides \<Token,Profile\> Map and some handy methods
-services.AccountService provides all accounting stuff (email, logout, etc)
+main.TokenService provides \<Token,Profile\> Map and some handy methods
+main.AccountService provides all accounting stuff (email, logout, etc)

@@ -5,10 +5,10 @@ package misc;
  */
 public class CredentialsPolicy {
     public static boolean checkLogin(String login){
-        return login.matches("^[a-zA-Z0-9]{4,}$");
+        return login != null;
     }
 
     public static boolean checkPassword(String password){
-        return password.matches("^[a-zA-Z0-9]{6,}$");
+        return password != null;
     }
 }

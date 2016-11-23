@@ -9,6 +9,8 @@
         <property name="hibernate.connection.username">atom22</property>
         <property name="hibernate.connection.password">atom22</property>
 
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>

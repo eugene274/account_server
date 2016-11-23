@@ -1,3 +1,5 @@
+package main;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -7,19 +9,19 @@ import org.eclipse.jetty.servlet.ServletHolder;
  */
 
 @SuppressWarnings("DefaultFileTemplate")
-public class Server extends Thread {
+public class AccountServer extends Thread {
   private final org.eclipse.jetty.server.Server jettyServer;
   private final String rootPath;
   private final int port;
 
-  private static final Logger LOG = org.apache.logging.log4j.LogManager.getLogger(Server.class);
+  private static final Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AccountServer.class);
 
 
-  public Server() {
+  public AccountServer() {
     this(8080,"/*");
   }
 
-  public Server(int port, String rootPath) {
+  public AccountServer(int port, String rootPath) {
     this.jettyServer = new org.eclipse.jetty.server.Server(port);
     this.rootPath = rootPath;
     this.port = port;
@@ -48,6 +50,6 @@ public class Server extends Thread {
   }
 
   public static void main(String[] args){
-    new Server().run();
+    new AccountServer().run();
   }
 }

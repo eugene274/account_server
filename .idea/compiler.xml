@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="account-server" />
         <module name="hw1" />
         <module name="hw2" />
         <module name="zagar_io" />
@@ -35,6 +36,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="account-server" target="1.8" />
       <module name="authorization_server" target="1.8" />
       <module name="hw2" target="1.8" />
       <module name="zagar_io" target="1.8" />

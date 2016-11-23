@@ -1,10 +1,10 @@
 package api;
 
+import main.AccountService;
 import model.data.Token;
 import model.response.ApiErrors.LoginExistsError;
 import model.response.ApiErrors.WrongCredentialsError;
 import model.response.ApiRequestError;
-import services.AccountService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
