@@ -17,8 +17,8 @@
 
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping class="model.data.UserProfile" />
-        <mapping class="model.data.Token" />
+        <mapping class="accountservice.model.data.UserProfile" />
+        <mapping class="accountservice.model.data.Token" />
 
     </session-factory>
 </hibernate-configuration>

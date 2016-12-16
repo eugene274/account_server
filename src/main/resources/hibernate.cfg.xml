@@ -14,8 +14,8 @@
 
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
 
-        <mapping class="model.data.UserProfile" />
-        <mapping class="model.data.Token" />
+        <mapping class="accountservice.model.data.UserProfile" />
+        <mapping class="accountservice.model.data.Token" />
 
     </session-factory>
 </hibernate-configuration>

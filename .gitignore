@@ -8,7 +8,7 @@
 *.war
 *.ear
 
-# database files
+# accountservice.database files
 *.db
 
 # sensitive data (dblogin-pass)

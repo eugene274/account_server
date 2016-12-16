@@ -34,7 +34,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>main.AccountServer</mainClass>
+                            <mainClass>accountservice.AccountServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
